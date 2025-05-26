@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar">
     <div class="brand">
-      <router-link to="/">Zha<strong>Face</strong></router-link>
+      <router-link to="/">Porto<strong>Z</strong></router-link>
     </div>
     <ul class="nav-links">
       <li><router-link to="/">Home</router-link></li>
