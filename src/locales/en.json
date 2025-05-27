@@ -1,0 +1,19 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About Me",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "home": {
+    "greeting": "Hello, I'm Zhafran Hafizh!",
+    "subtitle": "A Creative & Innovative UI/UX Designer",
+    "description": "Welcome to my digital portfolio. I transform complex ideas into intuitive and captivating user experiences.",
+    "button": "See My Projects"
+  },
+  "projects": {
+      "title": "My Projects",
+      "subtitle": "Here are some of the projects I've worked on."
+  }
+
+}

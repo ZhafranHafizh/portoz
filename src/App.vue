@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Navbar />
+    <MaintenanceTicker />
     <main class="content">
       <router-view/>
     </main>
@@ -11,12 +12,14 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
+import MaintenanceTicker from '@/components/MaintenanceTicker.vue'; // <-- Impor komponen
 
 export default {
   name: 'App',
   components: {
     Navbar,
-    Footer
+    Footer,
+    MaintenanceTicker // <-- Daftarkan komponen
   }
 }
 </script>

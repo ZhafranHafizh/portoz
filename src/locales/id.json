@@ -1,0 +1,18 @@
+{
+  "navbar": {
+    "home": "Beranda",
+    "about": "Tentang Saya",
+    "projects": "Proyek",
+    "contact": "Kontak"
+  },
+  "home": {
+    "greeting": "Halo, Saya Zhafran Hafizh!",
+    "subtitle": "Seorang UI/UX Designer Kreatif & Inovatif",
+    "description": "Selamat datang di portofolio digital saya. Saya mengubah ide kompleks menjadi pengalaman pengguna yang intuitif dan menawan.",
+    "button": "Lihat Proyek Saya"
+  },
+  "projects": {
+      "title": "Proyek Saya",
+      "subtitle": "Berikut adalah beberapa proyek yang telah saya kerjakan."
+  }
+}
