@@ -3,33 +3,33 @@
     <div class="led-board">
       <div class="scrolling-content">
         <span class="icon">⚠️</span>
-        <span>SITUS DALAM PENGEMBANGAN</span>
+        <span>SITE STILL UNDER DEVELOPMENT</span>
         <span class="separator">//</span>
         <span class="countdown">
-          ESTIMASI SELESAI DALAM:
-          <span class="time">{{ days }} Hari</span> :
-          <span class="time">{{ hours }} Jam</span> :
-          <span class="time">{{ minutes }} Menit</span> :
-          <span class="time">{{ seconds }} Detik</span>
+          ESTIMATED COMPLETION IN:
+          <span class="time">{{ days }} DAY</span> :
+          <span class="time">{{ hours }} HOUR</span> :
+          <span class="time">{{ minutes }} MINUTES</span> :
+          <span class="time">{{ seconds }} SECOND</span>
         </span>
         <span class="separator">//</span>
         <span class="icon">🚧</span>
-        <span>WEBSITE INI AKAN SEGERA HADIR</span>
+        <span>THIS WEBSITE WILL BE AVAILABLE SOON</span>
         <span class="separator">//</span>
 
         <span class="icon">⚠️</span>
-        <span>SITUS DALAM PENGEMBANGAN</span>
+        <span>SITE STILL UNDER DEVELOPMENT</span>
         <span class="separator">//</span>
         <span class="countdown">
-          ESTIMASI SELESAI DALAM:
-          <span class="time">{{ days }} Hari</span> :
-          <span class="time">{{ hours }} Jam</span> :
-          <span class="time">{{ minutes }} Menit</span> :
-          <span class="time">{{ seconds }} Detik</span>
+          ESTIMATED COMPLETION IN:
+          <span class="time">{{ days }} DAY</span> :
+          <span class="time">{{ hours }} HOUR</span> :
+          <span class="time">{{ minutes }} MINUTES</span> :
+          <span class="time">{{ seconds }} SECOND</span>
         </span>
         <span class="separator">//</span>
         <span class="icon">🚧</span>
-        <span>WEBSITE INI AKAN SEGERA HADIR</span>
+        <span>THIS WEBSITE WILL BE AVAILABLE SOON</span>
         <span class="separator">//</span>
       </div>
     </div>

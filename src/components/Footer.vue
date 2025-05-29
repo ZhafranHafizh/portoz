@@ -2,9 +2,9 @@
   <footer class="app-footer">
     <div class="footer-content">
       <p class="copyright">
-        &copy; {{ currentYear }} <strong>Porto Zhafran</strong>. Dibuat dengan
+        &copy; {{ currentYear }} <strong>Porto Zhafran</strong>. Made with
         <a href="https://vuejs.org/" target="_blank" rel="noopener noreferrer">Vue.js</a>
-        dan <span class="heart">&hearts;</span>.
+        and <span class="heart">&hearts;</span>.
       </p>
       <div class="social-links">
         <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub">

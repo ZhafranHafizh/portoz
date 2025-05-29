@@ -5,9 +5,9 @@
     </div>
     <ul class="nav-links">
       <li><router-link to="/">Home</router-link></li>
-      <li><router-link to="/about">Tentang Saya</router-link></li>
-      <li><router-link to="/projects">Proyek</router-link></li>
-      <li><router-link to="/contact">Kontak</router-link></li>
+      <li><router-link to="/about">About Me</router-link></li>
+      <li><router-link to="/projects">Project</router-link></li>
+      <li><router-link to="/contact">Contanct</router-link></li>
     </ul>
   </nav>
 </template>

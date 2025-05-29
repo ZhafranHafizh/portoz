@@ -9,29 +9,20 @@
       <div class="profile-image-container">
         <img src="@/assets/Face.jpg" alt="Foto Profil Zhafran Hafizh" class="profile-pic">
       </div>
-      <h1 class="hero-title">Halo, Saya <strong>Zhafran Hafizh</strong>!</h1>
-      <h2 class="hero-subtitle">Seorang <span>UI/UX Designer</span> Kreatif & Inovatif</h2>
+      <h1 class="hero-title">Hello, I'm <strong>Zhafran Hafizh</strong>!</h1>
+      <h2 class="hero-subtitle">A <span>Creative & Innovative</span> UI/UX Designer</h2>
       <p class="hero-description">
-        Selamat datang di portofolio digital saya. Saya mengubah ide kompleks
-        menjadi pengalaman pengguna yang intuitif dan menawan. Mari lihat karya-karya saya!
+        Welcome to my digital portfolio. 
+        I transform complex ideas into intuitive and captivating user experiences. Let's take a look at my work!
       </p>
       <router-link to="/projects" class="cta-button">
-        Lihat Proyek Saya <span class="arrow">&rarr;</span>
+        See my works <span class="arrow">&rarr;</span>
       </router-link>
     </section>
   </div>
 </template>
 
 <script>
-// Impor engine utama tsparticles dan preset (jika perlu)
-// import { loadFull } from "tsparticles";
-// Komponen Particles.vue3 tidak perlu diimpor secara eksplisit jika
-// Anda mendaftarkannya secara global, tapi kita akan daftarkan lokal saja.
-// Namun, jika Anda menggunakan Vue 3 dengan <script setup>, caranya sedikit berbeda.
-// Karena kita pakai Options API, kita tidak perlu impor 'Particles' di sini,
-// tapi kita perlu mendaftarkannya di main.js atau App.vue jika ingin global,
-// atau jika sudah terpasang, Vue CLI mungkin sudah menanganinya.
-// Cara paling aman adalah mendaftarkannya di main.js.
 
 export default {
   name: 'HomeView',
