@@ -1,10 +1,18 @@
 <template>
   <div class="about-view">
-    <section class="about-me-section">
+    <!-- Background parallax elements -->
+    <div class="parallax-bg" :style="backgroundParallaxStyle"></div>
+    <div class="parallax-shapes">
+      <div class="shape shape-1" :style="shape1ParallaxStyle"></div>
+      <div class="shape shape-2" :style="shape2ParallaxStyle"></div>
+      <div class="shape shape-3" :style="shape3ParallaxStyle"></div>
+    </div>
+
+    <section class="about-me-section" :style="aboutSectionParallaxStyle">
       <h1>Tentang Saya</h1>
       <div class="content">
-        <img src="@/assets/Face.jpg" alt="Foto Saya" class="about-pic">
-        <div class="text">
+        <img src="@/assets/Face.jpg" alt="Foto Saya" class="about-pic" :style="imageParallaxStyle">
+        <div class="text" :style="textParallaxStyle">
           <p>
             Halo! Saya Zhafran Hafizh, seorang UI/UX Designer yang bersemangat
             dengan pengalaman dalam pengembangan web front-end dan desain UI/UX.
@@ -19,16 +27,16 @@
       </div>
     </section>
 
-    <section class="timeline-section">
+    <section class="timeline-section" :style="timelineParallaxStyle">
       <h2 class="section-title">Perjalanan & Pencapaian Saya</h2>
       <div class="timeline">
-        <div v-for="item in timelineData" :key="item.year" class="timeline-item">
+        <div v-for="(item, index) in timelineData" :key="item.year" class="timeline-item" :style="getTimelineItemStyle(index)">
           <div class="timeline-marker">
             <div class="timeline-year">{{ item.year }}</div>
           </div>
           <div class="timeline-content">
             <ul>
-              <li v-for="(achievement, index) in item.achievements" :key="index">
+              <li v-for="(achievement, achievementIndex) in item.achievements" :key="achievementIndex">
                 <strong>{{ achievement.title }}</strong> - {{ achievement.description }}
               </li>
             </ul>
@@ -42,9 +50,10 @@
 
 <script>
 export default {
-  name: 'AboutView', // Pastikan nama sesuai (tanpa spasi)
+  name: 'AboutView',
   data() {
     return {
+      scrollY: 0,
       timelineData: [
         {
           year: '2021',
@@ -78,9 +87,68 @@ export default {
             { title: 'Membangun Portofolio Vue', description: 'Membuat portofolio interaktif ini dari nol!' },
           ]
         },
-        // Tambahkan tahun dan pencapaian lainnya di sini
       ]
     };
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+  methods: {
+    handleScroll() {
+      this.scrollY = window.scrollY;
+    },
+    getTimelineItemStyle(index) {
+      const offset = index * 50; // Stagger each timeline item
+      return {
+        transform: `translateY(${(this.scrollY - offset) * -0.1}px)`,
+        transition: 'transform 0.1s ease-out'
+      };
+    }
+  },
+  computed: {
+    backgroundParallaxStyle() {
+      return {
+        transform: `translateY(${this.scrollY * 0.5}px)`
+      };
+    },
+    shape1ParallaxStyle() {
+      return {
+        transform: `translate(${this.scrollY * 0.2}px, ${this.scrollY * 0.3}px) rotate(${this.scrollY * 0.1}deg)`
+      };
+    },
+    shape2ParallaxStyle() {
+      return {
+        transform: `translate(${this.scrollY * -0.15}px, ${this.scrollY * 0.25}px) rotate(${this.scrollY * -0.08}deg)`
+      };
+    },
+    shape3ParallaxStyle() {
+      return {
+        transform: `translate(${this.scrollY * 0.1}px, ${this.scrollY * -0.2}px) rotate(${this.scrollY * 0.05}deg)`
+      };
+    },
+    aboutSectionParallaxStyle() {
+      return {
+        transform: `translateY(${this.scrollY * -0.2}px)`
+      };
+    },
+    imageParallaxStyle() {
+      return {
+        transform: `translateY(${this.scrollY * -0.15}px)`
+      };
+    },
+    textParallaxStyle() {
+      return {
+        transform: `translateY(${this.scrollY * -0.1}px)`
+      };
+    },
+    timelineParallaxStyle() {
+      return {
+        transform: `translateY(${this.scrollY * -0.05}px)`
+      };
+    }
   }
 }
 </script>
@@ -89,16 +157,78 @@ export default {
 /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap'); */
 
 .about-view {
+  position: relative;
   max-width: 900px;
   margin: 60px auto;
   padding: 2rem 1.5rem;
   font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Parallax Background Elements */
+.parallax-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(40, 167, 69, 0.05) 100%);
+  z-index: -2;
+  transition: transform 0.1s ease-out;
+}
+
+.parallax-shapes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.1;
+  transition: transform 0.1s ease-out;
+}
+
+.shape-1 {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(45deg, #007bff, #28a745);
+  top: 10%;
+  right: 10%;
+}
+
+.shape-2 {
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(45deg, #28a745, #ffc107);
+  top: 60%;
+  left: 5%;
+}
+
+.shape-3 {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(45deg, #ffc107, #007bff);
+  top: 30%;
+  left: 15%;
 }
 
 /* Styling untuk bagian 'Tentang Saya' (ambil dari About.vue sebelumnya) */
 .about-me-section {
+  position: relative;
+  z-index: 1;
   text-align: center;
   margin-bottom: 80px; /* Jarak ke bagian timeline */
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.1s ease-out;
 }
 
 .about-me-section h1 {
@@ -121,9 +251,14 @@ export default {
   margin-bottom: 20px;
   object-fit: cover;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+.about-pic:hover { 
+  transform: scale(1.05); 
 }
 .text {
   max-width: 600px;
+  transition: transform 0.1s ease-out;
 }
 .text p {
   line-height: 1.7;
@@ -146,8 +281,15 @@ export default {
 
 /* Styling untuk bagian Timeline BARU */
 .timeline-section {
+  position: relative;
+  z-index: 1;
   margin-top: 80px;
   text-align: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.1s ease-out;
 }
 
 .section-title {
@@ -196,6 +338,7 @@ export default {
   margin-bottom: 40px;
   position: relative;
   align-items: flex-start; /* Rata atas */
+  transition: transform 0.1s ease-out;
 }
 
 /* Hapus margin bottom item terakhir */
@@ -297,6 +440,14 @@ export default {
 
 /* Penyesuaian untuk layar kecil */
 @media (max-width: 768px) {
+  .parallax-shapes {
+    display: none; /* Hide decorative shapes on mobile for better performance */
+  }
+  
+  .shape {
+    transform: none !important; /* Disable parallax on mobile */
+  }
+  
   .timeline::before {
     left: 30px; /* Geser garis ke kiri */
   }
@@ -313,6 +464,15 @@ export default {
   .timeline-content {
     margin-left: 70px; /* Kurangi jarak */
     padding: 15px 20px;
+  }
+  
+  /* Disable parallax effects on mobile for better performance */
+  .about-me-section,
+  .timeline-section,
+  .about-pic,
+  .text,
+  .timeline-item {
+    transform: none !important;
   }
 }
 </style>

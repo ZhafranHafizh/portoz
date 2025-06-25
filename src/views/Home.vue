@@ -3,10 +3,11 @@
     <Particles
       id="tsparticles"
       :options="particlesOptions"
+      :style="parallaxStyle"
     />
 
-    <section class="hero">
-      <div class="profile-image-container">
+    <section class="hero" :style="heroParallaxStyle">
+      <div class="profile-image-container" :style="profileParallaxStyle">
         <img src="@/assets/Face.jpg" alt="Foto Profil Zhafran Hafizh" class="profile-pic">
       </div>
       <h1 class="hero-title">Hello, I'm <strong>Zhafran Hafizh</strong>!</h1>
@@ -26,10 +27,9 @@
 
 export default {
   name: 'HomeView',
-  // HAPUS methods: { ... } yang berisi particlesInit dan particlesLoaded
   data() {
     return {
-      // Opsi partikel tetap di sini
+      scrollY: 0,
       particlesOptions: {
         background: { color: { value: 'transparent' } },
         fpsLimit: 60,
@@ -62,6 +62,34 @@ export default {
         detectRetina: true,
       }
     };
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+  methods: {
+    handleScroll() {
+      this.scrollY = window.scrollY;
+    }
+  },
+  computed: {
+    parallaxStyle() {
+      return {
+        transform: `translateY(${this.scrollY * 0.5}px)`
+      };
+    },
+    heroParallaxStyle() {
+      return {
+        transform: `translateY(${this.scrollY * -0.3}px)`
+      };
+    },
+    profileParallaxStyle() {
+      return {
+        transform: `translateY(${this.scrollY * -0.2}px)`
+      };
+    }
   }
 }
 </script>
@@ -72,21 +100,23 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 85vh;
+  min-height: 100vh;
   padding: 40px 20px;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   font-family: 'Poppins', sans-serif;
-  overflow: hidden; /* Mencegah partikel keluar batas jika perlu */
+  overflow-x: hidden; /* Mencegah partikel keluar batas jika perlu */
+  overflow-y: auto;
 }
 
 /* Styling untuk #tsparticles */
 #tsparticles {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 0; /* Pastikan di paling belakang */
+  transition: transform 0.1s ease-out;
 }
 
 .hero {
@@ -100,6 +130,7 @@ export default {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   transform: translateY(-20px);
   animation: fadeInSlideUp 0.8s ease-out forwards;
+  transition: transform 0.1s ease-out;
   /* ... sisa style .hero Anda ... */
 }
 
@@ -108,7 +139,10 @@ export default {
   from { opacity: 0; transform: translateY(0px); }
   to { opacity: 1; transform: translateY(-20px); }
 }
-.profile-image-container { margin-bottom: 25px; }
+.profile-image-container { 
+  margin-bottom: 25px; 
+  transition: transform 0.1s ease-out;
+}
 .profile-pic {
   width: 180px; height: 180px; border-radius: 50%; object-fit: cover;
   border: 5px solid #fff; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
