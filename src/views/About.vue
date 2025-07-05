@@ -56,33 +56,39 @@ export default {
         {
           year: '2021',
           achievements: [
-            { title: 'Started Learning UI/UX', description: 'Began my journey by learning the basics of interface and user experience design.' },
-            { title: 'First Design Project', description: 'Completed a mobile app design project for a college assignment.' },
-            { title: 'Joined Figma Workshop', description: 'Improved my prototyping skills using Figma.' },
+            { title: 'Memulai Perjalanan di Telkom University', description: 'Memulai studi S1 Teknik Rekayasa Perangkat Lunak dan langsung bergabung dengan CHEVA Lab sebagai desainer UI/UX.' },
+            { title: 'Proyek Desain Aplikasi & Web Pertama', description: 'Membuat desain UI untuk website dan aplikasi sebagai proyek akhir mata kuliah Design Thinking.' },
+            { title: 'Pengembangan Game Sederhana', description: 'Membuat sebuah game sederhana untuk proyek akhir mata kuliah Pengenalan Rekayasa Perangkat Lunak.' },
           ]
         },
         {
           year: '2022',
           achievements: [
-            { title: 'Internship at Startup A', description: 'First work experience as a UI/UX Designer intern.' },
-            { title: 'Website Redesign', description: 'Led a redesign project for a university organization website.' },
-            { title: 'Learning Vue.js', description: 'Started learning the Vue.js front-end framework.' },
+            { title: 'UI/UX Designer di Proyek DetectMe', description: 'Bertanggung jawab membuat desain UI/UX, prototipe, dan berbagai aset visual untuk proyek.' },
+            { title: 'Spesialisasi Dokumen Rekayasa Perangkat Lunak', description: 'Membuat dokumen SRS (Software Requirements Specification) untuk aplikasi layanan darurat.' },
+            { title: 'Desain UI Aplikasi Manajemen Toko', description: 'Merancang antarmuka untuk aplikasi manajemen toko sebagai bagian dari mata kuliah Interaksi Manusia & Komputer.' },
           ]
         },
         {
           year: '2023',
           achievements: [
-            { title: '1st Place in Design Competition', description: 'Won a national-level UI/UX design competition.' },
-            { title: 'Freelance Project X', description: 'Worked on a freelance project for an international client.' },
-            { title: 'Open Source Contributor', description: 'Contributed as a designer to open source projects.' },
+            { title: 'UI/UX Designer di Chevalier LAB', description: 'Berkontribusi dalam pembuatan UI/UX untuk proyek LMS (Learning Management System) dan aplikasi coffee shop.' },
+            { title: 'Pengembangan Berbagai Aplikasi Web', description: 'Mengembangkan website untuk registrasi konsultasi rumah sakit dan sistem penyewaan fasilitas kampus.' },
           ]
         },
         {
           year: '2024',
           achievements: [
-            { title: 'Graduated from University', description: 'Earned a Bachelor of Visual Communication Design.' },
-            { title: 'Working at Company B', description: 'Started my full-time career as a UI/UX Designer.' },
-            { title: 'Built Vue Portfolio', description: 'Created this interactive portfolio from scratch!' },
+            { title: 'Internship sebagai Scrum Master', description: 'Menjalani magang di HUMIC Research Center, memimpin Daily Standup dan Sprint Planning.' },
+            { title: 'Internship sebagai Web Developer (Front End)', description: 'Magang di PT. Jakarta International Container Terminal, meng-update tampilan dan fungsi sistem monitoring.' },
+            { title: 'Asisten Praktikum Pemrograman Web', description: 'Membimbing mahasiswa dalam konsep dan implementasi HTML, CSS, JavaScript, dan framework terkait di Laboratorium Informatika Telkom University.' },
+          ]
+        },
+        {
+          year: '2025',
+          achievements: [
+            { title: 'Pengembangan Proyek Akhir', description: 'Merancang UI dan mengembangkan proposal untuk Sistem Informasi Plotting Mengajar sebagai tugas akhir.' },
+            { title: 'Implementasi Proses DevOps', description: 'Menerapkan proses CI/CD dan DevOps ke dalam proyek MySkin.' },
           ]
         },
       ]
