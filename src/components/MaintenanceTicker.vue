@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="led-board-wrapper">
     <div class="led-board">
       <div class="scrolling-content">
@@ -166,4 +166,4 @@ export default {
 .led-board:hover .scrolling-content {
     animation-play-state: paused;
 }
-</style>
+</style> -->

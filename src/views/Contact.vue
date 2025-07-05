@@ -10,10 +10,10 @@
 
     <!-- Header section with parallax -->
     <div class="header-section" :style="headerParallaxStyle">
-      <h1 class="page-title" :class="{ 'visible': titleVisible }">Hubungi Saya</h1>
+      <h1 class="page-title" :class="{ 'visible': titleVisible }">Contact Me</h1>
       <p class="page-subtitle" :class="{ 'visible': subtitleVisible }">
-        Punya ide menarik, pertanyaan, atau hanya ingin menyapa? <br>
-        Saya akan senang mendengar dari Anda!
+        Have an interesting idea, a question, or just want to say hello? <br>
+        I would love to hear from you!
       </p>
     </div>
 
@@ -50,7 +50,7 @@
 
       <!-- Social media floating action -->
       <div class="social-floating" :class="{ 'visible': socialVisible }">
-        <div class="social-title">Ikuti Saya</div>
+        <div class="social-title">Follow Me</div>
         <div class="social-buttons">
           <a href="https://www.instagram.com/zhafranhafizh_ir/" class="social-btn instagram" target="_blank">
             <i class="fab fa-instagram"></i>
@@ -81,42 +81,42 @@ export default {
         {
           id: 1,
           title: 'Email',
-          description: 'Cara terbaik untuk menghubungi saya secara langsung.',
+          description: 'The best way to contact me directly.',
           icon: 'fas fa-envelope',
           iconClass: 'email',
           link: 'mailto:zhafranhafizhir@gmail.com',
           linkText: 'zhafranhafizhir@gmail.com',
-          stats: 'Respon dalam 24 jam'
+          stats: 'Response within 24 hours'
         },
         {
           id: 2,
           title: 'LinkedIn',
-          description: 'Terhubung secara profesional dan lihat pengalaman kerja saya.',
+          description: 'Connect professionally and see my work experience.',
           icon: 'fab fa-linkedin-in',
           iconClass: 'linkedin',
           link: 'https://www.linkedin.com/in/zhafran-hafizh-izdihar-riyadi-01b940223/',
-          linkText: 'Kunjungi Profil LinkedIn',
-          stats: '500+ Koneksi'
+          linkText: 'Visit LinkedIn Profile',
+          stats: '300+ Connections'
         },
         {
           id: 3,
           title: 'GitHub',
-          description: 'Eksplorasi repository dan kontribusi open source saya.',
+          description: 'Explore my repositories and open source contributions.',
           icon: 'fab fa-github',
           iconClass: 'github',
           link: 'https://github.com/ZhafranHafizh',
-          linkText: 'Kunjungi Profil GitHub',
+          linkText: 'Visit GitHub Profile',
           stats: '50+ Repositories'
         },
         {
           id: 4,
           title: 'WhatsApp',
-          description: 'Chat langsung untuk diskusi cepat dan informal.',
+          description: 'Chat directly for quick and informal discussions.',
           icon: 'fab fa-whatsapp',
           iconClass: 'whatsapp',
           link: 'https://wa.me/6281311501365',
-          linkText: 'Chat di WhatsApp',
-          stats: 'Online sekarang'
+          linkText: 'Chat on WhatsApp',
+          stats: 'Online now'
         }
       ]
     };

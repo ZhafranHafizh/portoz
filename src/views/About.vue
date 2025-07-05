@@ -33,6 +33,12 @@
             <div class="timeline-year">{{ item.year }}</div>
           </div>
           <div class="timeline-content">
+            <div v-if="item.year === '2025'" class="progress-indicator">
+              <span class="progress-badge">
+                <i class="fas fa-clock"></i>
+                In Progress
+              </span>
+            </div>
             <ul>
               <li v-for="(achievement, achievementIndex) in item.achievements" :key="achievementIndex">
                 <strong>{{ achievement.title }}</strong> - {{ achievement.description }}
@@ -440,6 +446,43 @@ export default {
 .timeline-content li strong {
   font-weight: 600;
   color: #333;
+}
+
+/* Progress Indicator Styles */
+.progress-indicator {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.progress-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.progress-badge i {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.5);
+  }
 }
 
 /* Penyesuaian untuk layar kecil */
