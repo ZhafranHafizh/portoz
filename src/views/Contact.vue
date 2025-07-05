@@ -146,7 +146,7 @@ export default {
           link: 'https://github.com/ZhafranHafizh',
           linkText: 'Explore GitHub Profile',
           linkIcon: 'fab fa-github',
-          stats: '50+ Public repositories'
+          stats: '30+ Public repositories'
         },
         {
           id: 4,
