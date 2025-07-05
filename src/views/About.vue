@@ -56,39 +56,39 @@ export default {
         {
           year: '2021',
           achievements: [
-            { title: 'Memulai Perjalanan di Telkom University', description: 'Memulai studi S1 Teknik Rekayasa Perangkat Lunak dan langsung bergabung dengan CHEVA Lab sebagai desainer UI/UX.' },
-            { title: 'Proyek Desain Aplikasi & Web Pertama', description: 'Membuat desain UI untuk website dan aplikasi sebagai proyek akhir mata kuliah Design Thinking.' },
-            { title: 'Pengembangan Game Sederhana', description: 'Membuat sebuah game sederhana untuk proyek akhir mata kuliah Pengenalan Rekayasa Perangkat Lunak.' },
+            { title: 'Started My Journey at Telkom University', description: 'Began my undergraduate studies in Software Engineering and immediately joined CHEVA Lab as a UI/UX designer.' },
+            { title: 'First App & Web Design Project', description: 'Created UI designs for websites and apps as a final project for the Design Thinking course.' },
+            { title: 'Simple Game Development', description: 'Developed a simple game for the final project in the Introduction to Software Engineering course.' },
           ]
         },
         {
           year: '2022',
           achievements: [
-            { title: 'UI/UX Designer di Proyek DetectMe', description: 'Bertanggung jawab membuat desain UI/UX, prototipe, dan berbagai aset visual untuk proyek.' },
-            { title: 'Spesialisasi Dokumen Rekayasa Perangkat Lunak', description: 'Membuat dokumen SRS (Software Requirements Specification) untuk aplikasi layanan darurat.' },
-            { title: 'Desain UI Aplikasi Manajemen Toko', description: 'Merancang antarmuka untuk aplikasi manajemen toko sebagai bagian dari mata kuliah Interaksi Manusia & Komputer.' },
+            { title: 'UI/UX Designer for DetectMe Project', description: 'Responsible for creating UI/UX designs, prototypes, and various visual assets for the project.' },
+            { title: 'Software Engineering Documentation Specialist', description: 'Created SRS (Software Requirements Specification) documents for an emergency service application.' },
+            { title: 'Store Management App UI Design', description: 'Designed the interface for a store management app as part of the Human-Computer Interaction course.' },
           ]
         },
         {
           year: '2023',
           achievements: [
-            { title: 'UI/UX Designer di Chevalier LAB', description: 'Berkontribusi dalam pembuatan UI/UX untuk proyek LMS (Learning Management System) dan aplikasi coffee shop.' },
-            { title: 'Pengembangan Berbagai Aplikasi Web', description: 'Mengembangkan website untuk registrasi konsultasi rumah sakit dan sistem penyewaan fasilitas kampus.' },
+            { title: 'UI/UX Designer at Chevalier LAB', description: 'Contributed to UI/UX development for LMS (Learning Management System) and coffee shop app projects.' },
+            { title: 'Developed Various Web Applications', description: 'Developed websites for hospital consultation registration and campus facility rental systems.' },
           ]
         },
         {
           year: '2024',
           achievements: [
-            { title: 'Internship sebagai Scrum Master', description: 'Menjalani magang di HUMIC Research Center, memimpin Daily Standup dan Sprint Planning.' },
-            { title: 'Internship sebagai Web Developer (Front End)', description: 'Magang di PT. Jakarta International Container Terminal, meng-update tampilan dan fungsi sistem monitoring.' },
-            { title: 'Asisten Praktikum Pemrograman Web', description: 'Membimbing mahasiswa dalam konsep dan implementasi HTML, CSS, JavaScript, dan framework terkait di Laboratorium Informatika Telkom University.' },
+            { title: 'Internship as Scrum Master', description: 'Interned at HUMIC Research Center, leading Daily Standups and Sprint Planning.' },
+            { title: 'Internship as Web Developer (Front End)', description: 'Interned at PT. Jakarta International Container Terminal, updating the appearance and functions of the monitoring system.' },
+            { title: 'Web Programming Lab Assistant', description: 'Guided students in the concepts and implementation of HTML, CSS, JavaScript, and related frameworks at the Informatics Laboratory, Telkom University.' },
           ]
         },
         {
           year: '2025',
           achievements: [
-            { title: 'Pengembangan Proyek Akhir', description: 'Merancang UI dan mengembangkan proposal untuk Sistem Informasi Plotting Mengajar sebagai tugas akhir.' },
-            { title: 'Implementasi Proses DevOps', description: 'Menerapkan proses CI/CD dan DevOps ke dalam proyek MySkin.' },
+            { title: 'Final Project Development', description: 'Designed the UI and developed the proposal for the Teaching Plotting Information System as a final project.' },
+            { title: 'DevOps Process Implementation', description: 'Implemented CI/CD and DevOps processes into the MySkin project.' },
           ]
         },
       ]
