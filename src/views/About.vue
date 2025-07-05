@@ -9,26 +9,24 @@
     </div>
 
     <section class="about-me-section" :style="aboutSectionParallaxStyle">
-      <h1>Tentang Saya</h1>
+      <h1>About Me</h1>
       <div class="content">
-        <img src="@/assets/Face.jpg" alt="Foto Saya" class="about-pic" :style="imageParallaxStyle">
+        <img src="@/assets/Face.jpg" alt="My Photo" class="about-pic" :style="imageParallaxStyle">
         <div class="text" :style="textParallaxStyle">
           <p>
-            Halo! Saya Zhafran Hafizh, seorang UI/UX Designer yang bersemangat
-            dengan pengalaman dalam pengembangan web front-end dan desain UI/UX.
-            Saya suka mengubah ide-ide kompleks menjadi solusi yang elegan dan mudah digunakan.
+            Hi! I'm Zhafran Hafizh, a passionate UI/UX Designer with experience in front-end web development and UI/UX design.
+            I love turning complex ideas into elegant and user-friendly solutions.
           </p>
           <p>
-            Saya memiliki keahlian dalam teknologi seperti Vue.js, Figma, Adobe XD, dll.
-            Saya selalu antusias untuk mempelajari hal-hal baru dan berkolaborasi dalam proyek-proyek
-            yang menantang dan berdampak.
+            I have expertise in technologies such as Vue.js, Figma, Adobe XD, and more.
+            I'm always eager to learn new things and collaborate on challenging and impactful projects.
           </p>
         </div>
       </div>
     </section>
 
     <section class="timeline-section" :style="timelineParallaxStyle">
-      <h2 class="section-title">Perjalanan & Pencapaian Saya</h2>
+      <h2 class="section-title">My Journey & Achievements</h2>
       <div class="timeline">
         <div v-for="(item, index) in timelineData" :key="item.year" class="timeline-item" :style="getTimelineItemStyle(index)">
           <div class="timeline-marker">
@@ -58,33 +56,33 @@ export default {
         {
           year: '2021',
           achievements: [
-            { title: 'Mulai Belajar UI/UX', description: 'Memulai perjalanan mendalami dasar-dasar desain antarmuka dan pengalaman pengguna.' },
-            { title: 'Proyek Desain Pertama', description: 'Menyelesaikan proyek desain aplikasi mobile untuk tugas kuliah.' },
-            { title: 'Ikut Workshop Figma', description: 'Meningkatkan skill menggunakan Figma untuk prototyping.' },
+            { title: 'Started Learning UI/UX', description: 'Began my journey by learning the basics of interface and user experience design.' },
+            { title: 'First Design Project', description: 'Completed a mobile app design project for a college assignment.' },
+            { title: 'Joined Figma Workshop', description: 'Improved my prototyping skills using Figma.' },
           ]
         },
         {
           year: '2022',
           achievements: [
-            { title: 'Magang di Startup A', description: 'Pengalaman kerja pertama sebagai UI/UX Designer intern.' },
-            { title: 'Redesain Situs Web', description: 'Memimpin proyek redesain untuk situs web organisasi kampus.' },
-            { title: 'Belajar Vue.js', description: 'Mulai mempelajari framework front-end Vue.js.' },
+            { title: 'Internship at Startup A', description: 'First work experience as a UI/UX Designer intern.' },
+            { title: 'Website Redesign', description: 'Led a redesign project for a university organization website.' },
+            { title: 'Learning Vue.js', description: 'Started learning the Vue.js front-end framework.' },
           ]
         },
         {
           year: '2023',
           achievements: [
-            { title: 'Juara 1 Lomba Desain', description: 'Memenangkan kompetisi desain UI/UX tingkat nasional.' },
-            { title: 'Freelance Project X', description: 'Mengerjakan proyek freelance untuk klien internasional.' },
-            { title: 'Kontributor Open Source', description: 'Berkontribusi pada proyek open source sebagai desainer.' },
+            { title: '1st Place in Design Competition', description: 'Won a national-level UI/UX design competition.' },
+            { title: 'Freelance Project X', description: 'Worked on a freelance project for an international client.' },
+            { title: 'Open Source Contributor', description: 'Contributed as a designer to open source projects.' },
           ]
         },
         {
           year: '2024',
           achievements: [
-            { title: 'Lulus Kuliah', description: 'Meraih gelar Sarjana Desain Komunikasi Visual.' },
-            { title: 'Bekerja di Perusahaan B', description: 'Memulai karier penuh waktu sebagai UI/UX Designer.' },
-            { title: 'Membangun Portofolio Vue', description: 'Membuat portofolio interaktif ini dari nol!' },
+            { title: 'Graduated from University', description: 'Earned a Bachelor of Visual Communication Design.' },
+            { title: 'Working at Company B', description: 'Started my full-time career as a UI/UX Designer.' },
+            { title: 'Built Vue Portfolio', description: 'Created this interactive portfolio from scratch!' },
           ]
         },
       ]

@@ -10,9 +10,9 @@
 
     <!-- Header section with parallax -->
     <div class="header-section" :style="headerParallaxStyle">
-      <h1 class="page-title" :class="{ 'visible': titleVisible }">Proyek Saya</h1>
+      <h1 class="page-title" :class="{ 'visible': titleVisible }">My Projects</h1>
       <p class="page-subtitle" :class="{ 'visible': subtitleVisible }">
-        Berikut adalah beberapa proyek yang telah saya kerjakan dengan passion dan dedikasi tinggi.
+        Here are some projects I have worked on with great passion and dedication.
       </p>
       
       <!-- Filter buttons -->
@@ -43,10 +43,10 @@
     </div>
 
     <!-- Scroll indicator -->
-    <div class="scroll-indicator" v-if="showScrollIndicator">
-      <div class="scroll-text">Scroll untuk melihat lebih banyak</div>
-      <div class="scroll-arrow">↓</div>
-    </div>
+      <div class="scroll-indicator" v-if="showScrollIndicator">
+        <div class="scroll-text">Scroll to see more</div>
+        <div class="scroll-arrow">↓</div>
+      </div>
   </div>
 </template>
 
@@ -66,13 +66,13 @@ export default {
       filtersVisible: false,
       projectsVisible: false,
       showScrollIndicator: true,
-      activeFilter: 'Semua',
-      filters: ['Semua', 'Web Development', 'UI/UX Design', 'Mobile'],
+      activeFilter: 'All',
+      filters: ['All', 'Web Development', 'UI/UX Design', 'Mobile'],
       projectsData: [
         {
           id: 1,
-          title: 'Aplikasi Web Cuaca',
-          description: 'Aplikasi untuk menampilkan perkiraan cuaca saat ini menggunakan API open-source dengan interface yang intuitif dan responsif.',
+          title: 'Weather Web App',
+          description: 'An app to display current weather forecasts using an open-source API with an intuitive and responsive interface.',
           imageUrl: 'https://images.unsplash.com/photo-1585210159781-76a1b7a27a6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
           tags: ['Vue.js', 'API', 'CSS', 'Weather'],
@@ -80,8 +80,8 @@ export default {
         },
         {
           id: 2,
-          title: 'Sistem Manajemen Tugas',
-          description: 'Platform untuk mengatur tugas harian tim dengan fitur drag-and-drop, notifikasi real-time, dan analytics dashboard.',
+          title: 'Task Management System',
+          description: 'A platform to manage team daily tasks with drag-and-drop features, real-time notifications, and an analytics dashboard.',
           imageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
           tags: ['React', 'Node.js', 'Socket.IO'],
@@ -89,17 +89,17 @@ export default {
         },
         {
           id: 3,
-          title: 'Desain Landing Page Startup',
-          description: 'Desain UI/UX modern dan konversi tinggi untuk startup teknologi AI dengan fokus pada user experience yang exceptional.',
+          title: 'Startup Landing Page Design',
+          description: 'Modern, high-conversion UI/UX design for an AI technology startup focused on exceptional user experience.',
           imageUrl: 'https://images.unsplash.com/photo-1559028006-44a10e643c68?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
-          tags: ['Figma', 'UI/UX', 'Desain', 'Web'],
+          tags: ['Figma', 'UI/UX', 'Design', 'Web'],
           category: 'UI/UX Design'
         },
         {
           id: 4,
           title: 'E-commerce Fashion',
-          description: 'Platform E-commerce lengkap dengan integrasi pembayaran, manajemen inventaris, dan sistem rekomendasi produk.',
+          description: 'A complete e-commerce platform with payment integration, inventory management, and product recommendation system.',
           imageUrl: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
           tags: ['Vue.js', 'Vuetify', 'Stripe'],
@@ -108,7 +108,7 @@ export default {
         {
           id: 5,
           title: 'Mobile Banking App Design',
-          description: 'Desain interface untuk aplikasi mobile banking dengan fokus pada security, accessibility, dan user-friendly design.',
+          description: 'Interface design for a mobile banking app focused on security, accessibility, and user-friendly design.',
           imageUrl: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
           tags: ['Mobile Design', 'Figma', 'Prototyping'],
@@ -117,7 +117,7 @@ export default {
         {
           id: 6,
           title: 'Dashboard Analytics',
-          description: 'Dashboard komprehensif untuk monitoring dan analisis data bisnis dengan visualisasi yang interaktif dan real-time.',
+          description: 'A comprehensive dashboard for business data monitoring and analysis with interactive, real-time visualizations.',
           imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
           tags: ['Vue.js', 'D3.js', 'Analytics'],
@@ -128,7 +128,7 @@ export default {
   },
   computed: {
     filteredProjects() {
-      if (this.activeFilter === 'Semua') {
+      if (this.activeFilter === 'All') {
         return this.projectsData;
       }
       return this.projectsData.filter(project => project.category === this.activeFilter);

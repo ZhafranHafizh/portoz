@@ -2,7 +2,7 @@
   <footer class="app-footer">
     <div class="footer-content">
       <p class="copyright">
-        &copy; {{ currentYear }} <strong>Porto Zhafran</strong>. Made with
+        &copy; {{ currentYear }} <strong>Zhafran's Portfolio</strong>. Built with
         <a href="https://vuejs.org/" target="_blank" rel="noopener noreferrer">Vue.js</a>
         and <span class="heart">&hearts;</span>.
       </p>
