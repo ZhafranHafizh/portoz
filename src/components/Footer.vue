@@ -40,13 +40,20 @@ export default {
 /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'); */
 
 .app-footer {
-  background-color: #f8f9fa; /* Warna background lebih terang */
-  color: #6c757d; /* Warna teks lebih lembut */
-  padding: 2rem 1.5rem; /* Padding lebih besar */
+  background-color: #f8f9fa;
+  color: #6c757d;
+  padding: 2rem 1.5rem;
   text-align: center;
-  border-top: 1px solid #e9ecef; /* Border atas yang halus */
-  font-family: 'Poppins', sans-serif; /* Sesuaikan font */
-  margin-top: auto; /* Mendorong footer ke bawah jika konten pendek */
+  border-top: 1px solid #e9ecef;
+  font-family: 'Poppins', sans-serif;
+  margin-top: auto;
+  transition: all 0.3s ease;
+}
+
+:global(.dark) .app-footer {
+  background-color: #1a1a2e;
+  color: #a1a1aa;
+  border-top: 1px solid #374151;
 }
 
 .footer-content {
@@ -68,10 +75,18 @@ export default {
   color: #495057;
 }
 
+:global(.dark) .copyright strong {
+  color: #e4e4e7;
+}
+
 .copyright a {
-  color: #007bff; /* Warna link aksen */
+  color: #007bff;
   text-decoration: none;
   font-weight: 600;
+}
+
+:global(.dark) .copyright a {
+  color: #60a5fa;
 }
 
 .copyright a:hover {
@@ -100,13 +115,21 @@ export default {
 
 .social-links a {
   color: #6c757d;
-  font-size: 1.3rem; /* Ukuran ikon */
+  font-size: 1.3rem;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
+:global(.dark) .social-links a {
+  color: #a1a1aa;
+}
+
 .social-links a:hover {
-  color: #007bff; /* Warna hover ikon */
-  transform: translateY(-3px); /* Efek ikon terangkat */
+  color: #007bff;
+  transform: translateY(-3px);
+}
+
+:global(.dark) .social-links a:hover {
+  color: #60a5fa;
 }
 
 /* Responsif */

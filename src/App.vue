@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navbar />
-    <MaintenanceTicker />
+    <!-- <MaintenanceTicker /> -->
     <main class="content">
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
@@ -16,14 +16,14 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
-import MaintenanceTicker from '@/components/MaintenanceTicker.vue'; // <-- Impor komponen
+// import MaintenanceTicker from '@/components/MaintenanceTicker.vue'; // <-- Impor komponen
 
 export default {
   name: 'App',
   components: {
     Navbar,
     Footer,
-    MaintenanceTicker
+    // MaintenanceTicker
   }
 }
 </script>
@@ -47,11 +47,19 @@ export default {
 /* Pastikan style #app dan .content Anda mendukung layout */
 body {
   margin: 0;
-  font-family: 'Poppins', 'Avenir', Helvetica, Arial, sans-serif; /* Sesuaikan */
+  font-family: 'Poppins', 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: #ffffff;
+}
+
+/* Dark mode global styles */
+body.dark-theme {
+  background-color: #0f0f23 !important;
+  color: #e4e4e7 !important;
 }
 
 #app {

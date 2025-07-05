@@ -7,14 +7,22 @@
       <li><router-link to="/">Home</router-link></li>
       <li><router-link to="/about">About Me</router-link></li>
       <li><router-link to="/projects">Project</router-link></li>
-      <li><router-link to="/contact">Contanct</router-link></li>
+      <li><router-link to="/contact">Contact</router-link></li>
     </ul>
+    <div class="nav-actions">
+      <DarkModeToggle />
+    </div>
   </nav>
 </template>
 
 <script>
+import DarkModeToggle from '@/components/DarkModeToggle.vue'
+
 export default {
-  name: 'TheNavbar' // Pastikan tidak ada spasi di akhir nama
+  name: 'TheNavbar',
+  components: {
+    DarkModeToggle
+  }
 }
 </script>
 
@@ -25,34 +33,53 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ffffff; /* Ubah ke putih */
-  padding: 1rem 3rem; /* Padding sedikit lebih banyak */
-  color: #333; /* Warna teks utama jadi gelap */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); /* Bayangan halus */
-  position: sticky; /* Membuat navbar tetap di atas saat scroll */
+  background-color: #ffffff;
+  padding: 1rem 3rem;
+  color: #333;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  position: sticky;
   top: 0;
-  z-index: 1000; /* Pastikan di atas elemen lain */
+  z-index: 1000;
   width: 100%;
-  box-sizing: border-box; /* Agar padding tidak menambah lebar */
-  transition: background-color 0.3s ease;
-  font-family: 'Poppins', sans-serif; /* Sesuaikan font */
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Dark mode styles */
+.dark-theme .navbar {
+  background-color: #1a1a2e;
+  color: #e4e4e7;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .brand a {
-  color: #333; /* Warna brand */
+  color: #333;
   text-decoration: none;
-  font-weight: 700; /* Lebih tebal */
-  font-size: 1.6rem; /* Sedikit lebih besar */
+  font-weight: 700;
+  font-size: 1.6rem;
   transition: color 0.3s ease;
 }
 
+.dark-theme .brand a {
+  color: #e4e4e7;
+}
+
 .brand a strong {
-  font-weight: 400; /* Nama belakang lebih ringan */
-  color: #007bff; /* Warna aksen, sesuaikan */
+  font-weight: 400;
+  color: #007bff;
+}
+
+.dark-theme .brand a strong {
+  color: #60a5fa;
 }
 
 .brand a:hover {
-  color: #007bff; /* Warna hover */
+  color: #007bff;
+}
+
+.dark-theme .brand a:hover {
+  color: #60a5fa;
 }
 
 .nav-links {
@@ -62,18 +89,28 @@ export default {
   padding: 0;
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
 .nav-links li {
   margin-left: 30px; /* Jarak antar link lebih besar */
 }
 
 .nav-links a {
-  color: #555; /* Warna link sedikit abu-abu */
+  color: #555;
   text-decoration: none;
-  font-size: 1rem; /* Ukuran font standar */
-  font-weight: 600; /* Sedikit tebal */
+  font-size: 1rem;
+  font-weight: 600;
   padding: 5px 0;
-  position: relative; /* Untuk garis bawah */
+  position: relative;
   transition: color 0.3s ease;
+}
+
+.dark-theme .nav-links a {
+  color: #a1a1aa;
 }
 
 /* Garis bawah untuk hover dan active */
@@ -82,16 +119,25 @@ export default {
   position: absolute;
   width: 0;
   height: 2px;
-  bottom: -2px; /* Posisi garis bawah */
+  bottom: -2px;
   left: 50%;
-  background-color: #007bff; /* Warna aksen */
+  background-color: #007bff;
   transition: all 0.3s ease-in-out;
   transform: translateX(-50%);
 }
 
+.dark-theme .nav-links a::after {
+  background-color: #60a5fa;
+}
+
 .nav-links a:hover,
 .nav-links a.router-link-exact-active {
-  color: #007bff; /* Warna link saat hover/active */
+  color: #007bff;
+}
+
+.dark-theme .nav-links a:hover,
+.dark-theme .nav-links a.router-link-exact-active {
+  color: #60a5fa;
 }
 
 .nav-links a:hover::after,

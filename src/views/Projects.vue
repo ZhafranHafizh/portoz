@@ -339,6 +339,11 @@ export default {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   padding: 0;
   font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  transition: background 0.3s ease;
+}
+
+:global(.dark) .projects-view {
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
 }
 
 /* Header Section */
@@ -349,6 +354,11 @@ export default {
   color: white;
   position: relative;
   overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+:global(.dark) .header-section {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 }
 
 .header-section::before {
@@ -567,6 +577,12 @@ export default {
   position: relative;
 }
 
+:global(.dark) .bento-card {
+  background: #1a1a2e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
 .bento-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
@@ -748,6 +764,10 @@ export default {
   line-height: 1.3;
 }
 
+:global(.dark) .project-title {
+  color: #e4e4e7;
+}
+
 .bento-item.large .project-title {
   font-size: 1.6rem;
 }
@@ -758,6 +778,10 @@ export default {
   margin-bottom: 20px;
   flex: 1;
   font-size: 0.95rem;
+}
+
+:global(.dark) .project-description {
+  color: #a1a1aa;
 }
 
 /* Project Tags */
@@ -776,6 +800,12 @@ export default {
   font-size: 0.75rem;
   font-weight: 500;
   border: 1px solid #e2e8f0;
+}
+
+:global(.dark) .tag {
+  background: #374151;
+  color: #e4e4e7;
+  border: 1px solid #4b5563;
 }
 
 .tag-more {
@@ -797,6 +827,10 @@ export default {
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:global(.dark) .stats-section {
+  background: #1a1a2e;
 }
 
 .stats-section.visible {
@@ -827,6 +861,10 @@ export default {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 0.875rem;
+}
+
+:global(.dark) .stat-label {
+  color: #a1a1aa;
 }
 
 /* Responsive Design */

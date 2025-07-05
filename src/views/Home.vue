@@ -96,7 +96,7 @@ export default {
 
 <style scoped>
 .home-view {
-  position: relative; /* Penting untuk positioning anak absolute */
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -104,8 +104,13 @@ export default {
   padding: 40px 20px;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   font-family: 'Poppins', sans-serif;
-  overflow-x: hidden; /* Mencegah partikel keluar batas jika perlu */
+  overflow-x: hidden;
   overflow-y: auto;
+  transition: background 0.3s ease;
+}
+
+:global(.dark) .home-view {
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
 }
 
 /* Styling untuk #tsparticles */
@@ -120,18 +125,22 @@ export default {
 }
 
 .hero {
-  position: relative; /* Penting agar bisa di atas partikel */
-  z-index: 1; /* Pastikan di atas partikel */
+  position: relative;
+  z-index: 1;
   text-align: center;
   max-width: 700px;
-  padding: 3rem; /* Padding lebih besar */
+  padding: 3rem;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   transform: translateY(-20px);
   animation: fadeInSlideUp 0.8s ease-out forwards;
-  transition: transform 0.1s ease-out;
-  /* ... sisa style .hero Anda ... */
+  transition: all 0.3s ease;
+}
+
+:global(.dark) .hero {
+  background-color: rgba(26, 26, 46, 0.9);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 /* ... Pastikan semua style .hero lainnya ada di sini ... */
@@ -153,14 +162,34 @@ export default {
   font-size: 2.8rem; font-weight: 700; color: #333;
   margin-bottom: 10px; line-height: 1.2;
 }
+
+:global(.dark) .hero-title {
+  color: #e4e4e7;
+}
+
 .hero-title strong { color: #007bff; }
+
+:global(.dark) .hero-title strong { color: #60a5fa; }
+
 .hero-subtitle {
   font-size: 1.6rem; font-weight: 400; color: #555; margin-bottom: 25px;
 }
+
+:global(.dark) .hero-subtitle {
+  color: #a1a1aa;
+}
+
 .hero-subtitle span { font-weight: 600; color: #28a745; }
+
+:global(.dark) .hero-subtitle span { color: #34d399; }
+
 .hero-description {
   font-size: 1.1rem; color: #666; line-height: 1.7; margin-bottom: 30px;
   max-width: 550px; margin-left: auto; margin-right: auto;
+}
+
+:global(.dark) .hero-description {
+  color: #a1a1aa;
 }
 .cta-button {
   display: inline-flex; align-items: center; padding: 14px 30px;

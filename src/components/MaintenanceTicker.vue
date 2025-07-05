@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div class="led-board-wrapper">
     <div class="led-board">
       <div class="scrolling-content">

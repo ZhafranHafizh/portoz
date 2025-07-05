@@ -175,6 +175,12 @@ export default {
   overflow-x: hidden;
 }
 
+/* Dark mode styles */
+:global(.dark) .about-view {
+  background-color: #0f0f23;
+  color: #e4e4e7;
+}
+
 /* Parallax Background Elements */
 .parallax-bg {
   position: fixed;
@@ -233,7 +239,7 @@ export default {
   position: relative;
   z-index: 1;
   text-align: center;
-  margin-bottom: 80px; /* Jarak ke bagian timeline */
+  margin-bottom: 80px;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 15px;
   padding: 2rem;
@@ -241,11 +247,20 @@ export default {
   transition: transform 0.1s ease-out;
 }
 
+:global(.dark) .about-me-section {
+  background-color: rgba(26, 26, 46, 0.9);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
 .about-me-section h1 {
   font-size: 2.5rem;
   font-weight: 700;
   color: #333;
   margin-bottom: 40px;
+}
+
+:global(.dark) .about-me-section h1 {
+  color: #e4e4e7;
 }
 
 .content {
@@ -276,6 +291,10 @@ export default {
   color: #555;
 }
 
+:global(.dark) .text p {
+  color: #a1a1aa;
+}
+
 @media (min-width: 768px) {
   .content {
     flex-direction: row;
@@ -302,6 +321,11 @@ export default {
   transition: transform 0.1s ease-out;
 }
 
+:global(.dark) .timeline-section {
+  background-color: rgba(26, 26, 46, 0.95);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
 .section-title {
   font-size: 2.2rem;
   font-weight: 700;
@@ -310,6 +334,10 @@ export default {
   position: relative;
   display: inline-block;
   padding-bottom: 10px;
+}
+
+:global(.dark) .section-title {
+  color: #e4e4e7;
 }
 
 .section-title::after {
@@ -335,12 +363,16 @@ export default {
 .timeline::before {
   content: '';
   position: absolute;
-  left: 60px; /* Sesuaikan posisi garis */
+  left: 60px;
   top: 0;
   bottom: 0;
   width: 4px;
   background-color: #e9ecef;
   border-radius: 2px;
+}
+
+:global(.dark) .timeline::before {
+  background-color: #374151;
 }
 
 .timeline-item {
@@ -360,7 +392,7 @@ export default {
   position: absolute;
   left: 60px;
   top: 0;
-  transform: translateX(-50%); /* Posisi awal */
+  transform: translateX(-50%);
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -371,16 +403,22 @@ export default {
   align-items: center;
   z-index: 2;
   box-shadow: 0 0 0 6px #fff;
-  /* Hapus 'transition' atau sesuaikan jika perlu, */
-  /* karena 'animation' akan lebih dominan saat hover */
-  transition: border-color 0.3s ease; /* Transisi untuk warna border */
+  transition: border-color 0.3s ease;
+}
+
+:global(.dark) .timeline-marker {
+  background-color: #1a1a2e;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 6px #1a1a2e;
 }
 
 .timeline-item:hover .timeline-marker {
-  /* Terapkan animasi saat hover */
   animation: heartbeat 1.2s ease-in-out infinite;
-  /* Anda bisa mempertahankan border-color jika mau */
   border-color: #0056b3;
+}
+
+:global(.dark) .timeline-item:hover .timeline-marker {
+  border-color: #3b82f6;
 }
 
 @keyframes heartbeat {
@@ -408,15 +446,25 @@ export default {
   font-size: 0.9rem;
 }
 
+:global(.dark) .timeline-year {
+  color: #60a5fa;
+}
+
 .timeline-content {
   background-color: #fff;
   border: 1px solid #e9ecef;
   border-radius: 8px;
   padding: 20px 25px;
-  margin-left: 110px; /* Jarak dari garis/marker */
+  margin-left: 110px;
   width: 100%;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
   text-align: left;
+}
+
+:global(.dark) .timeline-content {
+  background-color: #1a1a2e;
+  border: 1px solid #374151;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 
 .timeline-content h4 {
@@ -424,6 +472,10 @@ export default {
   margin-bottom: 15px;
   color: #333;
   font-size: 1.2rem;
+}
+
+:global(.dark) .timeline-content h4 {
+  color: #e4e4e7;
 }
 
 .timeline-content ul {
@@ -439,6 +491,10 @@ export default {
   font-size: 0.95rem;
 }
 
+:global(.dark) .timeline-content li {
+  color: #a1a1aa;
+}
+
 .timeline-content li:last-child {
   margin-bottom: 0;
 }
@@ -446,6 +502,10 @@ export default {
 .timeline-content li strong {
   font-weight: 600;
   color: #333;
+}
+
+:global(.dark) .timeline-content li strong {
+  color: #e4e4e7;
 }
 
 /* Progress Indicator Styles */
