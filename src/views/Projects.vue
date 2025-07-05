@@ -1,127 +1,266 @@
 <template>
   <div class="projects-view">
-    <!-- Animated background elements -->
-    <div class="background-elements">
-      <div class="floating-shape shape-1" :style="shape1Style"></div>
-      <div class="floating-shape shape-2" :style="shape2Style"></div>
-      <div class="floating-shape shape-3" :style="shape3Style"></div>
-      <div class="grid-pattern"></div>
-    </div>
-
-    <!-- Header section with parallax -->
-    <div class="header-section" :style="headerParallaxStyle">
-      <h1 class="page-title" :class="{ 'visible': titleVisible }">My Projects</h1>
-      <p class="page-subtitle" :class="{ 'visible': subtitleVisible }">
-        Here are some projects I have worked on with great passion and dedication.
-      </p>
-      
-      <!-- Filter buttons -->
-      <div class="filter-buttons" :class="{ 'visible': filtersVisible }">
-        <button 
-          v-for="filter in filters" 
-          :key="filter"
-          :class="{ 'active': activeFilter === filter }"
-          @click="setFilter(filter)"
-          class="filter-btn"
-        >
-          {{ filter }}
-        </button>
+    <!-- Header section -->
+    <div class="header-section">
+      <div class="header-content">
+        <h1 class="page-title" :class="{ 'visible': titleVisible }">
+          <span class="title-gradient">My Projects</span>
+        </h1>
+        <p class="page-subtitle" :class="{ 'visible': subtitleVisible }">
+          A curated collection of my work, showcasing innovation and creativity
+        </p>
+        
+        <!-- Download CV Button -->
+        <div class="cv-download-section" :class="{ 'visible': subtitleVisible }">
+          <a 
+            href="/cv/Zhafran_Hafizh_Resume_2025.pdf" 
+            download="Zhafran_Hafizh_Resume_2025.pdf"
+            class="download-cv-btn"
+            @click="trackDownload"
+          >
+            <i class="fas fa-download"></i>
+            <span>Download My CV</span>
+          </a>
+        </div>
+        
+        <!-- Filter pills -->
+        <div class="filter-pills" :class="{ 'visible': filtersVisible }">
+          <button 
+            v-for="filter in filters" 
+            :key="filter"
+            :class="{ 'active': activeFilter === filter }"
+            @click="setFilter(filter)"
+            class="filter-pill"
+          >
+            {{ filter }}
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Projects grid with stagger animation -->
-    <div class="project-list" :style="projectsParallaxStyle">
+    <!-- Bento Grid Layout -->
+    <div class="bento-grid" :class="{ 'visible': projectsVisible }">
       <div 
         v-for="(project, index) in filteredProjects" 
         :key="project.id"
-        class="project-wrapper"
+        class="bento-item"
+        :class="[getBentoClass(index), { 'visible': projectsVisible }]"
         :style="getProjectStyle(index)"
-        :class="{ 'visible': projectsVisible }"
+        @click="openModal(project)"
       >
-        <ProjectCard :project="project" />
+        <div class="bento-card">
+          <div class="card-image">
+            <img :src="project.imageUrl" :alt="project.title" />
+            <div class="image-overlay">
+              <div class="overlay-content">
+                <button class="maximize-btn" @click.stop="openModal(project)">
+                  <i class="fas fa-expand"></i>
+                </button>
+                <button v-if="project.link && project.link !== '#'" class="external-btn" @click.stop="openExternal(project.link)">
+                  <i class="fas fa-external-link-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Card overlay for entire card clickability -->
+          <div class="card-overlay" @click="openModal(project)">
+            <div class="overlay-actions">
+              <button class="overlay-maximize-btn" @click.stop="openModal(project)">
+                <i class="fas fa-expand"></i>
+                <span>View Details</span>
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="project-meta">
+              <span class="category-badge">{{ project.category }}</span>
+            </div>
+            <h3 class="project-title">{{ project.title }}</h3>
+            <p class="project-description">{{ project.description }}</p>
+            <div class="project-tags">
+              <span v-for="tag in project.tags.slice(0, 3)" :key="tag" class="tag">
+                {{ tag }}
+              </span>
+              <span v-if="project.tags.length > 3" class="tag-more">
+                +{{ project.tags.length - 3 }}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Scroll indicator -->
-      <div class="scroll-indicator" v-if="showScrollIndicator">
-        <div class="scroll-text">Scroll to see more</div>
-        <div class="scroll-arrow">↓</div>
+    <!-- Footer stats -->
+    <div class="stats-section" :class="{ 'visible': projectsVisible }">
+      <div class="stat-item">
+        <span class="stat-number">{{ projectsData.length }}</span>
+        <span class="stat-label">Projects</span>
       </div>
+      <div class="stat-item">
+        <span class="stat-number">{{ uniqueCategories }}</span>
+        <span class="stat-label">Categories</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">{{ totalTags }}</span>
+        <span class="stat-label">Technologies</span>
+      </div>
+    </div>
+
+    <!-- Project Modal -->
+    <ProjectModal 
+      :is-open="modalOpen" 
+      :project="selectedProject" 
+      @close="closeModal" 
+    />
   </div>
 </template>
 
 <script>
-import ProjectCard from '@/components/ProjectCard.vue';
-
+import ProjectModal from '@/components/ProjectModal.vue';
 export default {
   name: 'ProjectsView',
   components: {
-    ProjectCard
+    ProjectModal
   },
   data() {
     return {
-      scrollY: 0,
       titleVisible: false,
       subtitleVisible: false,
       filtersVisible: false,
       projectsVisible: false,
-      showScrollIndicator: true,
+      modalOpen: false,
+      selectedProject: {},
       activeFilter: 'All',
       filters: ['All', 'Web Development', 'UI/UX Design', 'Mobile'],
       projectsData: [
         {
           id: 1,
-          title: 'Weather Web App',
-          description: 'An app to display current weather forecasts using an open-source API with an intuitive and responsive interface.',
-          imageUrl: 'https://images.unsplash.com/photo-1585210159781-76a1b7a27a6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
+          title: 'System Monitoring Update at PT. JICT',
+          description: 'Professional internship project involving comprehensive updates to the GBOSS/MyJICT monitoring system, focusing on frontend improvements, enhanced user experience, and modern interface design.',
+          imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
-          tags: ['Vue.js', 'API', 'CSS', 'Weather'],
-          category: 'Web Development'
+          tags: ['Frontend Development', 'UI/UX Enhancement', 'System Monitoring', 'User Experience'],
+          category: 'Web Development',
+          features: [
+            'Modernized user interface for better usability',
+            'Enhanced system monitoring capabilities',
+            'Improved user experience flow',
+            'Responsive design implementation',
+            'Performance optimization',
+            'Integration with existing GBOSS infrastructure'
+          ],
+          challenges: 'Working with legacy systems while implementing modern frontend practices and ensuring seamless integration with existing workflows at a major port terminal company.',
+          duration: 'Internship Period',
+          team: 'Development Team at PT. JICT',
+          role: 'Frontend Web Developer Intern'
         },
         {
           id: 2,
-          title: 'Task Management System',
-          description: 'A platform to manage team daily tasks with drag-and-drop features, real-time notifications, and an analytics dashboard.',
+          title: 'Teaching Plotting Information System',
+          description: 'Comprehensive final project involving the complete design and development of an information system for teaching assignment plotting, utilizing User-Centered Design (UCD) methodology.',
           imageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
-          tags: ['React', 'Node.js', 'Socket.IO'],
-          category: 'Web Development'
+          github: '#',
+          tags: ['System Design', 'UCD Methodology', 'Information System', 'Final Project'],
+          category: 'Web Development',
+          features: [
+            'Complete system architecture design',
+            'User-Centered Design implementation',
+            'Teaching assignment management',
+            'Automated plotting algorithms',
+            'Comprehensive user interface',
+            'Database design and optimization'
+          ],
+          challenges: 'Designing a comprehensive system from proposal to implementation while ensuring it meets real-world educational institution requirements and follows UCD principles.',
+          duration: 'Final Project Timeline',
+          team: 'Academic Project Team',
+          role: 'System Designer & UI/UX Lead'
         },
         {
           id: 3,
-          title: 'Startup Landing Page Design',
-          description: 'Modern, high-conversion UI/UX design for an AI technology startup focused on exceptional user experience.',
+          title: 'UI/UX Design for Chevalier LAB',
+          description: 'Professional UI/UX design project for Chevalier LAB, creating comprehensive designs for Learning Management System (LMS) and coffee shop application with modern, user-friendly interfaces.',
           imageUrl: 'https://images.unsplash.com/photo-1559028006-44a10e643c68?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
-          tags: ['Figma', 'UI/UX', 'Design', 'Web'],
-          category: 'UI/UX Design'
+          tags: ['UI/UX Design', 'LMS Design', 'Mobile App', 'Figma', 'Design System'],
+          category: 'UI/UX Design',
+          features: [
+            'Complete LMS interface design',
+            'Coffee shop mobile app design',
+            'Design system development',
+            'User journey mapping',
+            'Interactive prototyping',
+            'Cross-platform design consistency'
+          ],
+          challenges: 'Creating intuitive designs for both educational and commercial applications while maintaining consistency across different platforms and user types.',
+          duration: 'Client Project Timeline',
+          team: 'Chevalier LAB Design Team',
+          role: 'Lead UI/UX Designer'
         },
         {
           id: 4,
-          title: 'E-commerce Fashion',
-          description: 'A complete e-commerce platform with payment integration, inventory management, and product recommendation system.',
-          imageUrl: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
+          title: 'Cardiovascular Detection System with AI',
+          description: 'Advanced artificial intelligence project focused on cardiovascular disease detection, showcasing expertise in AI integration, medical technology, and complex system design.',
+          imageUrl: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
-          tags: ['Vue.js', 'Vuetify', 'Stripe'],
-          category: 'Web Development'
+          github: '#',
+          tags: ['Artificial Intelligence', 'Healthcare Tech', 'Machine Learning', 'Medical Detection'],
+          category: 'Web Development',
+          features: [
+            'AI-powered cardiovascular analysis',
+            'Medical data processing',
+            'Real-time detection algorithms',
+            'Healthcare-compliant interface',
+            'Data visualization for medical professionals',
+            'Integration with medical devices'
+          ],
+          challenges: 'Developing a highly accurate AI system for medical applications while ensuring compliance with healthcare standards and creating an intuitive interface for medical professionals.',
+          duration: 'Research Project Timeline',
+          team: 'AI Research Team',
+          role: 'AI Developer & Interface Designer'
         },
         {
           id: 5,
-          title: 'Mobile Banking App Design',
-          description: 'Interface design for a mobile banking app focused on security, accessibility, and user-friendly design.',
-          imageUrl: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
+          title: 'Mobile App "Rent-It"',
+          description: 'Comprehensive mobile application development project for rental services, demonstrating cross-platform development skills and mobile-first design approach.',
+          imageUrl: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
-          tags: ['Mobile Design', 'Figma', 'Prototyping'],
-          category: 'Mobile'
+          github: '#',
+          tags: ['Mobile Development', 'Cross-platform', 'Rental System', 'Mobile UI'],
+          category: 'Mobile',
+          features: [
+            'Cross-platform mobile application',
+            'Rental booking system',
+            'Payment integration',
+            'User authentication',
+            'Real-time availability tracking',
+            'Push notifications'
+          ],
+          challenges: 'Creating a seamless rental experience across different mobile platforms while implementing secure payment processing and real-time inventory management.',
+          duration: 'Mobile Project Timeline',
+          team: 'Mobile Development Team',
+          role: 'Mobile Developer & UI Designer'
         },
         {
           id: 6,
-          title: 'Dashboard Analytics',
-          description: 'A comprehensive dashboard for business data monitoring and analysis with interactive, real-time visualizations.',
-          imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
+          title: 'Design & Prototype for "DetectMe" Project',
+          description: 'End-to-end design project encompassing complete UI/UX design, prototyping, and asset creation for the DetectMe application, demonstrating full design process expertise.',
+          imageUrl: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
-          tags: ['Vue.js', 'D3.js', 'Analytics'],
-          category: 'Web Development'
+          tags: ['UI/UX Design', 'Prototyping', 'Design Assets', 'Complete Design Process'],
+          category: 'UI/UX Design',
+          features: [
+            'Complete UI/UX design system',
+            'Interactive prototypes',
+            'Development-ready assets',
+            'User research integration',
+            'Design documentation',
+            'Handoff to development team'
+          ],
+          challenges: 'Managing the complete design process from concept to development handoff while ensuring design consistency and creating comprehensive documentation for seamless development implementation.',
+          duration: 'Design Project Timeline',
+          team: 'Design & Development Team',
+          role: 'Lead Designer & Design Process Manager'
         }
       ]
     };
@@ -133,44 +272,18 @@ export default {
       }
       return this.projectsData.filter(project => project.category === this.activeFilter);
     },
-    headerParallaxStyle() {
-      return {
-        transform: `translateY(${this.scrollY * -0.2}px)`
-      };
+    uniqueCategories() {
+      return new Set(this.projectsData.map(p => p.category)).size;
     },
-    projectsParallaxStyle() {
-      return {
-        transform: `translateY(${this.scrollY * -0.1}px)`
-      };
-    },
-    shape1Style() {
-      return {
-        transform: `translate(${this.scrollY * 0.1}px, ${this.scrollY * 0.15}px) rotate(${this.scrollY * 0.05}deg)`
-      };
-    },
-    shape2Style() {
-      return {
-        transform: `translate(${this.scrollY * -0.08}px, ${this.scrollY * 0.12}px) rotate(${this.scrollY * -0.03}deg)`
-      };
-    },
-    shape3Style() {
-      return {
-        transform: `translate(${this.scrollY * 0.06}px, ${this.scrollY * -0.1}px) rotate(${this.scrollY * 0.02}deg)`
-      };
+    totalTags() {
+      const allTags = this.projectsData.flatMap(p => p.tags);
+      return new Set(allTags).size;
     }
   },
   mounted() {
-    window.addEventListener('scroll', this.handleScroll);
     this.initAnimations();
   },
-  beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  },
   methods: {
-    handleScroll() {
-      this.scrollY = window.scrollY;
-      this.showScrollIndicator = window.scrollY < 100;
-    },
     setFilter(filter) {
       this.activeFilter = filter;
       this.projectsVisible = false;
@@ -178,10 +291,37 @@ export default {
         this.projectsVisible = true;
       }, 150);
     },
+    getBentoClass(index) {
+      // Simplified pattern for better reliability
+      const patterns = ['normal', 'wide', 'normal', 'large', 'normal', 'tall'];
+      return patterns[index % patterns.length] || 'normal';
+    },
     getProjectStyle(index) {
       return {
         animationDelay: `${index * 0.1}s`
       };
+    },
+    openProject(project) {
+      // This method is kept for backward compatibility but now opens modal
+      this.openModal(project);
+    },
+    openModal(project) {
+      this.selectedProject = project;
+      this.modalOpen = true;
+    },
+    closeModal() {
+      this.modalOpen = false;
+      this.selectedProject = {};
+    },
+    openExternal(link) {
+      if (link && link !== '#') {
+        window.open(link, '_blank', 'noopener,noreferrer');
+      }
+    },
+    trackDownload() {
+      // Optional: Add analytics tracking for CV downloads
+      console.log('CV downloaded at:', new Date().toISOString());
+      // You can add Google Analytics or other tracking here
     },
     initAnimations() {
       setTimeout(() => this.titleVisible = true, 200);
@@ -195,102 +335,47 @@ export default {
 
 <style scoped>
 .projects-view {
-  position: relative;
-  max-width: 1200px;
-  margin: 60px auto;
-  padding: 2rem 1.5rem;
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
   min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* Background Elements */
-.background-elements {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.floating-shape {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.08;
-  animation: float 6s ease-in-out infinite;
-}
-
-.shape-1 {
-  width: 200px;
-  height: 200px;
-  background: linear-gradient(45deg, #007bff, #28a745);
-  top: 10%;
-  right: 10%;
-  animation-delay: 0s;
-}
-
-.shape-2 {
-  width: 150px;
-  height: 150px;
-  background: linear-gradient(45deg, #28a745, #ffc107);
-  top: 70%;
-  left: 5%;
-  animation-delay: 2s;
-}
-
-.shape-3 {
-  width: 120px;
-  height: 120px;
-  background: linear-gradient(45deg, #ffc107, #dc3545);
-  top: 40%;
-  left: 15%;
-  animation-delay: 4s;
-}
-
-.grid-pattern {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    linear-gradient(rgba(0, 123, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 123, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: gridMove 20s linear infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33% { transform: translateY(-20px) rotate(5deg); }
-  66% { transform: translateY(10px) rotate(-3deg); }
-}
-
-@keyframes gridMove {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(50px, 50px); }
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 0;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
 }
 
 /* Header Section */
 .header-section {
-  margin-bottom: 60px;
-  transition: transform 0.1s ease-out;
+  padding: 80px 2rem 60px;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  opacity: 0.3;
+}
+
+.header-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .page-title {
-  font-size: 3rem;
-  font-weight: 700;
-  color: #333;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
   margin-bottom: 20px;
-  position: relative;
-  display: inline-block;
-  padding-bottom: 15px;
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s ease;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .page-title.visible {
@@ -298,232 +383,578 @@ export default {
   transform: translateY(0);
 }
 
-.page-title::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 4px;
-  background: linear-gradient(45deg, #007bff, #28a745);
-  border-radius: 2px;
-  animation: lineGrow 1s ease 0.5s forwards;
-  transform-origin: center;
-  scale: 0;
-}
-
-@keyframes lineGrow {
-  to { scale: 1; }
+.title-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #e8f4fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .page-subtitle {
   font-size: 1.2rem;
-  color: #666;
   margin-bottom: 40px;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+  opacity: 0.9;
+  font-weight: 400;
   line-height: 1.6;
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.8s ease;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
 }
 
 .page-subtitle.visible {
-  opacity: 1;
+  opacity: 0.9;
   transform: translateY(0);
 }
 
-/* Filter Buttons */
-.filter-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 40px;
+/* Download CV Section */
+.cv-download-section {
+  margin: 30px 0 40px;
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.8s ease;
-  flex-wrap: wrap;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
 }
 
-.filter-buttons.visible {
+.cv-download-section.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.filter-btn {
-  padding: 12px 24px;
-  border: 2px solid #e9ecef;
-  background-color: white;
-  color: #666;
+.download-cv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
   border-radius: 50px;
-  font-size: 0.9rem;
   font-weight: 600;
-  cursor: pointer;
+  font-size: 1rem;
   transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
   position: relative;
   overflow: hidden;
 }
 
-.filter-btn::before {
+.download-cv-btn::before {
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, #007bff, #28a745);
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
   transition: left 0.3s ease;
   z-index: -1;
 }
 
-.filter-btn:hover {
-  color: white;
-  border-color: #007bff;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+.download-cv-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
 }
 
-.filter-btn:hover::before {
+.download-cv-btn:hover::before {
   left: 0;
 }
 
-.filter-btn.active {
-  background: linear-gradient(45deg, #007bff, #28a745);
-  color: white;
-  border-color: #007bff;
+.download-cv-btn:active {
+  transform: translateY(-1px);
+}
+
+.download-cv-btn i {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.download-cv-btn:hover i {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
 }
 
-/* Projects Grid */
-.project-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 30px;
-  justify-items: center;
-  margin-top: 40px;
-  transition: transform 0.1s ease-out;
-}
-
-.project-wrapper {
+/* Filter Pills */
+.filter-pills {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
   opacity: 0;
-  transform: translateY(50px) scale(0.9);
-  transition: all 0.6s ease;
-  width: 100%;
-  max-width: 400px;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
 }
 
-.project-wrapper.visible {
+.filter-pills.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.filter-pill {
+  padding: 12px 24px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.filter-pill:hover,
+.filter-pill.active {
+  background: white;
+  color: #667eea;
+  border-color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Bento Grid */
+.bento-grid {
+  padding: 60px 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-auto-rows: 400px;
+  gap: 24px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-grid.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Bento Item Sizes */
+.bento-item {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.bento-item.visible {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
 
-.project-wrapper:hover {
-  transform: translateY(-10px) scale(1.02);
+.bento-item.large {
+  grid-column: span 2;
+  grid-row: span 2;
 }
 
-/* Scroll Indicator */
-.scroll-indicator {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
+.bento-item.wide {
+  grid-column: span 2;
+}
+
+.bento-item.tall {
+  grid-row: span 2;
+}
+
+/* Bento Card */
+.bento-card {
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+}
+
+.bento-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Card Image - Increased sizes */
+.card-image {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+.bento-item.large .card-image {
+  height: 320px;
+}
+
+.bento-item.tall .card-image {
+  height: 280px;
+}
+
+.bento-item.wide .card-image {
+  height: 260px;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.bento-card:hover .image-overlay {
+  opacity: 1;
+}
+
+.overlay-content {
+  display: flex;
+  gap: 16px;
+  transform: translateY(10px);
+  transition: transform 0.3s ease;
+}
+
+.bento-card:hover .overlay-content {
+  transform: translateY(0);
+}
+
+.maximize-btn,
+.external-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.maximize-btn:hover,
+.external-btn:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+.maximize-btn i,
+.external-btn i {
+  font-size: 18px;
+  color: #374151;
+}
+
+/* Full Card Overlay */
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.95), rgba(118, 75, 162, 0.95));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(8px);
+  z-index: 2;
+}
+
+.bento-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.overlay-actions {
   text-align: center;
-  color: #666;
-  animation: bounce 2s infinite;
-  z-index: 10;
-  transition: opacity 0.3s ease;
+  transform: translateY(20px);
+  transition: transform 0.4s ease;
 }
 
-.scroll-text {
-  font-size: 0.9rem;
-  margin-bottom: 5px;
+.bento-card:hover .overlay-actions {
+  transform: translateY(0);
 }
 
-.scroll-arrow {
-  font-size: 1.5rem;
-  animation: arrowBounce 1.5s ease-in-out infinite;
+.overlay-maximize-btn {
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 16px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-  40% { transform: translateX(-50%) translateY(-10px); }
-  60% { transform: translateX(-50%) translateY(-5px); }
+.overlay-maximize-btn:hover {
+  background: white;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
-@keyframes arrowBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(10px); }
+.overlay-maximize-btn i {
+  font-size: 18px;
+}
+
+/* Card Content */
+.card-content {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-meta {
+  margin-bottom: 12px;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.project-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.bento-item.large .project-title {
+  font-size: 1.6rem;
+}
+
+.project-description {
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex: 1;
+  font-size: 0.95rem;
+}
+
+/* Project Tags */
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.tag {
+  padding: 6px 12px;
+  background: #f1f5f9;
+  color: #475569;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid #e2e8f0;
+}
+
+.tag-more {
+  padding: 6px 12px;
+  background: #667eea;
+  color: white;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Stats Section */
+.stats-section {
+  padding: 60px 2rem;
+  background: white;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stats-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.stat-label {
+  display: block;
+  color: #64748b;
+  font-weight: 500;
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.875rem;
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+  .bento-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-auto-rows: 380px;
+  }
+  
+  .bento-item.large {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  
+  .bento-item.wide {
+    grid-column: span 1;
+  }
+  
+  .card-image,
+  .bento-item.large .card-image,
+  .bento-item.tall .card-image,
+  .bento-item.wide .card-image {
+    height: 220px;
+  }
+}
+
 @media (max-width: 768px) {
-  .page-title {
-    font-size: 2.2rem;
+  .header-section {
+    padding: 60px 1rem 40px;
   }
   
-  .page-subtitle {
-    font-size: 1rem;
-    padding: 0 20px;
-  }
-  
-  .filter-buttons {
-    gap: 10px;
-    padding: 0 20px;
-  }
-  
-  .filter-btn {
-    padding: 10px 20px;
-    font-size: 0.8rem;
-  }
-  
-  .project-list {
+  .bento-grid {
+    padding: 40px 1rem;
     grid-template-columns: 1fr;
+    grid-auto-rows: 360px;
     gap: 20px;
   }
   
-  .floating-shape {
-    display: none; /* Hide on mobile for better performance */
+  .bento-item.large,
+  .bento-item.wide,
+  .bento-item.tall {
+    grid-column: span 1;
+    grid-row: span 1;
   }
   
-  .grid-pattern {
-    opacity: 0.5;
+  .card-image {
+    height: 200px;
   }
   
-  /* Disable parallax on mobile */
-  .header-section,
-  .project-list {
-    transform: none !important;
+  .bento-item.large .card-image,
+  .bento-item.tall .card-image,
+  .bento-item.wide .card-image {
+    height: 200px;
+  }
+  
+  .stats-section {
+    flex-direction: column;
+    gap: 30px;
+    padding: 40px 1rem;
+  }
+  
+  .filter-pills {
+    gap: 8px;
+  }
+  
+  .filter-pill {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+  
+  .download-cv-btn {
+    padding: 14px 28px;
+    font-size: 0.95rem;
+  }
+  
+  .overlay-maximize-btn {
+    padding: 14px 20px;
+    font-size: 14px;
   }
 }
 
 @media (max-width: 480px) {
-  .projects-view {
-    padding: 1rem;
+  .bento-grid {
+    grid-auto-rows: 340px;
   }
   
-  .page-title {
-    font-size: 1.8rem;
+  .card-content {
+    padding: 20px;
   }
   
-  .filter-buttons {
-    flex-direction: column;
-    align-items: center;
+  .project-title {
+    font-size: 1.2rem;
+  }
+  
+  .project-description {
+    font-size: 0.9rem;
+  }
+  
+  .card-image {
+    height: 180px;
+  }
+  
+  .overlay-maximize-btn {
+    padding: 12px 18px;
+    font-size: 13px;
+    gap: 8px;
+  }
+  
+  .download-cv-btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    gap: 10px;
   }
 }
 
-/* Enhanced animations for modern feel */
-.project-wrapper:nth-child(even) {
-  animation-delay: 0.1s;
+/* Animation keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.project-wrapper:nth-child(3n) {
-  animation-delay: 0.2s;
-}
-
-/* Smooth scrolling enhancement */
+/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
@@ -534,15 +965,15 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #007bff, #28a745);
+  background: linear-gradient(135deg, #667eea, #764ba2);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, #0056b3, #1e7e34);
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
 }
 </style>
