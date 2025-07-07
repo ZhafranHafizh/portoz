@@ -855,41 +855,93 @@ export default {
 }
 
 @media (max-width: 480px) {
-  .page-title {
-    font-size: 2.2rem;
+  .contact-view {
+    padding: 0 2px;
   }
-  
+  .header-section {
+    padding: 1.2rem 0.2rem;
+    min-height: 180px;
+  }
+  .header-content-wrapper {
+    max-width: 99vw;
+    padding: 0 2vw;
+  }
+  .header-badge {
+    font-size: 0.85rem;
+    padding: 7px 14px;
+    margin-bottom: 16px;
+  }
+  .page-title {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
   .page-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+  }
+  .cta-buttons {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .primary-cta, .secondary-cta {
+    width: 100%;
+    max-width: 240px;
+    justify-content: center;
+    font-size: 0.95rem;
+    padding: 10px 0;
+  }
+  .contact-cards-container {
+    padding: 0 2vw;
+  }
+  .section-header h2 {
     font-size: 1.1rem;
   }
-  
+  .section-header p {
+    font-size: 0.92rem;
+  }
+  .contact-card {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
   .contact-item {
-    padding: 20px;
+    padding: 12px 6px;
+    border-radius: 10px;
   }
-  
   .icon-wrapper {
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
   }
-  
   .info-content h3 {
-    font-size: 1.3rem;
+    font-size: 1.05rem;
   }
-  
+  .info-content p {
+    font-size: 0.92rem;
+  }
+  .contact-link {
+    font-size: 0.92rem;
+  }
   .social-floating {
-    padding: 30px 20px;
+    padding: 18px 6px;
+    border-radius: 10px;
+    margin-bottom: 10px;
   }
-  
+  .social-header {
+    font-size: 0.95rem;
+  }
+  .social-title {
+    font-size: 1.05rem;
+  }
   .social-buttons {
-    flex-direction: row;
+    gap: 8px;
     flex-wrap: wrap;
-    gap: 12px;
   }
-}
-
-/* Smooth scrolling for anchor links */
-html {
-  scroll-behavior: smooth;
+  .social-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+  }
 }
 </style>

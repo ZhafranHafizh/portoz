@@ -498,21 +498,74 @@ export default {
 }
 
 @media (max-width: 480px) {
+  .modal-container {
+    max-width: 98vw;
+    width: 98vw;
+    min-width: 0;
+    border-radius: 12px;
+  }
+  .modal-header {
+    top: 8px;
+    right: 8px;
+  }
+  .close-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
   .modal-image-section {
-    height: 250px;
+    height: 120px;
+    border-radius: 10px 10px 0 0;
   }
-  
+  .modal-meta {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+  }
+  .modal-title {
+    font-size: 1.1rem;
+  }
   .modal-details {
-    padding: 24px 20px;
+    padding: 12px 6px;
   }
-  
+  .detail-section {
+    margin-bottom: 18px;
+  }
+  .section-title {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  .modal-description,
+  .challenges-text {
+    font-size: 0.92rem;
+  }
   .tech-stack {
+    gap: 5px;
+  }
+  .tech-tag {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+  .features-list li {
+    font-size: 0.92rem;
+    margin-bottom: 7px;
+  }
+  .project-info-grid {
     gap: 8px;
   }
-  
-  .tech-tag {
-    padding: 6px 12px;
-    font-size: 0.8rem;
+  .info-item {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+  .modal-actions {
+    gap: 8px;
+    margin-top: 18px;
+    padding-top: 18px;
+  }
+  .action-btn {
+    font-size: 0.95rem;
+    padding: 8px 12px;
+    border-radius: 8px;
   }
 }
 

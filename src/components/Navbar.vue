@@ -3,7 +3,12 @@
     <div class="brand">
       <router-link to="/">Porto<strong>Z</strong></router-link>
     </div>
-    <ul class="nav-links">
+    <button class="hamburger" @click="toggleMenu" :aria-expanded="menuOpen.toString()" aria-label="Toggle navigation">
+      <span :class="{ 'open': menuOpen }"></span>
+      <span :class="{ 'open': menuOpen }"></span>
+      <span :class="{ 'open': menuOpen }"></span>
+    </button>
+    <ul class="nav-links" :class="{ 'open': menuOpen }">
       <li><router-link to="/">Home</router-link></li>
       <li><router-link to="/about">About Me</router-link></li>
       <li><router-link to="/projects">Project</router-link></li>
@@ -22,6 +27,16 @@ export default {
   name: 'TheNavbar',
   components: {
     DarkModeToggle
+  },
+  data() {
+    return {
+      menuOpen: false
+    }
+  },
+  methods: {
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+    }
   }
 }
 </script>
@@ -145,13 +160,102 @@ export default {
   width: 100%; /* Garis bawah muncul penuh */
 }
 
-/* Responsif (Contoh sederhana untuk hamburger menu, butuh JS tambahan) */
-/*
-@media (max-width: 768px) {
-  .nav-links {
-    display: none; // Sembunyikan link di mobile, ganti dengan hamburger
-  }
-  // Anda perlu menambahkan tombol hamburger dan logika untuk menampilkannya
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 38px;
+  height: 38px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1200;
+  margin-left: 10px;
 }
-*/
+.hamburger span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  margin: 4px 0;
+  background: #333;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.dark-theme .hamburger span {
+  background: #e4e4e7;
+}
+.hamburger span.open:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger span.open:nth-child(2) {
+  opacity: 0;
+}
+.hamburger span.open:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    padding: 1rem 1.2rem;
+  }
+  .brand a {
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.7rem 0.5rem;
+  }
+  .brand a {
+    font-size: 1.1rem;
+  }
+  .nav-actions {
+    margin-left: 0;
+  }
+  .hamburger {
+    display: flex;
+  }
+  .nav-links {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    left: 0;
+    background: #fff;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 1.5rem 0 2rem 0;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    z-index: 1100;
+    display: none;
+    transition: all 0.3s;
+  }
+  .dark-theme .nav-links {
+    background: #1a1a2e;
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .nav-links li {
+    margin: 0.7rem 0;
+  }
+  .nav-links a {
+    font-size: 1.1rem;
+    padding: 10px 0;
+  }
+}
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.5rem 0.2rem;
+  }
+  .brand a {
+    font-size: 1rem;
+  }
+  .nav-links {
+    top: 48px;
+    padding: 1rem 0 1.5rem 0;
+  }
+}
 </style>

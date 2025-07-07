@@ -212,6 +212,36 @@ export default {
   .hero-subtitle { font-size: 1.3rem; }
   .profile-pic { width: 150px; height: 150px; }
   .cta-button { padding: 12px 25px; font-size: 1rem; }
+  .hero { padding: 1.5rem; }
 }
 
+@media (max-width: 480px) {
+  .home-view {
+    padding: 16px 4px;
+  }
+  .hero {
+    padding: 1rem;
+    border-radius: 10px;
+    max-width: 98vw;
+  }
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+    border-width: 3px;
+  }
+  .hero-title {
+    font-size: 1.3rem;
+  }
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+  .hero-description {
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+  }
+  .cta-button {
+    padding: 10px 16px;
+    font-size: 0.95rem;
+  }
+}
 </style>

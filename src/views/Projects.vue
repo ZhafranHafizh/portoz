@@ -893,90 +893,84 @@ export default {
 
 @media (max-width: 768px) {
   .header-section {
-    padding: 60px 1rem 40px;
+    padding: 1.2rem 0.5rem;
   }
-  
-  .bento-grid {
-    padding: 40px 1rem;
-    grid-template-columns: 1fr;
-    grid-auto-rows: 360px;
-    gap: 20px;
+  .page-title {
+    font-size: 2rem;
   }
-  
-  .bento-item.large,
-  .bento-item.wide,
-  .bento-item.tall {
-    grid-column: span 1;
-    grid-row: span 1;
+  .page-subtitle {
+    font-size: 1.1rem;
   }
-  
-  .card-image {
-    height: 200px;
+  .cv-download-section {
+    margin-bottom: 1.2rem;
   }
-  
-  .bento-item.large .card-image,
-  .bento-item.tall .card-image,
-  .bento-item.wide .card-image {
-    height: 200px;
-  }
-  
-  .stats-section {
-    flex-direction: column;
-    gap: 30px;
-    padding: 40px 1rem;
-  }
-  
   .filter-pills {
+    flex-wrap: wrap;
     gap: 8px;
+    margin-bottom: 1.2rem;
   }
-  
   .filter-pill {
-    padding: 10px 20px;
-    font-size: 0.85rem;
-  }
-  
-  .download-cv-btn {
-    padding: 14px 28px;
     font-size: 0.95rem;
+    padding: 7px 16px;
   }
-  
-  .overlay-maximize-btn {
-    padding: 14px 20px;
-    font-size: 14px;
+  .bento-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding: 0 4px;
+  }
+  .bento-card {
+    padding: 12px 8px;
+    border-radius: 12px;
+  }
+  .card-image {
+    height: 120px;
   }
 }
 
 @media (max-width: 480px) {
-  .bento-grid {
-    grid-auto-rows: 340px;
+  .header-section {
+    padding: 0.7rem 0.2rem;
   }
-  
-  .card-content {
-    padding: 20px;
+  .header-content {
+    padding: 0 2vw;
   }
-  
-  .project-title {
+  .page-title {
     font-size: 1.2rem;
   }
-  
-  .project-description {
-    font-size: 0.9rem;
+  .page-subtitle {
+    font-size: 0.95rem;
   }
-  
-  .card-image {
-    height: 180px;
+  .cv-download-section {
+    margin-bottom: 0.7rem;
   }
-  
-  .overlay-maximize-btn {
-    padding: 12px 18px;
-    font-size: 13px;
-    gap: 8px;
+  .filter-pills {
+    gap: 6px;
+    margin-bottom: 0.7rem;
   }
-  
-  .download-cv-btn {
-    padding: 12px 24px;
-    font-size: 0.9rem;
+  .filter-pill {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    border-radius: 16px;
+  }
+  .bento-grid {
+    grid-template-columns: 1fr;
     gap: 10px;
+    padding: 0 2px;
+  }
+  .bento-card {
+    padding: 8px 4px;
+    border-radius: 8px;
+  }
+  .card-image {
+    height: 90px;
+  }
+  .project-description {
+    font-size: 0.85rem;
+  }
+  .stats-section {
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.9rem;
   }
 }
 

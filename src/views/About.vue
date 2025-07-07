@@ -582,4 +582,98 @@ export default {
     transform: none !important;
   }
 }
+
+@media (max-width: 480px) {
+  .about-me-section {
+    padding: 1rem 0.3rem;
+    border-radius: 8px;
+    margin-bottom: 36px;
+  }
+  .about-me-section h1 {
+    font-size: 1.3rem;
+    margin-bottom: 18px;
+  }
+  .content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .about-pic {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+  }
+  .text {
+    max-width: 98vw;
+    font-size: 0.95rem;
+  }
+  .text p {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+  }
+  .timeline-section {
+    padding: 1rem 0.2rem;
+    border-radius: 8px;
+    margin-top: 30px;
+  }
+  .section-title {
+    font-size: 1.1rem;
+    margin-bottom: 24px;
+    padding-bottom: 4px;
+  }
+  .section-title::after {
+    width: 36px;
+    height: 2px;
+  }
+  .timeline {
+    padding: 0;
+    max-width: 99vw;
+  }
+  .timeline::before {
+    left: 18px;
+    width: 2px;
+  }
+  .timeline-item {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 22px;
+  }
+  .timeline-marker {
+    left: 18px;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    border-width: 2px;
+    box-shadow: 0 0 0 2px #fff;
+  }
+  .timeline-year {
+    font-size: 0.7rem;
+  }
+  .timeline-content {
+    margin-left: 32px;
+    width: calc(93vw - 72px);
+    max-width: calc(100vw - 72px);
+    min-width: 0;
+    padding: 10px 3vw;
+    font-size: 0.89rem;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .timeline-content ul,
+  .timeline-content li {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 0.89rem;
+  }
+  .progress-badge {
+    font-size: 0.7rem;
+    padding: 5px 10px;
+  }
+}
 </style>

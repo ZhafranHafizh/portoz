@@ -145,4 +145,25 @@ export default {
     justify-content: flex-end;
   }
 }
+
+@media (max-width: 480px) {
+  .app-footer {
+    padding: 1rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  .footer-content {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .copyright {
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  .social-links {
+    gap: 1rem;
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+}
 </style>
