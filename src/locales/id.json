@@ -3,6 +3,7 @@
     "home": "Beranda",
     "about": "Tentang Saya",
     "projects": "Proyek",
+    "gallery": "Galeri",
     "contact": "Kontak"
   },
   "home": {
@@ -14,5 +15,20 @@
   "projects": {
       "title": "Proyek Saya",
       "subtitle": "Berikut adalah beberapa proyek yang telah saya kerjakan."
+  },
+  "gallery": {
+    "title": "Galeri",
+    "subtitle": "Showcase visual dari karya kreatif dan perjalanan desain saya",
+    "categories": {
+      "all": "Semua",
+      "ui_ux": "UI/UX",
+      "web_design": "Desain Web",
+      "mobile_app": "Aplikasi Mobile",
+      "branding": "Branding"
+    },
+    "emptyState": {
+      "title": "Segera Hadir",
+      "description": "Gambar galeri akan segera ditambahkan. Nantikan!"
+    }
   }
 }

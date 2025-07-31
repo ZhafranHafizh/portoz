@@ -3,6 +3,7 @@
     "home": "Home",
     "about": "About Me",
     "projects": "Projects",
+    "gallery": "Gallery",
     "contact": "Contact"
   },
   "home": {
@@ -14,6 +15,21 @@
   "projects": {
       "title": "My Projects",
       "subtitle": "Here are some of the projects I've worked on."
+  },
+  "gallery": {
+    "title": "Gallery",
+    "subtitle": "A visual showcase of my creative work and design journey",
+    "categories": {
+      "all": "All",
+      "ui_ux": "UI/UX",
+      "web_design": "Web Design",
+      "mobile_app": "Mobile App",
+      "branding": "Branding"
+    },
+    "emptyState": {
+      "title": "Coming Soon",
+      "description": "Gallery images will be added soon. Stay tuned!"
+    }
   }
 
 }
