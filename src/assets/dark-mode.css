@@ -614,3 +614,25 @@ body.dark-theme .modal-content::-webkit-scrollbar-track {
 body.dark-theme .modal-content::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #2563eb, #60a5fa) !important;
 }
+
+/* Mode terang */
+body.light-mode {
+    background-color: #ffffff; /* Warna latar belakang putih */
+    color: #000000; /* Warna teks hitam */
+}
+
+/* Tambahkan aturan khusus untuk teks "Gallery" */
+body.light-mode .gallery-title {
+    color: #333333; /* Warna teks abu-abu gelap untuk kontras lebih baik */
+}
+
+/* Mode gelap */
+body.dark-mode {
+    background-color: #121212; /* Warna latar belakang gelap */
+    color: #ffffff; /* Warna teks putih */
+}
+
+/* Tambahkan aturan khusus untuk teks "Gallery" */
+body.dark-mode .gallery-title {
+    color: #ffffff; /* Warna teks putih */
+}

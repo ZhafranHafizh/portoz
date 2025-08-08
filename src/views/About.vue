@@ -1,7 +1,7 @@
 <template>
   <div class="about-view">
     <!-- Background parallax elements -->
-    <div class="parallax-bg" :style="backgroundParallaxStyle"></div>
+    <div class="parallax-bg"></div>
     <div class="parallax-shapes">
       <div class="shape shape-1" :style="shape1ParallaxStyle"></div>
       <div class="shape shape-2" :style="shape2ParallaxStyle"></div>
@@ -58,6 +58,7 @@ export default {
   data() {
     return {
       scrollY: 0,
+      ticking: false, // Untuk throttling scroll event
       timelineData: [
         {
           year: '2021',
@@ -108,55 +109,58 @@ export default {
   },
   methods: {
     handleScroll() {
-      this.scrollY = window.scrollY;
+      // Throttle scroll event untuk performa yang lebih baik
+      if (this.ticking) return;
+      
+      requestAnimationFrame(() => {
+        this.scrollY = window.scrollY;
+        this.ticking = false;
+      });
+      
+      this.ticking = true;
     },
     getTimelineItemStyle(index) {
-      const offset = index * 50; // Stagger each timeline item
+      const offset = index * 50;
       return {
-        transform: `translateY(${(this.scrollY - offset) * -0.1}px)`,
+        transform: `translateY(${(this.scrollY - offset) * -0.02}px)`,
         transition: 'transform 0.1s ease-out'
       };
     }
   },
   computed: {
-    backgroundParallaxStyle() {
-      return {
-        transform: `translateY(${this.scrollY * 0.5}px)`
-      };
-    },
     shape1ParallaxStyle() {
       return {
-        transform: `translate(${this.scrollY * 0.2}px, ${this.scrollY * 0.3}px) rotate(${this.scrollY * 0.1}deg)`
+        transform: `translate(${this.scrollY * 0.1}px, ${this.scrollY * 0.15}px) rotate(${this.scrollY * 0.05}deg)`
       };
     },
     shape2ParallaxStyle() {
       return {
-        transform: `translate(${this.scrollY * -0.15}px, ${this.scrollY * 0.25}px) rotate(${this.scrollY * -0.08}deg)`
+        transform: `translate(${this.scrollY * -0.08}px, ${this.scrollY * 0.12}px) rotate(${this.scrollY * -0.04}deg)`
       };
     },
     shape3ParallaxStyle() {
       return {
-        transform: `translate(${this.scrollY * 0.1}px, ${this.scrollY * -0.2}px) rotate(${this.scrollY * 0.05}deg)`
+        transform: `translate(${this.scrollY * 0.05}px, ${this.scrollY * -0.1}px) rotate(${this.scrollY * 0.03}deg)`
       };
     },
     aboutSectionParallaxStyle() {
       return {
-        transform: `translateY(${this.scrollY * -0.2}px)`
+        transform: `translateY(${this.scrollY * -0.05}px)`
       };
     },
     imageParallaxStyle() {
       return {
-        transform: `translateY(${this.scrollY * -0.15}px)`
+        transform: `translateY(${this.scrollY * -0.03}px)`
       };
     },
     textParallaxStyle() {
       return {
-        transform: `translateY(${this.scrollY * -0.1}px)`
+        transform: `translateY(${this.scrollY * -0.02}px)`
       };
     },
     timelineParallaxStyle() {
       return {
-        transform: `translateY(${this.scrollY * -0.05}px)`
+        transform: `translateY(${this.scrollY * -0.01}px)`
       };
     }
   }
@@ -173,6 +177,7 @@ export default {
   padding: 2rem 1.5rem;
   font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 /* Dark mode styles */
@@ -187,10 +192,10 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(40, 167, 69, 0.05) 100%);
   z-index: -2;
-  transition: transform 0.1s ease-out;
+  /* Hapus transition transform karena tidak diperlukan */
 }
 
 .parallax-shapes {
@@ -198,16 +203,18 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   z-index: -1;
   pointer-events: none;
+  overflow: hidden;
 }
 
 .shape {
   position: absolute;
   border-radius: 50%;
-  opacity: 0.1;
+  opacity: 0.08;
   transition: transform 0.1s ease-out;
+  will-change: transform;
 }
 
 .shape-1 {
@@ -547,6 +554,11 @@ export default {
 
 /* Penyesuaian untuk layar kecil */
 @media (max-width: 768px) {
+  .parallax-bg {
+    position: absolute; /* Ubah dari fixed ke absolute */
+    height: 100%;
+  }
+  
   .parallax-shapes {
     display: none; /* Hide decorative shapes on mobile for better performance */
   }
