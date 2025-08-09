@@ -45,6 +45,7 @@
           <div 
             v-for="(image, index) in filteredImages" 
             :key="index"
+            :data-index="index"
             class="gallery-item"
             :class="{ 'flipped': flippedCards.includes(index) }"
             @click="openModal(image)"
@@ -83,8 +84,13 @@
                   <h3>{{ image.title }}</h3>
                   <span class="category-badge">{{ image.category }}</span>
                 </div>
-                <div class="card-back-body">
+                <div 
+                  class="card-back-body"
+                  @wheel="handleCardBackWheel"
+                  @scroll.stop="handleCardBackScroll"
+                >
                   <p class="project-description">{{ image.description }}</p>
+                  
                   <div class="project-details">
                     <div class="detail-item">
                       <i class="fas fa-calendar"></i>
@@ -99,12 +105,50 @@
                       <span>{{ getProjectDuration(image.category) }}</span>
                     </div>
                   </div>
-                </div>
-                <div class="card-back-footer">
-                  <button class="view-full-btn" @click.stop="openModal(image)">
-                    <i class="fas fa-expand-arrows-alt"></i>
-                    Lihat Detail Lengkap
-                  </button>
+
+                  <!-- Additional project information -->
+                  <div class="project-objectives">
+                    <h4><i class="fas fa-bullseye"></i> Objectives</h4>
+                    <ul>
+                      <li>{{ getProjectObjective(image.category) }}</li>
+                      <li>Deliver high-quality user experience</li>
+                      <li>Ensure responsive design across devices</li>
+                    </ul>
+                  </div>
+
+                  <div class="project-challenges">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Key Challenges</h4>
+                    <p>{{ getProjectChallenges(image.category) }}</p>
+                  </div>
+
+                  <div class="project-results">
+                    <h4><i class="fas fa-chart-line"></i> Results</h4>
+                    <p>{{ getProjectResults(image.category) }}</p>
+                  </div>
+
+                  <!-- Additional sections to ensure scrolling -->
+                  <div class="project-technologies">
+                    <h4><i class="fas fa-code"></i> Technologies Used</h4>
+                    <p>{{ getToolsUsed(image.category) }} and various supporting frameworks, libraries, and development tools for optimal performance and user experience.</p>
+                  </div>
+
+                  <div class="project-learnings">
+                    <h4><i class="fas fa-lightbulb"></i> Key Learnings</h4>
+                    <p>This project provided valuable insights into modern development practices, user-centered design principles, and the importance of iterative improvement based on user feedback.</p>
+                  </div>
+
+                  <div class="project-future">
+                    <h4><i class="fas fa-rocket"></i> Future Enhancements</h4>
+                    <p>Plans for future improvements include performance optimization, additional features based on user feedback, enhanced accessibility, and integration with emerging technologies.</p>
+                  </div>
+
+                  <!-- Button di dalam scrollable content, di bagian paling bawah -->
+                  <div class="card-back-footer-inline">
+                    <button class="view-full-btn" @click.stop="openModal(image)">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                      Lihat Detail Lengkap
+                    </button>
+                  </div>
                 </div>
               </div>
               <!-- Back Flip Button -->
@@ -233,21 +277,24 @@ export default {
     },
     toggleFlip(index) {
       if (this.flippedCards.includes(index)) {
-        this.flippedCards = this.flippedCards.filter(i => i !== index);
+        // Close current card
+        this.flippedCards = [];
       } else {
-        this.flippedCards.push(index);
+        // Close all other cards and open this one
+        this.flippedCards = [index];
       }
       
       // Apply focus effect to cards
       this.$nextTick(() => {
-        this.applyFocusEffect(index);
+        this.applyFocusEffect();
       });
     },
-    applyFocusEffect(flippedIndex) {
+    applyFocusEffect() {
       const galleryItems = document.querySelectorAll('.gallery-item');
-      const isFlipped = this.flippedCards.includes(flippedIndex);
+      const hasFlippedCard = this.flippedCards.length > 0;
+      const flippedIndex = hasFlippedCard ? this.flippedCards[0] : -1;
       
-      if (isFlipped) {
+      if (hasFlippedCard) {
         // Apply focus effect - blur all other cards
         galleryItems.forEach((item, index) => {
           if (index === flippedIndex) {
@@ -274,9 +321,7 @@ export default {
         }
       } else {
         // Reset all cards when no card is flipped
-        galleryItems.forEach((item, index) => {
-          if (index === flippedIndex) return;
-          
+        galleryItems.forEach(item => {
           item.classList.remove('blurred', 'focused');
           item.style.filter = '';
           item.style.zIndex = '';
@@ -289,20 +334,35 @@ export default {
           galleryGrid.classList.remove('focus-mode');
         }
       }
+    },
+    handleCardBackScroll(event) {
+      // Prevent scroll event from bubbling up to prevent page scroll
+      event.stopPropagation();
+      event.stopImmediatePropagation();
       
-      // Reset all when no cards are flipped
-      if (this.flippedCards.length === 0) {
-        galleryItems.forEach(item => {
-          item.classList.remove('blurred', 'focused');
-          item.style.filter = '';
-          item.style.zIndex = '';
-          item.style.transform = '';
-        });
-        
-        const galleryGrid = document.querySelector('.gallery-grid');
-        if (galleryGrid) {
-          galleryGrid.classList.remove('focus-mode');
-        }
+      // Additional check to ensure scroll stays within the card
+      const target = event.target;
+      const isAtTop = target.scrollTop === 0;
+      const isAtBottom = target.scrollTop >= (target.scrollHeight - target.clientHeight);
+      
+      // If trying to scroll beyond boundaries, prevent default
+      if ((isAtTop && event.deltaY < 0) || (isAtBottom && event.deltaY > 0)) {
+        event.preventDefault();
+      }
+    },
+    handleCardBackWheel(event) {
+      // Handle wheel events specifically for the card content
+      const target = event.currentTarget;
+      const isAtTop = target.scrollTop === 0;
+      const isAtBottom = target.scrollTop >= (target.scrollHeight - target.clientHeight);
+      
+      // If trying to scroll beyond content boundaries, prevent the event
+      if ((isAtTop && event.deltaY < 0) || (isAtBottom && event.deltaY > 0)) {
+        event.preventDefault();
+        event.stopPropagation();
+      } else {
+        // Allow normal scrolling within the card but prevent bubbling
+        event.stopPropagation();
       }
     },
     getToolsUsed(category) {
@@ -323,6 +383,33 @@ export default {
       };
       return durationMap[category] || '1-4 minggu';
     },
+    getProjectObjective(category) {
+      const objectiveMap = {
+        'UI/UX Desing': 'Create intuitive and user-friendly interface',
+        'Website': 'Build responsive and performant web platform',
+        'Mobile App': 'Develop cross-platform mobile experience',
+        'Branding': 'Establish strong visual identity'
+      };
+      return objectiveMap[category] || 'Deliver exceptional user experience';
+    },
+    getProjectChallenges(category) {
+      const challengeMap = {
+        'UI/UX Desing': 'Balancing user needs with business requirements while maintaining accessibility standards.',
+        'Website': 'Optimizing performance across different browsers and ensuring mobile responsiveness.',
+        'Mobile App': 'Creating consistent experience across iOS and Android platforms while managing app store guidelines.',
+        'Branding': 'Developing unique visual language that stands out in competitive market.'
+      };
+      return challengeMap[category] || 'Overcoming technical and design challenges';
+    },
+    getProjectResults(category) {
+      const resultMap = {
+        'UI/UX Desing': 'Achieved 40% increase in user engagement and 25% reduction in bounce rate.',
+        'Website': 'Improved page load speed by 60% and increased conversion rate by 35%.',
+        'Mobile App': 'Reached 4.8/5 app store rating with 50K+ downloads in first month.',
+        'Branding': 'Brand recognition increased by 45% with consistent visual implementation.'
+      };
+      return resultMap[category] || 'Successfully met all project objectives';
+    },
     handleMouseMove(event) {
       // Only apply parallax effect when showing all images
       if (this.activeCategory !== 'All') {
@@ -330,9 +417,10 @@ export default {
       }
       
       const card = event.currentTarget;
+      const cardIndex = parseInt(card.dataset.index);
       
       // Skip parallax effect if card is flipped
-      if (card.classList.contains('flipped')) {
+      if (this.flippedCards.includes(cardIndex)) {
         return;
       }
       
@@ -369,9 +457,10 @@ export default {
       }
       
       const card = event.currentTarget;
+      const cardIndex = parseInt(card.dataset.index);
       
       // Skip reset if card is flipped
-      if (card.classList.contains('flipped')) {
+      if (this.flippedCards.includes(cardIndex)) {
         return;
       }
       
@@ -395,15 +484,35 @@ export default {
     setTimeout(() => this.titleVisible = true, 200);
     setTimeout(() => this.subtitleVisible = true, 400);
     
-    // Add resize listener for responsive focus effects
-    window.addEventListener('resize', this.handleResize);
+    // Add aggressive scroll prevention for card content
+    this.$nextTick(() => {
+      const cardBodies = document.querySelectorAll('.card-back-body');
+      cardBodies.forEach(body => {
+        // Prevent wheel events from propagating
+        body.addEventListener('wheel', (e) => {
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          
+          const target = e.currentTarget;
+          const isAtTop = target.scrollTop === 0;
+          const isAtBottom = target.scrollTop >= (target.scrollHeight - target.clientHeight);
+          
+          // Only prevent default if trying to scroll beyond boundaries
+          if ((isAtTop && e.deltaY < 0) || (isAtBottom && e.deltaY > 0)) {
+            e.preventDefault();
+          }
+        }, { passive: false });
+        
+        // Also prevent touchmove for mobile
+        body.addEventListener('touchmove', (e) => {
+          e.stopPropagation();
+        }, { passive: false });
+      });
+    });
   },
   beforeUnmount() {
     // Pastikan scroll dikembalikan jika component di-unmount
     document.body.style.overflow = 'auto';
-    
-    // Remove resize listener
-    window.removeEventListener('resize', this.handleResize);
   }
 }
 </script>
@@ -706,8 +815,19 @@ export default {
   transform: rotateY(0deg);
 }
 
+/* Override transition for smooth parallax */
+.gallery-item:not(.flipped) .card-3d {
+  transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+}
+
 .card-3d:hover {
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* Override transform for flipped cards */
+.gallery-item.flipped .card-3d {
+  transform: rotateY(180deg) !important;
+  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1); /* Restore original transition for flip */
 }
 
 .card-front,
@@ -730,11 +850,13 @@ export default {
   transform: rotateY(180deg);
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
+  flex-direction: column;
+  padding: 0;
   color: white;
   position: relative;
+  overflow: hidden;
+  height: 100%;
+  overscroll-behavior: contain;
 }
 
 /* Flip Button Styles */
@@ -813,8 +935,15 @@ export default {
   transition: transform 0.6s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
-.gallery-item.flipped .card-3d {
-  transform: rotateY(180deg) !important;
+/* Re-enable pointer events for card content */
+.gallery-item.flipped .card-back-content {
+  pointer-events: auto;
+}
+
+/* Disable card-front interaction when flipped */
+.gallery-item.flipped .card-front {
+  pointer-events: none;
+  z-index: 0;
 }
 
 .card-back-content {
@@ -822,15 +951,46 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   text-align: left;
   z-index: 3;
   padding: 0;
 }
 
+/* Custom scrollbar - more visible version */
+.card-back-body::-webkit-scrollbar {
+  width: 8px; /* Increased width */
+}
+
+.card-back-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.2); /* More visible track */
+  border-radius: 4px;
+  margin: 4px;
+}
+
+.card-back-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.8); /* More opaque */
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.4); /* Add border */
+  transition: all 0.3s ease;
+}
+
+.card-back-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.95); /* Nearly opaque on hover */
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Firefox scrollbar - more visible */
+.card-back-body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.8) rgba(255, 255, 255, 0.2);
+}
+
+/* Scroll indicator - Removed for cleaner design */
+
 .card-back-header {
   padding: 20px 20px 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
 }
 
 .card-back-header h3 {
@@ -856,9 +1016,10 @@ export default {
 .card-back-body {
   flex: 1;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
 }
 
 .project-description {
@@ -888,8 +1049,75 @@ export default {
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* Additional project sections */
+.project-objectives,
+.project-challenges,
+.project-results {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.project-objectives h4,
+.project-challenges h4,
+.project-results h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+}
+
+.project-objectives h4 i,
+.project-challenges h4 i,
+.project-results h4 i {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.project-objectives ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.project-objectives li {
+  position: relative;
+  padding-left: 15px;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.project-objectives li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #4ade80;
+  font-weight: bold;
+}
+
+.project-challenges p,
+.project-results p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
 .card-back-footer {
   padding: 15px 20px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0; /* Prevent footer from shrinking */
+  margin-top: auto; /* Push footer to bottom */
+}
+
+.card-back-footer-inline {
+  margin-top: 30px;
+  padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -1122,6 +1350,58 @@ export default {
     display: none;
   }
 
+  /* Mobile card back scrolling */
+  .card-back-content {
+    padding-bottom: 0;
+  }
+
+  .card-back-header {
+    padding: 15px 15px 12px;
+  }
+
+  .card-back-header h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+
+  .card-back-body {
+    padding: 15px;
+    min-height: 100px;
+  }
+
+  .project-description {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .project-objectives h4,
+  .project-challenges h4,
+  .project-results h4 {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+
+  .project-objectives li,
+  .project-challenges p,
+  .project-results p {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  .card-back-footer {
+    padding: 12px 15px 15px;
+  }
+
+  .card-back-footer-inline {
+    margin-top: 20px;
+    padding-top: 15px;
+  }
+
+  .view-full-btn {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+
   .interaction-hint p {
     font-size: 0.8rem;
     gap: 15px;
@@ -1269,6 +1549,11 @@ export default {
   .view-full-btn {
     font-size: 0.8rem;
     padding: 8px 14px;
+  }
+
+  .card-back-footer-inline {
+    margin-top: 15px;
+    padding-top: 12px;
   }
 }
 

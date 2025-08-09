@@ -10,12 +10,14 @@
       </router-view>
     </main>
     <Footer />
+    <MobileNotice />
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
+import MobileNotice from '@/components/MobileNotice.vue';
 // import MaintenanceTicker from '@/components/MaintenanceTicker.vue'; // <-- Impor komponen
 
 export default {
@@ -23,6 +25,7 @@ export default {
   components: {
     Navbar,
     Footer,
+    MobileNotice,
     // MaintenanceTicker
   }
 }
