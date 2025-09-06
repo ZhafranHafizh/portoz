@@ -1,0 +1,11 @@
+/* Gallery View Main Styles */
+
+/* Import all gallery-related styles */
+@import '../variables.css';
+@import '../animations.css';
+@import './gallery-header.css';
+@import './gallery-filters.css';
+@import './gallery-grid.css';
+@import './gallery-overlay.css';
+@import './gallery-card-back.css';
+@import '../components/modal.css';

@@ -71,7 +71,6 @@ export default {
         {
           year: '2022',
           achievements: [
-            { title: 'UI/UX Designer for DetectMe Project', description: 'Responsible for creating UI/UX designs, prototypes, and various visual assets for the project.' },
             { title: 'Software Engineering Documentation Specialist', description: 'Created SRS (Software Requirements Specification) documents for an emergency service application.' },
             { title: 'Store Management App UI Design', description: 'Designed the interface for a store management app as part of the Human-Computer Interaction course.' },
           ]
@@ -96,6 +95,7 @@ export default {
           achievements: [
             { title: 'Final Project Development', description: 'Designed the UI and developed the proposal for the Teaching Plotting Information System as a final project.' },
             { title: 'DevOps Process Implementation', description: 'Implemented CI/CD and DevOps processes into the MySkin project.' },
+            { title: 'UI/UX Designer DetectMe', description: 'Responsible for creating UI/UX designs, prototypes, and various visual assets for the project.' }
           ]
         },
       ]

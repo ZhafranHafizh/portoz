@@ -615,24 +615,229 @@ body.dark-theme .modal-content::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #2563eb, #60a5fa) !important;
 }
 
-/* Mode terang */
-body.light-mode {
-    background-color: #ffffff; /* Warna latar belakang putih */
-    color: #000000; /* Warna teks hitam */
+/* Gallery View Dark Mode */
+body.dark-theme .gallery-container {
+  background: #0f0f23 !important;
+  color: #e4e4e7 !important;
 }
 
-/* Tambahkan aturan khusus untuk teks "Gallery" */
-body.light-mode .gallery-title {
-    color: #333333; /* Warna teks abu-abu gelap untuk kontras lebih baik */
+body.dark-theme .header-section {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
 }
 
-/* Mode gelap */
-body.dark-mode {
-    background-color: #121212; /* Warna latar belakang gelap */
-    color: #ffffff; /* Warna teks putih */
+body.dark-theme .gallery-content {
+  background: transparent !important;
+  color: #e4e4e7 !important;
 }
 
-/* Tambahkan aturan khusus untuk teks "Gallery" */
-body.dark-mode .gallery-title {
-    color: #ffffff; /* Warna teks putih */
+/* Gallery Filter and Hint Dark Mode */
+body.dark-theme .hint-toggle-btn {
+  background: #8b5cf6 !important;
+  color: white !important;
+  box-shadow: 0 2px 10px rgba(139, 92, 246, 0.2) !important;
+}
+
+body.dark-theme .hint-toggle-btn:hover {
+  background: #7c3aed !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
+}
+
+body.dark-theme .interaction-hint {
+  background: rgba(139, 92, 246, 0.15) !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+}
+
+body.dark-theme .interaction-hint p {
+  color: #a1a1aa !important;
+}
+
+body.dark-theme .interaction-hint i {
+  color: #8b5cf6 !important;
+}
+
+body.dark-theme .filter-btn {
+  border-color: #374151 !important;
+  color: #e4e4e7 !important;
+}
+
+body.dark-theme .filter-btn:hover {
+  border-color: #8b5cf6 !important;
+  color: #8b5cf6 !important;
+}
+
+body.dark-theme .filter-btn.active {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+  border-color: transparent !important;
+  color: white !important;
+}
+
+/* Gallery Grid and Cards Dark Mode */
+body.dark-theme .gallery-grid {
+  background: transparent !important;
+}
+
+body.dark-theme .gallery-item .card-3d {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.dark-theme .gallery-item .card-3d:hover {
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.dark-theme .card-front,
+body.dark-theme .card-back {
+  background: #1a1a2e !important;
+}
+
+body.dark-theme .card-back {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+}
+
+/* Gallery Card Back Content Dark Mode */
+body.dark-theme .card-back-content {
+  color: white !important;
+}
+
+body.dark-theme .card-back-header {
+  border-bottom-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+body.dark-theme .card-back-header h3 {
+  color: white !important;
+}
+
+body.dark-theme .category-badge {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+}
+
+body.dark-theme .project-description,
+body.dark-theme .project-challenges p,
+body.dark-theme .project-results p,
+body.dark-theme .project-technologies p,
+body.dark-theme .project-learnings p,
+body.dark-theme .project-future p {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+body.dark-theme .project-objectives h4,
+body.dark-theme .project-challenges h4,
+body.dark-theme .project-results h4,
+body.dark-theme .project-technologies h4,
+body.dark-theme .project-learnings h4,
+body.dark-theme .project-future h4 {
+  color: white !important;
+}
+
+body.dark-theme .project-objectives li {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+body.dark-theme .detail-item {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+body.dark-theme .detail-item i {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+body.dark-theme .view-full-btn {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+}
+
+body.dark-theme .view-full-btn:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Gallery Flip Button Dark Mode */
+body.dark-theme .flip-btn {
+  background: rgba(0, 0, 0, 0.6) !important;
+  color: white !important;
+}
+
+body.dark-theme .flip-btn:hover {
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+body.dark-theme .flip-btn-back {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+body.dark-theme .flip-btn-back:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Gallery Modal Dark Mode */
+body.dark-theme .modal-overlay {
+  background: rgba(15, 15, 35, 0.9) !important;
+}
+
+body.dark-theme .modal-content {
+  background: #1a1a2e !important;
+  color: #e4e4e7 !important;
+}
+
+body.dark-theme .close-btn {
+  background: rgba(0, 0, 0, 0.5) !important;
+  color: white !important;
+}
+
+body.dark-theme .close-btn:hover {
+  background: rgba(0, 0, 0, 0.7) !important;
+}
+
+body.dark-theme .modal-info h3 {
+  color: #e4e4e7 !important;
+}
+
+body.dark-theme .modal-info p {
+  color: #a1a1aa !important;
+}
+
+body.dark-theme .category-tag {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+  color: white !important;
+}
+
+/* Gallery Empty State Dark Mode */
+body.dark-theme .empty-state {
+  color: #a1a1aa !important;
+}
+
+body.dark-theme .empty-state i {
+  opacity: 0.3 !important;
+}
+
+body.dark-theme .empty-state h3 {
+  color: #e4e4e7 !important;
+}
+
+/* Gallery Focus Effects Dark Mode */
+body.dark-theme .gallery-item.blurred {
+  filter: blur(3px) brightness(0.4) saturate(0.7) !important;
+}
+
+body.dark-theme .gallery-grid.focus-mode::before {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Gallery Scrollbar Dark Mode */
+body.dark-theme .card-back-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-theme .card-back-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+body.dark-theme .card-back-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
 }

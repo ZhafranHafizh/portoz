@@ -135,11 +135,11 @@ export default {
       projectsData: [
         {
           id: 1,
-          title: 'System Monitoring Update at PT. JICT',
+          title: 'System Monitoring Update at PT. JICT (GBOSS/MyJICT)',
           description: 'Professional internship project involving comprehensive updates to the GBOSS/MyJICT monitoring system, focusing on frontend improvements, enhanced user experience, and modern interface design.',
-          imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
-          link: '#',
-          tags: ['Frontend Development', 'UI/UX Enhancement', 'System Monitoring', 'User Experience'],
+          imageUrl: '../galeri/ManifestL1.png',
+          link: 'https://my.jict.co.id/gboss-eunoia/',
+          tags: ['Frontend Development', 'UI/UX Enhancement', 'System Monitoring', 'User Experience', 'Vue.js'],
           category: 'Web Development',
           features: [
             'Modernized user interface for better usability',
@@ -159,8 +159,8 @@ export default {
           title: 'Teaching Plotting Information System',
           description: 'Comprehensive final project involving the complete design and development of an information system for teaching assignment plotting, utilizing User-Centered Design (UCD) methodology.',
           imageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
-          link: '#',
-          github: '#',
+          link: 'https://siplongjar.com/',
+          github: 'https://github.com/rasjidzz/cap-plongjar',
           tags: ['System Design', 'UCD Methodology', 'Information System', 'Final Project'],
           category: 'Web Development',
           features: [

@@ -1,0 +1,15 @@
+/* Global Styles Index */
+
+/* Import base variables and animations */
+@import './variables.css';
+@import './animations.css';
+
+/* Common component styles */
+@import './components/modal.css';
+
+/* 
+  View-specific styles should be imported in their respective components
+  Example: 
+  - Gallery.vue imports './views/gallery.css'
+  - About.vue would import './views/about.css' (when created)
+*/

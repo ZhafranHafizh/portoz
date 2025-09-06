@@ -1,0 +1,209 @@
+/* Gallery Grid and Card Styles */
+
+.gallery-container {
+  min-height: 100vh;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+.gallery-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+/* Gallery Grid */
+.gallery-container {
+  position: relative;
+  overflow: visible;
+  padding: 0 20px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 35px;
+  margin-bottom: var(--spacing-xl);
+  padding: 15px;
+}
+
+/* Focus Mode Effects */
+.gallery-grid.focus-mode {
+  position: relative;
+}
+
+.gallery-grid.focus-mode::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1px);
+  border-radius: var(--radius-md);
+  pointer-events: none;
+  z-index: 0;
+  animation: fadeInGlass 0.6s ease-out;
+}
+
+/* Gallery Item Base */
+.gallery-item {
+  cursor: pointer;
+  height: 300px;
+  position: relative;
+  transition: var(--transition-slow);
+  perspective: 1000px;
+}
+
+.gallery-item:hover:not(.flipped):not(.blurred):not(.focused) {
+  transform: translateY(-10px);
+}
+
+/* Gallery Item States */
+.gallery-item.flipped {
+  transform: translateY(-20px) scale(1.05) !important;
+  z-index: 100 !important;
+  box-shadow: var(--shadow-lg);
+}
+
+.gallery-item.focused {
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  z-index: 100 !important;
+}
+
+.gallery-item.blurred {
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  z-index: 1 !important;
+}
+
+/* Card 3D Structure */
+.card-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  transform: rotateY(0deg);
+}
+
+.gallery-item:not(.flipped) .card-3d {
+  transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+}
+
+.card-3d:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.gallery-item.flipped .card-3d {
+  transform: rotateY(180deg) !important;
+  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Card Front and Back */
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--card-bg);
+}
+
+.card-front {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  background: var(--gradient-primary);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  overscroll-behavior: contain;
+}
+
+/* Image Container */
+.image-container {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+.parallax-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--text-secondary);
+}
+
+.empty-state i {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-md);
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .gallery-content {
+    padding: 40px 15px;
+  }
+
+  .gallery-container {
+    padding: 0 10px;
+  }
+
+  .gallery-grid {
+    gap: 20px;
+    padding: 10px 0;
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .gallery-item {
+    height: 250px;
+  }
+
+  .gallery-item.flipped {
+    transform: translateY(-15px) scale(1.03);
+  }
+
+  /* Disable 3D effects on mobile for performance but keep flip */
+  .parallax-image {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-item {
+    height: 200px;
+  }
+}
