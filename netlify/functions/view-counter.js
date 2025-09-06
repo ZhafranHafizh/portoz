@@ -1,7 +1,16 @@
 const { neon } = require('@neondatabase/serverless');
 
-// Initialize Neon client
-const sql = neon(process.env.NETLIFY_DATABASE_URL);
+// Initialize Neon client - try multiple possible environment variable names
+const databaseUrl = process.env.DATABASE_URL || 
+                   process.env.NETLIFY_DATABASE_URL || 
+                   process.env.NEON_DATABASE_URL ||
+                   process.env.NETLIFY_DATABASE_URL_UNPOOLED;
+
+if (!databaseUrl) {
+  console.error('No database URL found in environment variables');
+}
+
+const sql = neon(databaseUrl);
 
 // CORS headers
 const headers = {
@@ -12,6 +21,9 @@ const headers = {
 };
 
 exports.handler = async (event, context) => {
+  console.log('Function called with method:', event.httpMethod);
+  console.log('Database URL exists:', !!databaseUrl);
+  
   // Handle CORS preflight
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -21,14 +33,31 @@ exports.handler = async (event, context) => {
     };
   }
 
+  // Check if database URL is available
+  if (!databaseUrl) {
+    console.error('Database URL not configured');
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ 
+        error: 'Database not configured',
+        details: 'DATABASE_URL environment variable is missing'
+      })
+    };
+  }
+
   try {
     // Initialize database tables if they don't exist
+    console.log('Initializing database tables...');
     await initializeTables();
 
     if (event.httpMethod === 'GET') {
+      console.log('Handling GET request...');
       return await getViewCounterData();
     } else if (event.httpMethod === 'POST') {
+      console.log('Handling POST request...');
       const data = JSON.parse(event.body);
+      console.log('POST data:', data);
       return await updateViewCounterData(data);
     } else {
       return {
@@ -52,6 +81,7 @@ exports.handler = async (event, context) => {
 
 async function initializeTables() {
   try {
+    console.log('Creating view_counters table...');
     // Create view_counters table
     await sql`
       CREATE TABLE IF NOT EXISTS view_counters (
@@ -62,6 +92,7 @@ async function initializeTables() {
       )
     `;
 
+    console.log('Creating daily_stats table...');
     // Create daily_stats table
     await sql`
       CREATE TABLE IF NOT EXISTS daily_stats (
@@ -75,6 +106,7 @@ async function initializeTables() {
       )
     `;
 
+    console.log('Creating visitor_sessions table...');
     // Create visitor_sessions table
     await sql`
       CREATE TABLE IF NOT EXISTS visitor_sessions (
@@ -88,6 +120,7 @@ async function initializeTables() {
       )
     `;
 
+    console.log('Creating global_stats table...');
     // Create global_stats table
     await sql`
       CREATE TABLE IF NOT EXISTS global_stats (
@@ -98,12 +131,15 @@ async function initializeTables() {
       )
     `;
 
+    console.log('Checking global stats...');
     // Initialize global stats if empty
     const globalStats = await sql`SELECT * FROM global_stats LIMIT 1`;
     if (globalStats.length === 0) {
+      console.log('Initializing global stats...');
       await sql`INSERT INTO global_stats (total_views, unique_visitors) VALUES (0, 0)`;
     }
 
+    console.log('Initializing page counters...');
     // Initialize page counters if empty
     const pages = ['Home', 'About', 'Projects', 'Gallery', 'Contact', 'Analytics'];
     for (const page of pages) {
@@ -114,6 +150,7 @@ async function initializeTables() {
       `;
     }
 
+    console.log('Database initialization completed successfully');
   } catch (error) {
     console.error('Database initialization error:', error);
     throw error;

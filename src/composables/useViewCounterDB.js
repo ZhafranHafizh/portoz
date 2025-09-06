@@ -130,6 +130,8 @@ async function fetchViewCounterData() {
       return await loadFromLocalStorage()
     }
     
+    console.log('Fetching view counter data from:', `${API_BASE}/view-counter`)
+    
     const response = await fetch(`${API_BASE}/view-counter`, {
       method: 'GET',
       headers: {
@@ -137,11 +139,16 @@ async function fetchViewCounterData() {
       }
     })
     
+    console.log('Response status:', response.status)
+    
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+      const errorText = await response.text()
+      console.error('API Error Response:', errorText)
+      throw new Error(`HTTP error! status: ${response.status}, details: ${errorText}`)
     }
     
     const data = await response.json()
+    console.log('Received data:', data)
     
     // Update reactive store
     viewCounts.total = data.total || 0
@@ -194,11 +201,16 @@ async function trackPageView(pageName, additionalData = {}) {
       body: JSON.stringify(payload)
     })
     
+    console.log('Track response status:', response.status)
+    
     if (!response.ok) {
+      const errorText = await response.text()
+      console.error('Track API Error Response:', errorText)
       throw new Error(`HTTP error! status: ${response.status}`)
     }
     
     const result = await response.json()
+    console.log('Track result:', result)
     
     // Update local counters optimistically
     viewCounts.total++
