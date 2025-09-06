@@ -213,18 +213,20 @@ export default {
       resetViewCounter,
       isLoading,
       error,
-      initializeData
+      initializeData,
+      fetchViewCounterData
     } = useViewCounter()
 
     const showDetails = ref(false)
     const isLive = ref(false)
     const isDevelopment = computed(() => process.env.NODE_ENV === 'development')
+    const forceUpdateKey = ref(0)
 
     let refreshInterval = null
     let liveIndicatorTimeout = null
 
-    // Analytics data
-    const analyticsData = ref(getAnalytics())
+    // Analytics data - make it reactive to changes
+    const analyticsData = computed(() => getAnalytics())
 
     // Computed properties
     const recentSessions = computed(() => {
@@ -309,8 +311,12 @@ export default {
 
     const refreshData = async () => {
       try {
+        // Force refresh from database
+        await fetchViewCounterData()
         const newData = await refreshAnalytics()
-        analyticsData.value = newData
+        
+        // Force reactivity update
+        forceUpdateKey.value++
         
         // Show live indicator
         isLive.value = true
@@ -318,10 +324,10 @@ export default {
         liveIndicatorTimeout = setTimeout(() => {
           isLive.value = false
         }, 2000)
+        
+        console.log('Data refreshed successfully:', newData)
       } catch (err) {
         console.warn('Failed to refresh analytics data:', err)
-        // Fallback to cached data
-        analyticsData.value = getAnalytics()
       }
     }
 
@@ -367,6 +373,7 @@ export default {
       analyticsData,
       isLoading,
       error,
+      forceUpdateKey,
       
       // Computed
       totalViews,

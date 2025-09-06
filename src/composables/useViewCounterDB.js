@@ -178,6 +178,10 @@ async function fetchViewCounterData() {
     const data = await response.json()
     console.log('Received data:', data)
     
+    // Store previous values for comparison
+    const previousTotal = viewCounts.total
+    const previousPages = { ...viewCounts.pages }
+    
     // Update reactive store
     viewCounts.total = data.total || 0
     viewCounts.pages = { ...viewCounts.pages, ...(data.pages || {}) }
@@ -187,8 +191,33 @@ async function fetchViewCounterData() {
     viewCounts.todayStats = data.todayStats || { total: 0, unique: 0 }
     viewCounts.lastUpdated = new Date().toISOString()
     
+    // Log changes for debugging
+    if (previousTotal !== viewCounts.total) {
+      console.log(`Total views updated: ${previousTotal} → ${viewCounts.total}`)
+    }
+    
+    Object.keys(viewCounts.pages).forEach(page => {
+      if (previousPages[page] !== viewCounts.pages[page]) {
+        console.log(`${page} views updated: ${previousPages[page]} → ${viewCounts.pages[page]}`)
+      }
+    })
+    
     // Clear any previous errors
     error.value = null
+    
+    // Broadcast update to other tabs/browsers
+    try {
+      localStorage.setItem('portfolio-view-counter-sync', JSON.stringify({
+        timestamp: Date.now(),
+        data: {
+          total: viewCounts.total,
+          pages: viewCounts.pages,
+          uniqueVisitors: viewCounts.uniqueVisitors
+        }
+      }))
+    } catch (syncError) {
+      console.warn('Failed to broadcast sync:', syncError)
+    }
     
     return data
   } catch (err) {
@@ -401,6 +430,19 @@ export function useViewCounter() {
     }
   }
   
+  // Add global functions for debugging
+  if (typeof window !== 'undefined') {
+    window.debugViewCounter = {
+      fetchData: fetchViewCounterData,
+      trackView: trackPageView,
+      getState: () => viewCounts,
+      forceRefresh: async () => {
+        console.log('Force refreshing view counter...')
+        return await fetchViewCounterData()
+      }
+    }
+  }
+  
   return {
     // State
     viewCounts,
@@ -437,19 +479,43 @@ export async function initializeViewCounter() {
   if (isInitialized) return
   
   try {
+    console.log('Initializing view counter...')
     await fetchViewCounterData()
     isInitialized = true
+    
+    // Listen for localStorage changes from other tabs
+    if (typeof window !== 'undefined') {
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'portfolio-view-counter-sync' && e.newValue) {
+          try {
+            const syncData = JSON.parse(e.newValue)
+            console.log('Received sync from another tab:', syncData)
+            
+            // Update local state with synced data
+            viewCounts.total = syncData.data.total || 0
+            viewCounts.pages = { ...viewCounts.pages, ...syncData.data.pages }
+            viewCounts.uniqueVisitors = syncData.data.uniqueVisitors || 0
+            viewCounts.lastUpdated = new Date().toISOString()
+          } catch (syncErr) {
+            console.warn('Failed to process sync data:', syncErr)
+          }
+        }
+      })
+    }
     
     // Set up periodic refresh for real-time sync across browsers
     // Only in production where we have a real API
     if (!isDevelopment) {
+      console.log('Setting up periodic refresh every 15 seconds...')
       refreshInterval = setInterval(async () => {
         try {
+          console.log('Periodic refresh triggered...')
           await fetchViewCounterData()
+          console.log('Periodic refresh completed')
         } catch (err) {
           console.warn('Periodic refresh failed:', err)
         }
-      }, 30000) // Refresh every 30 seconds
+      }, 15000) // Refresh every 15 seconds for faster sync
     }
   } catch (err) {
     console.warn('Auto-initialization failed:', err)
