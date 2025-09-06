@@ -335,12 +335,16 @@ export default {
     // Lifecycle
     onMounted(async () => {
       // Initialize data first
-      await initializeData()
-      await refreshData()
+      try {
+        await initializeData()
+        await refreshData()
+      } catch (err) {
+        console.warn('Failed to initialize view counter:', err)
+      }
       
-      // Auto refresh if enabled
+      // Auto refresh if enabled (less frequent than global refresh)
       if (props.autoRefresh) {
-        refreshInterval = setInterval(refreshData, 30000) // Refresh every 30 seconds
+        refreshInterval = setInterval(refreshData, 60000) // Refresh every 60 seconds
       }
 
       // Listen for page view events (using updated event name)
@@ -435,6 +439,30 @@ export default {
 .counter-badge .label {
   font-size: 0.8rem;
   opacity: 0.7;
+}
+
+/* Loading and Error States */
+.counter-badge.loading {
+  background: #f59e0b;
+  color: white;
+}
+
+.counter-badge.loading i {
+  animation: spin 1s linear infinite;
+}
+
+.counter-badge.error {
+  background: #ef4444;
+  color: white;
+}
+
+.counter-badge.error:hover {
+  background: #dc2626;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* Detailed Mode Styles */

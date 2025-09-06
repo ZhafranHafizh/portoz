@@ -55,6 +55,9 @@ async function loadFromLocalStorage() {
       viewCounts.todayStats = parsed.todayStats || { total: 0, unique: 0 }
       viewCounts.lastUpdated = new Date().toISOString()
       
+      // Clear any previous errors when localStorage loads successfully
+      error.value = null
+      
       return parsed
     } else {
       // Initialize with default data
@@ -75,11 +78,34 @@ async function loadFromLocalStorage() {
       viewCounts.todayStats = defaultData.todayStats
       viewCounts.lastUpdated = new Date().toISOString()
       
+      // Clear any previous errors
+      error.value = null
+      
       return defaultData
     }
   } catch (err) {
     console.warn('Failed to load from localStorage:', err)
-    throw err
+    error.value = 'Failed to load local data'
+    
+    // Return minimal default data even if localStorage fails
+    const defaultData = {
+      total: 0,
+      pages: { Home: 0, About: 0, Projects: 0, Gallery: 0, Contact: 0, Analytics: 0 },
+      uniqueVisitors: 0,
+      last7Days: [],
+      last30Days: [],
+      todayStats: { total: 0, unique: 0 }
+    }
+    
+    viewCounts.total = defaultData.total
+    viewCounts.pages = defaultData.pages
+    viewCounts.uniqueVisitors = defaultData.uniqueVisitors
+    viewCounts.last7Days = defaultData.last7Days
+    viewCounts.last30Days = defaultData.last30Days
+    viewCounts.todayStats = defaultData.todayStats
+    viewCounts.lastUpdated = new Date().toISOString()
+    
+    return defaultData
   }
 }
 
@@ -132,10 +158,12 @@ async function fetchViewCounterData() {
     
     console.log('Fetching view counter data from:', `${API_BASE}/view-counter`)
     
-    const response = await fetch(`${API_BASE}/view-counter`, {
+    // Add cache busting to ensure fresh data
+    const response = await fetch(`${API_BASE}/view-counter?t=${Date.now()}`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache'
       }
     })
     
@@ -144,7 +172,7 @@ async function fetchViewCounterData() {
     if (!response.ok) {
       const errorText = await response.text()
       console.error('API Error Response:', errorText)
-      throw new Error(`HTTP error! status: ${response.status}, details: ${errorText}`)
+      throw new Error(`API Error: ${response.status}`)
     }
     
     const data = await response.json()
@@ -159,10 +187,13 @@ async function fetchViewCounterData() {
     viewCounts.todayStats = data.todayStats || { total: 0, unique: 0 }
     viewCounts.lastUpdated = new Date().toISOString()
     
+    // Clear any previous errors
+    error.value = null
+    
     return data
   } catch (err) {
     console.error('Failed to fetch view counter data:', err)
-    error.value = err.message
+    error.value = `Failed to load analytics: ${err.message}`
     
     // Fallback to localStorage if API fails
     return await loadFromLocalStorage()
@@ -206,11 +237,21 @@ async function trackPageView(pageName, additionalData = {}) {
     if (!response.ok) {
       const errorText = await response.text()
       console.error('Track API Error Response:', errorText)
-      throw new Error(`HTTP error! status: ${response.status}`)
+      throw new Error(`Track Error: ${response.status}`)
     }
     
     const result = await response.json()
     console.log('Track result:', result)
+    
+    // Refresh data from server to get the latest counts
+    // This ensures all browsers see the same updated data
+    setTimeout(async () => {
+      try {
+        await fetchViewCounterData()
+      } catch (refreshErr) {
+        console.warn('Failed to refresh after tracking:', refreshErr)
+      }
+    }, 500)
     
     // Update local counters optimistically
     viewCounts.total++
@@ -390,6 +431,7 @@ export function useViewCounter() {
 
 // Auto-initialize on module load
 let isInitialized = false
+let refreshInterval = null
 
 export async function initializeViewCounter() {
   if (isInitialized) return
@@ -397,7 +439,27 @@ export async function initializeViewCounter() {
   try {
     await fetchViewCounterData()
     isInitialized = true
+    
+    // Set up periodic refresh for real-time sync across browsers
+    // Only in production where we have a real API
+    if (!isDevelopment) {
+      refreshInterval = setInterval(async () => {
+        try {
+          await fetchViewCounterData()
+        } catch (err) {
+          console.warn('Periodic refresh failed:', err)
+        }
+      }, 30000) // Refresh every 30 seconds
+    }
   } catch (err) {
     console.warn('Auto-initialization failed:', err)
+  }
+}
+
+// Cleanup function
+export function cleanupViewCounter() {
+  if (refreshInterval) {
+    clearInterval(refreshInterval)
+    refreshInterval = null
   }
 }
