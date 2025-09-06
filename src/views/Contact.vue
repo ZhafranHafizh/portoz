@@ -11,10 +11,6 @@
     <!-- Header section with parallax -->
     <div class="header-section" :style="headerParallaxStyle">
       <div class="header-content-wrapper">
-        <div class="header-badge" :class="{ 'visible': titleVisible }">
-          <!-- <i class="fas fa-paper-plane"></i> -->
-          <span>Contact Me</span>
-        </div>
         <h1 class="page-title" :class="{ 'visible': titleVisible }">Get In Touch</h1>
         <p class="page-subtitle" :class="{ 'visible': subtitleVisible }">
           Ready to bring your ideas to life? Whether you have a project in mind, 

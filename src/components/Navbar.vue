@@ -13,9 +13,11 @@
       <li><router-link to="/about">About Me</router-link></li>
       <li><router-link to="/projects">Project</router-link></li>
       <li><router-link to="/gallery">Gallery</router-link></li>
+      <li><router-link to="/analytics">Analytics</router-link></li>
       <li><router-link to="/contact">Contact</router-link></li>
     </ul>
     <div class="nav-actions">
+      <ViewCounter :compact="true" />
       <DarkModeToggle />
     </div>
   </nav>
@@ -23,11 +25,13 @@
 
 <script>
 import DarkModeToggle from '@/components/DarkModeToggle.vue'
+import ViewCounter from '@/components/ViewCounter.vue'
 
 export default {
   name: 'TheNavbar',
   components: {
-    DarkModeToggle
+    DarkModeToggle,
+    ViewCounter
   },
   data() {
     return {
@@ -108,6 +112,7 @@ export default {
 .nav-actions {
   display: flex;
   align-items: center;
+  gap: 12px;
   margin-left: 20px;
 }
 

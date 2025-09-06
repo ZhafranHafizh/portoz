@@ -5,6 +5,10 @@ import router from './router'
 import Particles from "particles.vue3"
 import './composables/useDarkMode' // Initialize dark mode
 import './assets/dark-mode.css' // Dark mode styles
+import { setupViewTracking } from './plugins/viewTracking' // View counter
+
+// Setup view tracking
+setupViewTracking(router)
 
 createApp(App)
   .use(router)

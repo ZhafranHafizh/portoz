@@ -4,6 +4,7 @@ import About from '../views/About.vue'
 import Projects from '../views/Projects.vue'
 import Gallery from '../views/Gallery.vue'
 import Contact from '../views/Contact.vue'
+import Analytics from '../views/Analytics.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/contact',
     name: 'Contact',
     component: Contact
+  },
+  {
+    path: '/analytics',
+    name: 'Analytics',
+    component: Analytics
   }
 ]
 
