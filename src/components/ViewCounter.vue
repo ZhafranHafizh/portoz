@@ -2,7 +2,15 @@
   <div class="view-counter" :class="{ 'compact': compact, 'detailed': !compact }">
     <!-- Compact Mode (for navbar or footer) -->
     <div v-if="compact" class="counter-compact">
-      <div class="counter-badge" :title="`Total Views: ${totalViews} | Today: ${todayViews} | Unique Visitors: ${uniqueVisitorsCount}`">
+      <div v-if="isLoading" class="counter-badge loading">
+        <i class="fas fa-spinner fa-spin"></i>
+        <span class="label">loading...</span>
+      </div>
+      <div v-else-if="error" class="counter-badge error" :title="`Error: ${error}`">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span class="label">error</span>
+      </div>
+      <div v-else class="counter-badge" :title="`Total Views: ${totalViews} | Today: ${todayViews} | Unique Visitors: ${uniqueVisitorsCount}`">
         <i class="fas fa-eye"></i>
         <span class="count">{{ formatNumber(totalViews) }}</span>
         <span class="label">views</span>
@@ -172,7 +180,7 @@
 
 <script>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useViewCounter } from '@/composables/useViewCounter'
+import { useViewCounter } from '@/composables/useViewCounterDB'
 
 export default {
   name: 'ViewCounter',
@@ -201,7 +209,11 @@ export default {
       uniqueVisitorsCount, 
       todayViews, 
       getAnalytics,
-      resetViewCounter
+      refreshAnalytics,
+      resetViewCounter,
+      isLoading,
+      error,
+      initializeData
     } = useViewCounter()
 
     const showDetails = ref(false)
@@ -216,7 +228,9 @@ export default {
 
     // Computed properties
     const recentSessions = computed(() => {
-      return analyticsData.value.sessions.slice(-5).reverse()
+      // Database version doesn't store sessions in the same way
+      // This will be empty or we can remove this feature
+      return []
     })
 
     const last7DaysData = computed(() => {
@@ -293,15 +307,22 @@ export default {
       showDetails.value = !showDetails.value
     }
 
-    const refreshData = () => {
-      analyticsData.value = getAnalytics()
-      
-      // Show live indicator
-      isLive.value = true
-      clearTimeout(liveIndicatorTimeout)
-      liveIndicatorTimeout = setTimeout(() => {
-        isLive.value = false
-      }, 2000)
+    const refreshData = async () => {
+      try {
+        const newData = await refreshAnalytics()
+        analyticsData.value = newData
+        
+        // Show live indicator
+        isLive.value = true
+        clearTimeout(liveIndicatorTimeout)
+        liveIndicatorTimeout = setTimeout(() => {
+          isLive.value = false
+        }, 2000)
+      } catch (err) {
+        console.warn('Failed to refresh analytics data:', err)
+        // Fallback to cached data
+        analyticsData.value = getAnalytics()
+      }
     }
 
     const resetCounter = () => {
@@ -312,16 +333,18 @@ export default {
     }
 
     // Lifecycle
-    onMounted(() => {
-      refreshData()
+    onMounted(async () => {
+      // Initialize data first
+      await initializeData()
+      await refreshData()
       
       // Auto refresh if enabled
       if (props.autoRefresh) {
         refreshInterval = setInterval(refreshData, 30000) // Refresh every 30 seconds
       }
 
-      // Listen for page view events
-      window.addEventListener('page-view-tracked', refreshData)
+      // Listen for page view events (using updated event name)
+      window.addEventListener('viewCountUpdated', refreshData)
     })
 
     onUnmounted(() => {
@@ -329,7 +352,7 @@ export default {
         clearInterval(refreshInterval)
       }
       clearTimeout(liveIndicatorTimeout)
-      window.removeEventListener('page-view-tracked', refreshData)
+      window.removeEventListener('viewCountUpdated', refreshData)
     })
 
     return {
@@ -338,6 +361,8 @@ export default {
       isLive,
       isDevelopment,
       analyticsData,
+      isLoading,
+      error,
       
       // Computed
       totalViews,

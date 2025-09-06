@@ -231,7 +231,7 @@
 
 <script>
 import { ref, computed, onMounted } from 'vue'
-import { useViewCounter } from '@/composables/useViewCounter'
+import { useViewCounter } from '@/composables/useViewCounterDB'
 import ViewCounter from '@/components/ViewCounter.vue'
 
 export default {
