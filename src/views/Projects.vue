@@ -246,7 +246,7 @@ export default {
           title: 'Design & Prototype for "DetectMe" Project',
           description: 'End-to-end design project encompassing complete UI/UX design, prototyping, and asset creation for the DetectMe application, demonstrating full design process expertise.',
           imageUrl: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
-          link: '#',
+          link: 'https://detectme.id/',
           tags: ['UI/UX Design', 'Prototyping', 'Design Assets', 'Complete Design Process'],
           category: 'UI/UX Design',
           features: [
