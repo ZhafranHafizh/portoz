@@ -90,7 +90,17 @@
               class="action-btn secondary"
             >
               <i class="fab fa-github"></i>
-              View Code
+              View Repository
+            </a>
+            <a 
+              v-if="project.figma" 
+              :href="project.figma" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="action-btn figma"
+            >
+              <i class="fab fa-figma"></i>
+              View Design
             </a>
             <button v-if="project.case_study" @click="openCaseStudy" class="action-btn tertiary">
               <i class="fas fa-file-alt"></i>
@@ -430,6 +440,17 @@ export default {
 .action-btn.secondary:hover {
   background: #111827;
   transform: translateY(-2px);
+}
+
+.action-btn.figma {
+  background: #F24E1E;
+  color: white;
+}
+
+.action-btn.figma:hover {
+  background: #D73A16;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(242, 78, 30, 0.4);
 }
 
 .action-btn.tertiary {

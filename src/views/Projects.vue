@@ -161,6 +161,7 @@ export default {
           imageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: 'https://siplongjar.com/',
           github: 'https://github.com/rasjidzz/cap-plongjar',
+          figma: 'https://www.figma.com/design/JzMxkBh4CM8B18SBwH6RTr/UI-Sistem-Plottingan?node-id=2515-1038&t=t8OiDTzwDBauptRw-1',
           tags: ['System Design', 'UCD Methodology', 'Information System', 'Final Project'],
           category: 'Web Development',
           features: [
@@ -182,6 +183,7 @@ export default {
           description: 'Professional UI/UX design project for Chevalier LAB, creating comprehensive designs for Learning Management System (LMS) and coffee shop application with modern, user-friendly interfaces.',
           imageUrl: 'https://images.unsplash.com/photo-1559028006-44a10e643c68?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
+          figma: 'https://www.figma.com/design/VrFKV4lK8Esk2vEe32T0M8/LMS-Chevalier?node-id=0-1&t=XOrry4zlMuy5d5Uc-1',
           tags: ['UI/UX Design', 'LMS Design', 'Mobile App', 'Figma', 'Design System'],
           category: 'UI/UX Design',
           features: [
@@ -202,8 +204,8 @@ export default {
           title: 'Cardiovascular Detection System with AI',
           description: 'Advanced artificial intelligence project focused on cardiovascular disease detection, showcasing expertise in AI integration, medical technology, and complex system design.',
           imageUrl: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
-          link: '#',
-          github: '#',
+          link: 'https://cardiainsightt.humicprototyping.com/',
+          github: '',
           tags: ['Artificial Intelligence', 'Healthcare Tech', 'Machine Learning', 'Medical Detection'],
           category: 'Web Development',
           features: [
@@ -225,7 +227,8 @@ export default {
           description: 'Comprehensive mobile application development project for rental services, demonstrating cross-platform development skills and mobile-first design approach.',
           imageUrl: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
-          github: '#',
+          github: 'https://github.com/SuryaaAulia/Rent-It-App-Flutter',
+          figma: 'https://www.figma.com/design/eudmS0XQSKFWt8dndjMIed/Rent-It?m=auto&t=dZyiGxhXRLTbMvL7-6',
           tags: ['Mobile Development', 'Cross-platform', 'Rental System', 'Mobile UI'],
           category: 'Mobile',
           features: [
@@ -247,6 +250,7 @@ export default {
           description: 'End-to-end design project encompassing complete UI/UX design, prototyping, and asset creation for the DetectMe application, demonstrating full design process expertise.',
           imageUrl: '../galeri/Detectme.png',
           link: 'https://detectme.id/',
+          figma: 'https://www.figma.com/design/4EdpOtL2y0FS0y62IAowVI/DetectME?node-id=0-1&t=yt0aqYR2vwLm58LM-1',
           tags: ['UI/UX Design', 'Prototyping', 'Design Assets', 'Complete Design Process'],
           category: 'UI/UX Design',
           features: [
