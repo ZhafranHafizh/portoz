@@ -14,7 +14,15 @@
           <img :src="project.imageUrl" :alt="project.title" class="modal-image" />
           <div class="image-gradient-overlay"></div>
           <div class="modal-meta">
-            <span class="modal-category">{{ project.category }}</span>
+            <div class="modal-categories">
+              <span 
+                v-for="category in getProjectCategories(project)" 
+                :key="category"
+                class="modal-category"
+              >
+                {{ category }}
+              </span>
+            </div>
             <h1 class="modal-title">{{ project.title }}</h1>
           </div>
         </div>
@@ -160,6 +168,10 @@ export default {
     openCaseStudy() {
       // This could open another modal or navigate to a detailed page
       console.log('Opening case study for:', this.project.title);
+    },
+    getProjectCategories(project) {
+      // Returns all categories as an array for proper display
+      return Array.isArray(project.category) ? project.category : [project.category];
     }
   }
 }
@@ -260,6 +272,13 @@ export default {
   color: white;
 }
 
+.modal-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
 .modal-category {
   display: inline-block;
   padding: 8px 16px;
@@ -267,7 +286,6 @@ export default {
   border-radius: 20px;
   font-size: 0.875rem;
   font-weight: 600;
-  margin-bottom: 12px;
   backdrop-filter: blur(10px);
 }
 

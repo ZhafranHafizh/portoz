@@ -73,7 +73,7 @@
           </div>
           <div class="card-content">
             <div class="project-meta">
-              <span class="category-badge">{{ project.category }}</span>
+              <span class="category-badge">{{ getPrimaryCategory(project) }}</span>
             </div>
             <h3 class="project-title">{{ project.title }}</h3>
             <p class="project-description">{{ project.description }}</p>
@@ -274,10 +274,20 @@ export default {
       if (this.activeFilter === 'All') {
         return this.projectsData;
       }
-      return this.projectsData.filter(project => project.category === this.activeFilter);
+      return this.projectsData.filter(project => {
+        // Handle both single category (string) and multiple categories (array)
+        if (Array.isArray(project.category)) {
+          return project.category.includes(this.activeFilter);
+        } else {
+          return project.category === this.activeFilter;
+        }
+      });
     },
     uniqueCategories() {
-      return new Set(this.projectsData.map(p => p.category)).size;
+      const allCategories = this.projectsData.flatMap(p => 
+        Array.isArray(p.category) ? p.category : [p.category]
+      );
+      return new Set(allCategories).size;
     },
     totalTags() {
       const allTags = this.projectsData.flatMap(p => p.tags);
@@ -326,6 +336,14 @@ export default {
       // Optional: Add analytics tracking for CV downloads
       console.log('CV downloaded at:', new Date().toISOString());
       // You can add Google Analytics or other tracking here
+    },
+    getPrimaryCategory(project) {
+      // Returns the first category if it's an array, or the category if it's a string
+      return Array.isArray(project.category) ? project.category[0] : project.category;
+    },
+    getAllCategories(project) {
+      // Returns all categories as an array
+      return Array.isArray(project.category) ? project.category : [project.category];
     },
     initAnimations() {
       setTimeout(() => this.titleVisible = true, 200);
