@@ -170,7 +170,7 @@ export default {
         {
           src: '../galeri/Detectme.png',
           title: 'DetectMe',
-          description: 'A system that helps pregnant women detect fetal conditions.',
+          description: 'A system that helps pregnant mothers detect fetal conditions.',
           category: 'Mobile App'
         },
         {
