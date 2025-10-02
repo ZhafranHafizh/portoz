@@ -163,7 +163,7 @@ export default {
           github: 'https://github.com/rasjidzz/cap-plongjar',
           figma: 'https://www.figma.com/design/JzMxkBh4CM8B18SBwH6RTr/UI-Sistem-Plottingan?node-id=2515-1038&t=t8OiDTzwDBauptRw-1',
           tags: ['System Design', 'UCD Methodology', 'Information System', 'Final Project'],
-          category: 'Web Development',
+          category: ['Web Development', 'UI/UX Design'],
           features: [
             'Complete system architecture design',
             'User-Centered Design implementation',
@@ -183,7 +183,7 @@ export default {
           description: 'Professional UI/UX design project for Chevalier LAB, creating comprehensive designs for Learning Management System (LMS) and coffee shop application with modern, user-friendly interfaces.',
           imageUrl: 'https://images.unsplash.com/photo-1559028006-44a10e643c68?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60',
           link: '#',
-          figma: 'https://www.figma.com/design/VrFKV4lK8Esk2vEe32T0M8/LMS-Chevalier?node-id=0-1&t=XOrry4zlMuy5d5Uc-1',
+          figma: 'https://www.figma.com/design/example-chevalier-lab',
           tags: ['UI/UX Design', 'LMS Design', 'Mobile App', 'Figma', 'Design System'],
           category: 'UI/UX Design',
           features: [
@@ -230,7 +230,7 @@ export default {
           github: 'https://github.com/SuryaaAulia/Rent-It-App-Flutter',
           figma: 'https://www.figma.com/design/eudmS0XQSKFWt8dndjMIed/Rent-It?m=auto&t=dZyiGxhXRLTbMvL7-6',
           tags: ['Mobile Development', 'Cross-platform', 'Rental System', 'Mobile UI'],
-          category: 'Mobile',
+          category: ['Mobile', 'UI/UX Design'],
           features: [
             'Cross-platform mobile application',
             'Rental booking system',
