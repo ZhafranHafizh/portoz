@@ -76,7 +76,7 @@
               <span class="category-badge">{{ getPrimaryCategory(project) }}</span>
             </div>
             <h3 class="project-title">{{ project.title }}</h3>
-            <p class="project-description">{{ project.description }}</p>
+            <p class="project-description">{{ getTruncatedDescription(project.description) }}</p>
             <div class="project-tags">
               <span v-for="tag in project.tags.slice(0, 3)" :key="tag" class="tag">
                 {{ tag }}
@@ -344,6 +344,20 @@ export default {
     getAllCategories(project) {
       // Returns all categories as an array
       return Array.isArray(project.category) ? project.category : [project.category];
+    },
+    getTruncatedDescription(description, maxSentences = 2) {
+      if (!description) return '';
+      
+      // Split by sentence endings (. ! ?)
+      const sentences = description.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0);
+      
+      if (sentences.length <= maxSentences) {
+        return description;
+      }
+      
+      // Take first maxSentences and add ellipsis
+      const truncated = sentences.slice(0, maxSentences).join('. ').trim();
+      return truncated + (truncated.endsWith('.') ? '..' : '...');
     },
     initAnimations() {
       setTimeout(() => this.titleVisible = true, 200);
