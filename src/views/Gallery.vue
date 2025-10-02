@@ -23,7 +23,7 @@
           <p>
             <i class="fas fa-mouse-pointer" v-if="activeCategory === 'All'"></i> 
             <span v-if="activeCategory === 'All'">Hover untuk efek parallax • </span>
-            <i class="fas fa-info-circle"></i> Tombol info untuk penjelasan • 
+            <i class="fas fa-info-circle"></i> Tombol info untuk deskripsi • 
             <i class="fas fa-eye"></i> Klik card untuk detail lengkap
           </p>
         </div>
@@ -73,7 +73,7 @@
               <button 
                 class="flip-btn" 
                 @click.stop="toggleFlip(index)"
-                :title="flippedCards.includes(index) ? 'Kembali ke gambar' : 'Lihat penjelasan singkat'"
+                :title="flippedCards.includes(index) ? 'Kembali ke gambar' : 'Lihat deskripsi'"
               >
                 <i class="fas fa-info-circle"></i>
               </button>
@@ -84,66 +84,27 @@
                   <h3>{{ image.title }}</h3>
                   <span class="category-badge">{{ image.category }}</span>
                 </div>
-                <div 
-                  class="card-back-body"
-                  @wheel="handleCardBackWheel"
-                  @scroll.stop="handleCardBackScroll"
-                >
-                  <p class="project-description">{{ image.description }}</p>
+                
+                <!-- Simplified content - just description -->                
+                <div class="card-back-body">
+                  <div class="image-description">
+                    <p>{{ getTruncatedDescription(image.description) }}</p>
+                    <p v-if="image.description && getTruncatedDescription(image.description) !== image.description" class="description-hint">
+                      <i class="fas fa-info-circle"></i>
+                      Klik tombol detail untuk deskripsi lengkap
+                    </p>
+                  </div>
                   
-                  <div class="project-details">
-                    <div class="detail-item">
-                      <i class="fas fa-calendar"></i>
-                      <span>2024</span>
-                    </div>
-                    <div class="detail-item">
-                      <i class="fas fa-tools"></i>
-                      <span>{{ getToolsUsed(image.category) }}</span>
-                    </div>
-                    <div class="detail-item">
-                      <i class="fas fa-clock"></i>
-                      <span>{{ getProjectDuration(image.category) }}</span>
+                  <!-- Simple meta info -->
+                  <div class="image-meta">
+                    <div class="meta-item">
+                      <i class="fas fa-tag"></i>
+                      <span>{{ image.category }}</span>
                     </div>
                   </div>
-
-                  <!-- Additional project information -->
-                  <div class="project-objectives">
-                    <h4><i class="fas fa-bullseye"></i> Objectives</h4>
-                    <ul>
-                      <li>{{ getProjectObjective(image.category) }}</li>
-                      <li>Deliver high-quality user experience</li>
-                      <li>Ensure responsive design across devices</li>
-                    </ul>
-                  </div>
-
-                  <div class="project-challenges">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Key Challenges</h4>
-                    <p>{{ getProjectChallenges(image.category) }}</p>
-                  </div>
-
-                  <div class="project-results">
-                    <h4><i class="fas fa-chart-line"></i> Results</h4>
-                    <p>{{ getProjectResults(image.category) }}</p>
-                  </div>
-
-                  <!-- Additional sections to ensure scrolling -->
-                  <div class="project-technologies">
-                    <h4><i class="fas fa-code"></i> Technologies Used</h4>
-                    <p>{{ getToolsUsed(image.category) }} and various supporting frameworks, libraries, and development tools for optimal performance and user experience.</p>
-                  </div>
-
-                  <div class="project-learnings">
-                    <h4><i class="fas fa-lightbulb"></i> Key Learnings</h4>
-                    <p>This project provided valuable insights into modern development practices, user-centered design principles, and the importance of iterative improvement based on user feedback.</p>
-                  </div>
-
-                  <div class="project-future">
-                    <h4><i class="fas fa-rocket"></i> Future Enhancements</h4>
-                    <p>Plans for future improvements include performance optimization, additional features based on user feedback, enhanced accessibility, and integration with emerging technologies.</p>
-                  </div>
-
-                  <!-- Button di dalam scrollable content, di bagian paling bawah -->
-                  <div class="card-back-footer-inline">
+                  
+                  <!-- View full button -->
+                  <div class="card-back-footer">
                     <button class="view-full-btn" @click.stop="openModal(image)">
                       <i class="fas fa-expand-arrows-alt"></i>
                       Lihat Detail Lengkap
@@ -207,15 +168,15 @@ export default {
       // Sample images dari Unsplash - ganti dengan data gambar Anda nanti
       images: [
         {
-          src: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=600&fit=crop&crop=center',
-          title: 'E-Commerce Mobile App',
-          description: 'UI/UX design untuk aplikasi e-commerce mobile dengan fokus pada user experience yang intuitif',
+          src: '../galeri/Detectme.png',
+          title: 'DetectMe',
+          description: 'A system that helps pregnant women detect fetal conditions.',
           category: 'Mobile App'
         },
         {
-          src: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&h=600&fit=crop&crop=center',
-          title: 'Corporate Website Design',
-          description: 'Desain website corporate yang modern dan profesional',
+          src: '../galeri/rentit.png',
+          title: 'Rent-It',
+          description: 'Facility rental system at Telkom University campus',
           category: 'Website'
         },
         {
@@ -335,80 +296,19 @@ export default {
         }
       }
     },
-    handleCardBackScroll(event) {
-      // Prevent scroll event from bubbling up to prevent page scroll
-      event.stopPropagation();
-      event.stopImmediatePropagation();
+    getTruncatedDescription(description, maxSentences = 2) {
+      if (!description) return '';
       
-      // Additional check to ensure scroll stays within the card
-      const target = event.target;
-      const isAtTop = target.scrollTop === 0;
-      const isAtBottom = target.scrollTop >= (target.scrollHeight - target.clientHeight);
+      // Split by sentence endings (. ! ?)
+      const sentences = description.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0);
       
-      // If trying to scroll beyond boundaries, prevent default
-      if ((isAtTop && event.deltaY < 0) || (isAtBottom && event.deltaY > 0)) {
-        event.preventDefault();
+      if (sentences.length <= maxSentences) {
+        return description;
       }
-    },
-    handleCardBackWheel(event) {
-      // Handle wheel events specifically for the card content
-      const target = event.currentTarget;
-      const isAtTop = target.scrollTop === 0;
-      const isAtBottom = target.scrollTop >= (target.scrollHeight - target.clientHeight);
       
-      // If trying to scroll beyond content boundaries, prevent the event
-      if ((isAtTop && event.deltaY < 0) || (isAtBottom && event.deltaY > 0)) {
-        event.preventDefault();
-        event.stopPropagation();
-      } else {
-        // Allow normal scrolling within the card but prevent bubbling
-        event.stopPropagation();
-      }
-    },
-    getToolsUsed(category) {
-      const toolsMap = {
-        'UI/UX Desing': 'Figma, Adobe XD',
-        'Website': 'Vue.js, HTML, CSS',
-        'Mobile App': 'Flutter, Dart',
-        'Branding': 'Illustrator, Photoshop'
-      };
-      return toolsMap[category] || 'Various Tools';
-    },
-    getProjectDuration(category) {
-      const durationMap = {
-        'UI/UX Desing': '2-3 minggu',
-        'Website': '1-2 bulan',
-        'Mobile App': '2-3 bulan',
-        'Branding': '1-2 minggu'
-      };
-      return durationMap[category] || '1-4 minggu';
-    },
-    getProjectObjective(category) {
-      const objectiveMap = {
-        'UI/UX Desing': 'Create intuitive and user-friendly interface',
-        'Website': 'Build responsive and performant web platform',
-        'Mobile App': 'Develop cross-platform mobile experience',
-        'Branding': 'Establish strong visual identity'
-      };
-      return objectiveMap[category] || 'Deliver exceptional user experience';
-    },
-    getProjectChallenges(category) {
-      const challengeMap = {
-        'UI/UX Desing': 'Balancing user needs with business requirements while maintaining accessibility standards.',
-        'Website': 'Optimizing performance across different browsers and ensuring mobile responsiveness.',
-        'Mobile App': 'Creating consistent experience across iOS and Android platforms while managing app store guidelines.',
-        'Branding': 'Developing unique visual language that stands out in competitive market.'
-      };
-      return challengeMap[category] || 'Overcoming technical and design challenges';
-    },
-    getProjectResults(category) {
-      const resultMap = {
-        'UI/UX Desing': 'Achieved 40% increase in user engagement and 25% reduction in bounce rate.',
-        'Website': 'Improved page load speed by 60% and increased conversion rate by 35%.',
-        'Mobile App': 'Reached 4.8/5 app store rating with 50K+ downloads in first month.',
-        'Branding': 'Brand recognition increased by 45% with consistent visual implementation.'
-      };
-      return resultMap[category] || 'Successfully met all project objectives';
+      // Take first maxSentences and add ellipsis
+      const truncated = sentences.slice(0, maxSentences).join('. ').trim();
+      return truncated + (truncated.endsWith('.') ? '..' : '...');
     },
     handleMouseMove(event) {
       // Only apply parallax effect when showing all images
@@ -483,32 +383,6 @@ export default {
     // Trigger animations with delay
     setTimeout(() => this.titleVisible = true, 200);
     setTimeout(() => this.subtitleVisible = true, 400);
-    
-    // Add aggressive scroll prevention for card content
-    this.$nextTick(() => {
-      const cardBodies = document.querySelectorAll('.card-back-body');
-      cardBodies.forEach(body => {
-        // Prevent wheel events from propagating
-        body.addEventListener('wheel', (e) => {
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-          
-          const target = e.currentTarget;
-          const isAtTop = target.scrollTop === 0;
-          const isAtBottom = target.scrollTop >= (target.scrollHeight - target.clientHeight);
-          
-          // Only prevent default if trying to scroll beyond boundaries
-          if ((isAtTop && e.deltaY < 0) || (isAtBottom && e.deltaY > 0)) {
-            e.preventDefault();
-          }
-        }, { passive: false });
-        
-        // Also prevent touchmove for mobile
-        body.addEventListener('touchmove', (e) => {
-          e.stopPropagation();
-        }, { passive: false });
-      });
-    });
   },
   beforeUnmount() {
     // Pastikan scroll dikembalikan jika component di-unmount
