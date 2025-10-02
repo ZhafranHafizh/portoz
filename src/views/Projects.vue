@@ -258,7 +258,7 @@ export default {
             'Handoff to development team'
           ],
           challenges: 'Managing the complete design process from concept to development handoff while ensuring design consistency and creating comprehensive documentation for seamless development implementation.',
-          duration: 'Design Project Timeline',
+          duration: 'Still in Development',
           team: 'Design & Development Team',
           role: 'Lead Designer & Design Process Manager'
         }
