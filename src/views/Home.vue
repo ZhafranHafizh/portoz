@@ -8,7 +8,7 @@
 
     <section class="hero" :style="heroParallaxStyle">
       <div class="profile-image-container" :style="profileParallaxStyle">
-        <img src="@/assets/Face.jpg" alt="Foto Profil Zhafran Hafizh" class="profile-pic">
+        <img src="../../public/galeri/Profil.png" alt="Foto Profil Zhafran Hafizh" class="profile-pic">
       </div>
       <h1 class="hero-title">Hello, I'm <strong>Zhafran Hafizh</strong>!</h1>
       <h2 class="hero-subtitle">A <span>Creative & Innovative</span> UI/UX Designer</h2>

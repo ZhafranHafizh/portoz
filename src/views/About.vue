@@ -11,7 +11,7 @@
     <section class="about-me-section" :style="aboutSectionParallaxStyle">
       <h1>About Me</h1>
       <div class="content">
-        <img src="@/assets/Face.jpg" alt="My Photo" class="about-pic" :style="imageParallaxStyle">
+        <img src="../../public/galeri/Profil.png" alt="My Photo" class="about-pic" :style="imageParallaxStyle">
         <div class="text" :style="textParallaxStyle">
           <p>
             Hi! I'm Zhafran Hafizh, a passionate UI/UX Designer with experience in front-end web development and UI/UX design.
