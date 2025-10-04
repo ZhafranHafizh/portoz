@@ -309,8 +309,10 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 800px;
+  text-align: center;
 }
 
 .header-badge {
@@ -784,9 +786,21 @@ export default {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .contact-view {
+    padding: 1.5rem 2rem;
+  }
+  
+  .contact-card {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+  }
+}
+
 @media (max-width: 768px) {
   .contact-view {
-    padding: 1rem;
+    padding: 1rem 1.5rem;
+    margin: 40px auto;
   }
   
   .page-title {
@@ -794,13 +808,15 @@ export default {
   }
   
   .header-section {
-    padding: 25px 0;
-    min-height: 340px;
+    padding: 30px 0;
+    min-height: 360px;
   }
+  
   .header-content-wrapper {
-    max-width: 98vw;
-    padding: 0 10px;
+    max-width: 95vw;
+    padding: 0 20px;
   }
+  
   .header-divider {
     width: 90px;
     margin: 12px 0 18px 0;
@@ -809,17 +825,31 @@ export default {
   .cta-buttons {
     flex-direction: column;
     gap: 15px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
   }
   
   .primary-cta, .secondary-cta {
     width: 100%;
-    max-width: 280px;
+    max-width: 300px;
     justify-content: center;
+    padding: 16px 32px;
+    margin: 0 auto;
+  }
+  
+  .contact-cards-container {
+    padding: 0 10px;
   }
   
   .contact-card {
     grid-template-columns: 1fr;
     gap: 25px;
+    margin-bottom: 60px;
+  }
+  
+  .section-header {
+    margin-bottom: 40px;
   }
   
   .section-header h2 {
@@ -827,15 +857,22 @@ export default {
   }
   
   .contact-item {
-    padding: 25px;
+    padding: 28px 24px;
+    margin: 0 5px;
+    border-radius: 18px;
   }
   
   .floating-circle {
     display: none;
   }
   
+  .social-floating {
+    margin: 0 10px;
+    padding: 35px 25px;
+  }
+  
   .social-buttons {
-    gap: 15px;
+    gap: 18px;
   }
   
   .social-btn {
@@ -852,92 +889,149 @@ export default {
 
 @media (max-width: 480px) {
   .contact-view {
-    padding: 0 2px;
+    padding: 1rem 1.2rem;
+    margin: 30px auto;
   }
+  
   .header-section {
-    padding: 1.2rem 0.2rem;
-    min-height: 180px;
+    padding: 20px 15px;
+    min-height: 300px;
   }
+  
   .header-content-wrapper {
-    max-width: 99vw;
-    padding: 0 2vw;
+    max-width: 96vw;
+    padding: 0 15px;
   }
+  
   .header-badge {
     font-size: 0.85rem;
-    padding: 7px 14px;
-    margin-bottom: 16px;
+    padding: 8px 16px;
+    margin-bottom: 20px;
   }
+  
   .page-title {
-    font-size: 1.2rem;
-    margin-bottom: 12px;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
   }
+  
   .page-subtitle {
-    font-size: 0.95rem;
-    margin-bottom: 18px;
+    font-size: 1rem;
+    margin-bottom: 25px;
+    line-height: 1.6;
   }
+  
   .cta-buttons {
     flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 12px;
+    margin-top: 15px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
   }
+  
   .primary-cta, .secondary-cta {
     width: 100%;
-    max-width: 240px;
+    max-width: 280px;
     justify-content: center;
     font-size: 0.95rem;
-    padding: 10px 0;
+    padding: 14px 24px;
+    margin: 0 auto;
+    display: flex;
   }
+  
   .contact-cards-container {
-    padding: 0 2vw;
+    padding: 0 15px;
   }
-  .section-header h2 {
-    font-size: 1.1rem;
-  }
-  .section-header p {
-    font-size: 0.92rem;
-  }
-  .contact-card {
-    grid-template-columns: 1fr;
-    gap: 10px;
+  
+  .section-header {
     margin-bottom: 30px;
   }
-  .contact-item {
-    padding: 12px 6px;
-    border-radius: 10px;
+  
+  .section-header h2 {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
   }
-  .icon-wrapper {
-    width: 44px;
-    height: 44px;
-    font-size: 1.1rem;
-  }
-  .info-content h3 {
-    font-size: 1.05rem;
-  }
-  .info-content p {
-    font-size: 0.92rem;
-  }
-  .contact-link {
-    font-size: 0.92rem;
-  }
-  .social-floating {
-    padding: 18px 6px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-  }
-  .social-header {
+  
+  .section-header p {
     font-size: 0.95rem;
   }
+  
+  .contact-card {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  
+  .contact-item {
+    padding: 24px 20px;
+    margin: 0 5px;
+    border-radius: 15px;
+  }
+  
+  .icon-wrapper {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+  }
+  
+  .info-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .info-content p {
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  
+  .contact-link {
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
+  
+  .contact-stats {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    margin-top: 12px;
+  }
+  
+  .social-floating {
+    padding: 25px 20px;
+    border-radius: 15px;
+    margin: 0 15px 20px;
+  }
+  
+  .social-header {
+    margin-bottom: 25px;
+  }
+  
+  .social-header i {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+  }
+  
   .social-title {
-    font-size: 1.05rem;
+    font-size: 1.3rem;
+    margin-bottom: 6px;
   }
+  
+  .social-subtitle {
+    font-size: 0.9rem;
+  }
+  
   .social-buttons {
-    gap: 8px;
+    gap: 12px;
     flex-wrap: wrap;
+    justify-content: center;
   }
+  
   .social-btn {
-    width: 44px;
-    height: 44px;
-    font-size: 1.1rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+    border-radius: 12px;
   }
 }
 </style>
