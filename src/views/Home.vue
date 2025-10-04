@@ -206,42 +206,117 @@ export default {
 .cta-button .arrow { margin-left: 8px; transition: transform 0.3s ease; }
 .cta-button:hover .arrow { transform: translateX(5px); }
 
-/* ... sisa style @media Anda ... */
+/* Responsive Design */
 @media (max-width: 768px) {
-  .hero-title { font-size: 2.2rem; }
-  .hero-subtitle { font-size: 1.3rem; }
-  .profile-pic { width: 150px; height: 150px; }
-  .cta-button { padding: 12px 25px; font-size: 1rem; }
-  .hero { padding: 1.5rem; }
+  .home-view {
+    padding: 30px 15px;
+  }
+  
+  .hero {
+    padding: 2rem 1.5rem;
+    max-width: 90vw;
+  }
+  
+  .hero-title { 
+    font-size: 2.2rem; 
+  }
+  
+  .hero-subtitle { 
+    font-size: 1.3rem; 
+  }
+  
+  .profile-pic { 
+    width: 150px; 
+    height: 150px; 
+  }
+  
+  .cta-button { 
+    padding: 12px 25px; 
+    font-size: 1rem; 
+  }
 }
 
 @media (max-width: 480px) {
   .home-view {
-    padding: 16px 4px;
+    padding: 20px 12px;
+    min-height: 100vh;
   }
+  
   .hero {
-    padding: 1rem;
-    border-radius: 10px;
-    max-width: 98vw;
+    padding: 1.5rem 1.2rem;
+    border-radius: 12px;
+    max-width: 95vw;
+    margin: 0 auto;
   }
+  
+  .profile-image-container {
+    margin-bottom: 20px;
+  }
+  
+  .profile-pic {
+    width: 120px;
+    height: 120px;
+    border-width: 4px;
+  }
+  
+  .hero-title {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+  
+  .hero-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    padding: 0 5px;
+  }
+  
+  .cta-button {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 400px) {
+  .home-view {
+    padding: 15px 8px;
+  }
+  
+  .hero {
+    padding: 1.2rem 1rem;
+    max-width: 96vw;
+    border-radius: 10px;
+  }
+  
   .profile-pic {
     width: 100px;
     height: 100px;
     border-width: 3px;
   }
+  
   .hero-title {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
+  
   .hero-subtitle {
-    font-size: 1.05rem;
+    font-size: 1rem;
   }
+  
   .hero-description {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     margin-bottom: 18px;
   }
+  
   .cta-button {
-    padding: 10px 16px;
-    font-size: 0.95rem;
+    padding: 10px 18px;
+    font-size: 0.9rem;
   }
 }
 </style>
