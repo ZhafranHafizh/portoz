@@ -9,12 +9,12 @@
       <span :class="{ 'open': menuOpen }"></span>
     </button>
     <ul class="nav-links" :class="{ 'open': menuOpen }">
-      <li><router-link to="/">Home</router-link></li>
-      <li><router-link to="/about">About Me</router-link></li>
-      <li><router-link to="/projects">Project</router-link></li>
-      <li><router-link to="/gallery">Gallery</router-link></li>
-      <!-- <li><router-link to="/analytics">Analytics</router-link></li> -->
-      <li><router-link to="/contact">Contact</router-link></li>
+      <li><router-link to="/" @click="closeMenu">Home</router-link></li>
+      <li><router-link to="/about" @click="closeMenu">About Me</router-link></li>
+      <li><router-link to="/projects" @click="closeMenu">Project</router-link></li>
+      <li><router-link to="/gallery" @click="closeMenu">Gallery</router-link></li>
+      <!-- <li><router-link to="/analytics" @click="closeMenu">Analytics</router-link></li> -->
+      <li><router-link to="/contact" @click="closeMenu">Contact</router-link></li>
     </ul>
     <div class="nav-actions">
       <!-- <ViewCounter :compact="true" /> -->
@@ -38,9 +38,39 @@ export default {
       menuOpen: false
     }
   },
+  mounted() {
+    // Close menu when clicking outside
+    document.addEventListener('click', this.handleClickOutside);
+    // Close menu on route change
+    this.$router.afterEach(() => {
+      this.closeMenu();
+    });
+  },
+  beforeUnmount() {
+    document.removeEventListener('click', this.handleClickOutside);
+  },
   methods: {
     toggleMenu() {
       this.menuOpen = !this.menuOpen;
+      // Prevent body scroll when menu is open on mobile
+      if (this.menuOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    },
+    closeMenu() {
+      this.menuOpen = false;
+      document.body.style.overflow = '';
+    },
+    handleClickOutside(event) {
+      // Close menu if clicking outside of navbar on mobile
+      if (window.innerWidth <= 768 && this.menuOpen) {
+        const navbar = this.$el;
+        if (navbar && !navbar.contains(event.target)) {
+          this.closeMenu();
+        }
+      }
     }
   }
 }
@@ -227,29 +257,54 @@ export default {
     top: 60px;
     right: 0;
     left: 0;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     gap: 0;
-    padding: 1.5rem 0 2rem 0;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    padding: 2rem 0 3rem 0;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     z-index: 1100;
-    display: none;
-    transition: all 0.3s;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .dark-theme .nav-links {
-    background: #1a1a2e;
+    background: rgba(26, 26, 46, 0.98);
   }
   .nav-links.open {
-    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
   }
   .nav-links li {
-    margin: 0.7rem 0;
+    margin: 0.8rem 0;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: none;
   }
+  .nav-links.open li {
+    animation: slideInUp 0.4s ease forwards;
+  }
+  .nav-links.open li:nth-child(1) { animation-delay: 0.1s; }
+  .nav-links.open li:nth-child(2) { animation-delay: 0.15s; }
+  .nav-links.open li:nth-child(3) { animation-delay: 0.2s; }
+  .nav-links.open li:nth-child(4) { animation-delay: 0.25s; }
+  .nav-links.open li:nth-child(5) { animation-delay: 0.3s; }
   .nav-links a {
-    font-size: 1.1rem;
-    padding: 10px 0;
+    font-size: 1.2rem;
+    padding: 15px 30px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  .nav-links a:hover {
+    background: rgba(0, 123, 255, 0.1);
+    transform: translateY(-2px);
+  }
+  .dark-theme .nav-links a:hover {
+    background: rgba(96, 165, 250, 0.1);
   }
 }
 @media (max-width: 480px) {
@@ -261,7 +316,37 @@ export default {
   }
   .nav-links {
     top: 48px;
-    padding: 1rem 0 1.5rem 0;
+    padding: 1.5rem 0 2rem 0;
   }
+  .nav-links a {
+    font-size: 1.1rem;
+    padding: 12px 25px;
+  }
+}
+
+/* Animation keyframes */
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Improve hamburger animation */
+.hamburger span {
+  transform-origin: center;
+}
+
+/* Add subtle hover effect to brand */
+.brand a {
+  transition: all 0.3s ease;
+}
+
+.brand a:hover {
+  transform: translateY(-1px);
 }
 </style>
