@@ -11,17 +11,20 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  padding: var(--spacing-md);
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .modal-content {
   position: relative;
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: 95vw;
+  max-height: 95vh;
   background: var(--card-bg);
   border-radius: var(--radius-sm);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
 }
 
 .close-btn {
@@ -44,16 +47,41 @@
   background: rgba(0, 0, 0, 0.7);
 }
 
-.modal-content img {
-  width: 100%;
+.modal-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8f9fa;
+  overflow: hidden;
   max-height: 70vh;
+  min-height: 200px;
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Fallback for older browsers */
+.modal-content img {
+  max-width: 100%;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
   object-fit: contain;
   background: #f8f9fa;
+  display: block;
+  margin: 0 auto;
 }
 
 .modal-info {
   padding: 25px;
   color: var(--text-color);
+  flex-shrink: 0;
 }
 
 .modal-info h3 {
@@ -82,9 +110,21 @@
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
+  .modal-overlay {
+    padding: 10px;
+  }
+
   .modal-content {
-    max-width: 95vw;
-    max-height: 95vh;
+    max-width: 98vw;
+    max-height: 98vh;
+  }
+
+  .modal-image-container {
+    max-height: 60vh;
+  }
+
+  .modal-image {
+    max-height: 60vh;
   }
 
   .modal-info {
@@ -93,5 +133,48 @@
 
   .modal-info h3 {
     font-size: 1.4rem;
+  }
+
+  .close-btn {
+    top: 10px;
+    right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-overlay {
+    padding: 5px;
+  }
+
+  .modal-content {
+    max-width: 99vw;
+    max-height: 99vh;
+  }
+
+  .modal-image-container {
+    max-height: 50vh;
+    min-height: 150px;
+  }
+
+  .modal-image {
+    max-height: 50vh;
+  }
+
+  .modal-info {
+    padding: 15px;
+  }
+
+  .modal-info h3 {
+    font-size: 1.2rem;
+  }
+
+  .modal-info p {
+    font-size: 0.9rem;
+  }
+
+  .close-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
   }
 }

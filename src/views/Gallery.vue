@@ -140,7 +140,9 @@
         <button class="close-btn" @click="closeModal">
           <i class="fas fa-times"></i>
         </button>
-        <img :src="selectedImage.src" :alt="selectedImage.title" />
+        <div class="modal-image-container">
+          <img :src="selectedImage.src" :alt="selectedImage.title" class="modal-image" />
+        </div>
         <div class="modal-info">
           <h3>{{ selectedImage.title }}</h3>
           <p>{{ selectedImage.description }}</p>
