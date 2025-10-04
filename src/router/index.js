@@ -42,7 +42,18 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    // Always scroll to top when navigating to a new page
+    // This ensures users start at the top of each page
+    if (savedPosition) {
+      // If user used back/forward button, restore saved position
+      return savedPosition
+    } else {
+      // For all other navigation, scroll to top
+      return { top: 0, behavior: 'smooth' }
+    }
+  }
 })
 
 export default router
