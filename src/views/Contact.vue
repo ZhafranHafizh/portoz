@@ -1034,4 +1034,61 @@ export default {
     border-radius: 12px;
   }
 }
+
+/* Extra small screens (fix for 382px breakpoint) */
+@media (max-width: 400px) {
+  .contact-view {
+    padding: 1rem 0.8rem;
+    margin: 20px auto;
+  }
+  
+  .header-section {
+    padding: 15px 8px;
+    min-height: 280px;
+  }
+  
+  .header-content-wrapper {
+    max-width: 98vw;
+    padding: 0 8px;
+  }
+  
+  .page-title {
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+  }
+  
+  .page-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  
+  .cta-buttons {
+    gap: 10px;
+    margin-top: 12px;
+    padding: 0 5px;
+  }
+  
+  .primary-cta, .secondary-cta {
+    width: calc(100% - 10px);
+    max-width: 260px;
+    font-size: 0.9rem;
+    padding: 12px 20px;
+    margin: 0 5px;
+  }
+  
+  .contact-cards-container {
+    padding: 0 8px;
+  }
+  
+  .contact-item {
+    padding: 20px 16px;
+    margin: 0 2px;
+  }
+  
+  .social-floating {
+    padding: 20px 16px;
+    margin: 0 8px 16px;
+  }
+}
 </style>
