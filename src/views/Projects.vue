@@ -731,6 +731,32 @@ export default {
   opacity: 1;
 }
 
+/* Mobile touch optimization */
+@media (max-width: 768px) {
+  .card-overlay {
+    /* Show overlay on mobile tap instead of hover */
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .bento-card:active .card-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  /* Make entire card more touch-friendly */
+  .bento-card {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Improve touch feedback */
+  .bento-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+}
+
 .overlay-actions {
   text-align: center;
   transform: translateY(20px);
@@ -739,6 +765,12 @@ export default {
 
 .bento-card:hover .overlay-actions {
   transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .bento-card:active .overlay-actions {
+    transform: translateY(0);
+  }
 }
 
 .overlay-maximize-btn {
@@ -756,12 +788,24 @@ export default {
   font-weight: 600;
   color: #374151;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .overlay-maximize-btn:hover {
   background: white;
   transform: translateY(-2px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .overlay-maximize-btn {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+  
+  .overlay-maximize-btn:active {
+    transform: scale(0.95);
+  }
 }
 
 .overlay-maximize-btn i {
@@ -908,6 +952,7 @@ export default {
   .bento-grid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-auto-rows: 380px;
+    gap: 20px;
   }
   
   .bento-item.large {
@@ -927,86 +972,239 @@ export default {
   }
 }
 
+/* Medium screens (tablets) */
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 350px;
+    gap: 20px;
+    padding: 50px 1.5rem;
+  }
+  
+  .bento-item {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+  
+  .card-image {
+    height: 180px;
+  }
+  
+  .card-content {
+    padding: 20px 18px;
+  }
+}
+
 @media (max-width: 768px) {
   .header-section {
-    padding: 1.2rem 0.5rem;
+    padding: 60px 1.5rem 40px;
   }
+  
+  .header-content {
+    padding: 0 10px;
+  }
+  
   .page-title {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    margin-bottom: 16px;
   }
+  
   .page-subtitle {
     font-size: 1.1rem;
+    margin-bottom: 30px;
   }
+  
   .cv-download-section {
-    margin-bottom: 1.2rem;
+    margin: 25px 0 35px;
   }
-  .filter-pills {
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 1.2rem;
-  }
-  .filter-pill {
+  
+  .download-cv-btn {
+    padding: 14px 28px;
     font-size: 0.95rem;
-    padding: 7px 16px;
   }
+  
+  .filter-pills {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .filter-pill {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+  
+  /* Convert to single column layout */
   .bento-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    padding: 0 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 40px 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
   }
+  
+  .bento-item {
+    width: 100%;
+    height: auto;
+    min-height: unset;
+  }
+  
   .bento-card {
-    padding: 12px 8px;
-    border-radius: 12px;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 420px;
   }
+  
   .card-image {
-    height: 120px;
+    height: 200px;
+    flex-shrink: 0;
+  }
+  
+  .card-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .project-title {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  
+  .project-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  
+  .project-tags {
+    margin-top: auto;
+    gap: 6px;
+  }
+  
+  .tag {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+  
+  .stats-section {
+    flex-direction: row;
+    gap: 40px;
+    padding: 40px 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
   .header-section {
-    padding: 0.7rem 0.2rem;
+    padding: 40px 1rem 30px;
   }
+  
   .header-content {
-    padding: 0 2vw;
+    padding: 0 5px;
   }
+  
   .page-title {
-    font-size: 1.2rem;
+    font-size: 2rem;
+    margin-bottom: 12px;
   }
+  
   .page-subtitle {
-    font-size: 0.95rem;
+    font-size: 1rem;
+    margin-bottom: 25px;
+    line-height: 1.5;
   }
+  
   .cv-download-section {
-    margin-bottom: 0.7rem;
+    margin: 20px 0 30px;
   }
+  
+  .download-cv-btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    gap: 10px;
+  }
+  
   .filter-pills {
-    gap: 6px;
-    margin-bottom: 0.7rem;
+    gap: 8px;
+    margin-bottom: 15px;
   }
+  
   .filter-pill {
     font-size: 0.85rem;
-    padding: 6px 10px;
-    border-radius: 16px;
+    padding: 8px 16px;
   }
+  
+  /* Mobile vertical card layout */
   .bento-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 0 2px;
+    padding: 30px 1rem;
+    gap: 20px;
+    max-width: 100%;
   }
+  
   .bento-card {
-    padding: 8px 4px;
-    border-radius: 8px;
+    border-radius: 16px;
+    min-height: 380px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   }
+  
   .card-image {
-    height: 90px;
+    height: 180px;
   }
+  
+  .card-content {
+    padding: 18px 16px;
+  }
+  
+  .category-badge {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+  }
+  
+  .project-title {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  
   .project-description {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 14px;
   }
+  
+  .project-tags {
+    gap: 5px;
+  }
+  
+  .tag {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 10px;
+  }
+  
+  .tag-more {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+  
   .stats-section {
     flex-direction: column;
-    gap: 8px;
-    font-size: 0.9rem;
+    gap: 20px;
+    padding: 30px 1rem;
+    text-align: center;
+  }
+  
+  .stat-number {
+    font-size: 2.5rem;
+  }
+  
+  .stat-label {
+    font-size: 0.8rem;
   }
 }
 
