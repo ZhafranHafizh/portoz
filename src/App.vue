@@ -11,6 +11,7 @@
     </main>
     <Footer />
     <MobileNotice />
+    <FloatingActionButton />
   </div>
 </template>
 
@@ -18,6 +19,7 @@
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import MobileNotice from '@/components/MobileNotice.vue';
+import FloatingActionButton from '@/components/FloatingActionButton.vue';
 // import MaintenanceTicker from '@/components/MaintenanceTicker.vue'; // <-- Impor komponen
 
 export default {
@@ -26,6 +28,7 @@ export default {
     Navbar,
     Footer,
     MobileNotice,
+    FloatingActionButton,
     // MaintenanceTicker
   }
 }
