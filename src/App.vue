@@ -79,4 +79,58 @@ body.dark-theme {
   padding: 0; /* Padding mungkin lebih baik diatur per halaman */
   position: relative; /* Bisa membantu jika ada positioning aneh */
 }
+
+/* ===== CUSTOM SCROLLBAR STYLES ===== */
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0c0c0c;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  transform: scale(1.1);
+}
+
+::-webkit-scrollbar-corner {
+  background: #1f1f1f;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #667eea #162637;
+}
+
+/* Dark mode scrollbar */
+body.dark-theme ::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+body.dark-theme ::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+}
+
+body.dark-theme ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+}
+
+body.dark-theme ::-webkit-scrollbar-corner {
+  background: #1e293b;
+}
+
+body.dark-theme * {
+  scrollbar-color: #4f46e5 #1e293b;
+}
 </style>
