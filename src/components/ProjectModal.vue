@@ -10,9 +10,7 @@
 
       <!-- Modal Content -->
       <div class="modal-content">
-        <div class="modal-image-section">
-          <img :src="project.imageUrl" :alt="project.title" class="modal-image" />
-          <div class="image-gradient-overlay"></div>
+        <div class="modal-header-section">
           <div class="modal-meta">
             <div class="modal-categories">
               <span 
@@ -31,6 +29,11 @@
           <div class="detail-section">
             <h3 class="section-title">About This Project</h3>
             <p class="modal-description">{{ project.description }}</p>
+          </div>
+
+          <!-- Project Image in Middle -->
+          <div class="detail-section modal-image-section">
+            <img :src="project.imageUrl" :alt="project.title" class="modal-image" />
           </div>
 
           <div class="detail-section">
@@ -242,33 +245,13 @@ export default {
   overflow-y: auto;
 }
 
-/* Modal Image Section */
-.modal-image-section {
-  position: relative;
-  height: 300px;
-  overflow: hidden;
-}
-
-.modal-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.image-gradient-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60%;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+/* Modal Header Section */
+.modal-header-section {
+  padding: 40px 40px 20px 40px;
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
 }
 
 .modal-meta {
-  position: absolute;
-  bottom: 30px;
-  left: 30px;
-  right: 30px;
   color: white;
 }
 
@@ -294,6 +277,26 @@ export default {
   font-weight: 800;
   margin: 0;
   line-height: 1.2;
+}
+
+/* Modal Image Section - Now in Middle */
+.modal-image-section {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  margin: 32px 0;
+}
+
+.modal-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  max-height: 500px;
+}
+
+.image-gradient-overlay {
+  display: none;
 }
 
 /* Modal Details */
@@ -509,18 +512,16 @@ export default {
     padding: 10px;
   }
   
+  .modal-header-section {
+    padding: 30px 24px 16px 24px;
+  }
+  
   .modal-title {
     font-size: 2rem;
   }
   
   .modal-details {
     padding: 30px 24px;
-  }
-  
-  .modal-meta {
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
   }
   
   .modal-actions {
@@ -533,6 +534,10 @@ export default {
   
   .project-info-grid {
     grid-template-columns: 1fr;
+  }
+
+  .modal-image-section {
+    margin: 24px 0;
   }
 }
 
@@ -552,14 +557,8 @@ export default {
     height: 36px;
     font-size: 1rem;
   }
-  .modal-image-section {
-    height: 120px;
-    border-radius: 10px 10px 0 0;
-  }
-  .modal-meta {
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
+  .modal-header-section {
+    padding: 20px 16px 12px 16px;
   }
   .modal-title {
     font-size: 1.1rem;
@@ -605,6 +604,13 @@ export default {
     font-size: 0.95rem;
     padding: 8px 12px;
     border-radius: 8px;
+  }
+  .modal-image-section {
+    margin: 18px 0;
+    border-radius: 12px;
+  }
+  .modal-image {
+    max-height: 300px;
   }
 }
 
