@@ -39,12 +39,12 @@
     </div>
 
     <!-- Bento Grid Layout -->
-    <div class="bento-grid" :class="{ 'visible': projectsVisible }">
+    <div class="bento-grid" :class="{ 'visible': projectsVisible, 'mobile-layout': isMobile }">
       <div 
         v-for="(project, index) in filteredProjects" 
         :key="project.id"
         class="bento-item"
-        :class="[getBentoClass(index), { 'visible': projectsVisible }]"
+        :class="[!isMobile ? getBentoClass(index) : 'mobile', { 'visible': projectsVisible }]"
         :style="getProjectStyle(index)"
         @click="openModal(project)"
       >
@@ -132,6 +132,8 @@ export default {
       selectedProject: {},
       activeFilter: 'All',
       filters: ['All', 'Web Development', 'UI/UX Design', 'Mobile'],
+      isMobile: false,
+      resizeObserver: null,
       projectsData: [
         {
           id: 1,
@@ -295,7 +297,13 @@ export default {
     }
   },
   mounted() {
+    this.checkMobile();
     this.initAnimations();
+    // Add resize listener for responsive updates
+    window.addEventListener('resize', this.checkMobile);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.checkMobile);
   },
   methods: {
     setFilter(filter) {
@@ -364,6 +372,10 @@ export default {
       setTimeout(() => this.subtitleVisible = true, 400);
       setTimeout(() => this.filtersVisible = true, 600);
       setTimeout(() => this.projectsVisible = true, 800);
+    },
+    checkMobile() {
+      // Check if device is mobile based on screen width
+      this.isMobile = window.innerWidth <= 768;
     }
   }
 }
@@ -568,6 +580,17 @@ export default {
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Mobile Layout - Simplified for Performance */
+.bento-grid.mobile-layout {
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: unset;
+  grid-auto-rows: unset;
+  gap: 20px;
+  padding: 40px 1.5rem;
+  max-width: 600px;
+}
+
 .bento-grid.visible {
   opacity: 1;
   transform: translateY(0);
@@ -597,6 +620,15 @@ export default {
 
 .bento-item.tall {
   grid-row: span 2;
+}
+
+/* Mobile Item - No Bento Complexity */
+.bento-item.mobile {
+  grid-column: unset !important;
+  grid-row: unset !important;
+  width: 100%;
+  height: auto;
+  min-height: unset;
 }
 
 /* Bento Card */
