@@ -11,10 +11,9 @@
         <img src="../../public/galeri/Profil.png" alt="Foto Profil Zhafran Hafizh" class="profile-pic">
       </div>
       <h1 class="hero-title">Hello, I'm <strong>Zhafran Hafizh</strong>!</h1>
-      <h2 class="hero-subtitle">A <span>Creative & Innovative</span> UI/UX Designer</h2>
+      <h2 class="hero-subtitle">A <span>Software Engineer</span> Bridging Design, Development, and Quality</h2>
       <p class="hero-description">
-        Welcome to my digital portfolio. 
-        I transform complex ideas into intuitive and captivating user experiences. Let's take a look at my work!
+        Hello! This is where design meets code. As a product development enthusiast, I excel at creating intuitive UI/UX, implementing robust front-end interfaces, and ensuring software quality. Take a look at my end-to-end projects.
       </p>
       <router-link to="/projects" class="cta-button">
         See my works <span class="arrow">&rarr;</span>
