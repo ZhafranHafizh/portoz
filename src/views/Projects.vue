@@ -208,7 +208,7 @@ export default {
           imageUrl: '../galeri/cardia.png',
           link: 'https://cardiainsightt.humicprototyping.com/',
           github: '',
-          tags: ['Artificial Intelligence', 'Healthcare Tech', 'Machine Learning', 'Medical Detection'],
+          tags: ['Artificial Intelligence', 'Healthcare Tech', 'Machine Learning', 'Medical Detection', 'Flask', 'React JS'],
           category: 'Web Development',
           features: [
             'AI-powered cardiovascular analysis',
@@ -231,7 +231,7 @@ export default {
           link: '#',
           github: 'https://github.com/SuryaaAulia/Rent-It-App-Flutter',
           figma: 'https://www.figma.com/design/eudmS0XQSKFWt8dndjMIed/Rent-It?m=auto&t=dZyiGxhXRLTbMvL7-6',
-          tags: ['Mobile Development', 'Cross-platform', 'Rental System', 'Mobile UI'],
+          tags: ['Flutter', 'Mobile App', 'Cross-Platform', 'Rental Service'],
           category: ['Mobile', 'UI/UX Design'],
           features: [
             'Cross-platform mobile application',
@@ -253,7 +253,7 @@ export default {
           imageUrl: '../galeri/Detectme.png',
           link: 'https://detectme.id/',
           figma: 'https://www.figma.com/design/4EdpOtL2y0FS0y62IAowVI/DetectME?node-id=0-1&t=yt0aqYR2vwLm58LM-1',
-          tags: ['UI/UX Design', 'Prototyping', 'Design Assets', 'Complete Design Process'],
+          tags: ['UI/UX Design', 'Prototyping', 'Design Assets', 'Complete Design Process', 'Figma'],
           category: 'UI/UX Design',
           features: [
             'Complete UI/UX design system',
