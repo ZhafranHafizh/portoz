@@ -50,7 +50,7 @@
       >
         <div class="bento-card">
           <div class="card-image">
-            <img :src="project.imageUrl" :alt="project.title" />
+            <img :src="project.imageUrl" :alt="project.title" loading="lazy" />
             <div class="image-overlay">
               <div class="overlay-content">
                 <button class="maximize-btn" @click.stop="openModal(project)">
