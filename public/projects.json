@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "System Monitoring Update at PT. JICT (GBOSS/MyJICT)",
-    "description": "As part of my internship assignment, I modernized the front-end design...",
+    "description": "As part of my internship assignment, I modernized the front-end design for several core GBOSS/MYJICT displays. I also created several custom components, such as the application logo and icons, to give it a professional look. I was also responsible for making GBOSS responsive on all devices.",
     "imageUrl": "../galeri/ManifestL1.webp",
     "link": "https://my.jict.co.id/gboss-eunoia/",
     "tags": [
@@ -29,7 +29,7 @@
   {
     "id": 2,
     "title": "Teaching Plotting Information System (Siplongjar)",
-    "description": "My final project, along with my group...",
+    "description": "My final project, along with my group, was to create a system that could be used to plot courses and lecturers at the Telkom University Faculty of Informatics.",
     "imageUrl": "../galeri/Siplongjar.webp",
     "link": "https://siplongjar.com/",
     "github": "https://github.com/rasjidzz/cap-plongjar",
@@ -57,7 +57,7 @@
   {
     "id": 3,
     "title": "UI/UX Design for Chevalier LAB",
-    "description": "Professional UI/UX design project for Chevalier LAB...",
+    "description": "Professional UI/UX design project for Chevalier LAB, creating comprehensive designs for Learning Management System (LMS) and coffee shop application with modern, user-friendly interfaces.",
     "imageUrl": "../galeri/Lmscheva.webp",
     "link": "#",
     "figma": "https://www.figma.com/design/VrFKV4lK8Esk2vEe32T0M8/LMS-Chevalier?node-id=0-1&t=2D62HaKtCBO5dfjO-1",
@@ -85,7 +85,7 @@
   {
     "id": 4,
     "title": "Cardiovascular Detection System with AI",
-    "description": "Advanced artificial intelligence project focused on cardiovascular disease detection...",
+    "description": "Advanced artificial intelligence project focused on cardiovascular disease detection, showcasing expertise in AI integration, medical technology, and complex system design.",
     "imageUrl": "../galeri/cardia.webp",
     "link": "https://cardiainsightt.humicprototyping.com/",
     "github": "",
@@ -114,7 +114,7 @@
   {
     "id": 5,
     "title": "Mobile App \"Rent-It\"",
-    "description": "Comprehensive mobile application development project for rental services...",
+    "description": "Comprehensive mobile application development project for rental services, demonstrating cross-platform development skills and mobile-first design approach.",
     "imageUrl": "../galeri/rentit.webp",
     "link": "#",
     "github": "https://github.com/SuryaaAulia/Rent-It-App-Flutter",
@@ -137,7 +137,7 @@
   {
     "id": 6,
     "title": "Design & Prototype for \"DetectMe\" Project",
-    "description": "End-to-end design project encompassing complete UI/UX design...",
+    "description": "End-to-end design project encompassing complete UI/UX design, prototyping, and asset creation for the DetectMe application, demonstrating full design process expertise.",
     "imageUrl": "../galeri/Detectme.webp",
     "link": "https://detectme.id/",
     "figma": "https://www.figma.com/design/4EdpOtL2y0FS0y62IAowVI/DetectME?node-id=0-1&t=yt0aqYR2vwLm58LM-1",
