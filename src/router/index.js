@@ -1,56 +1,50 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import About from '../views/About.vue'
-import Projects from '../views/Projects.vue'
-import Gallery from '../views/Gallery.vue'
-import Contact from '../views/Contact.vue'
-// import Analytics from '../views/Analytics.vue'  // Disabled Analytics page
+
+// --- KITA HAPUS SEMUA IMPORT STATIS DI SINI ---
+// Tidak ada lagi import Home, About, dll. di sini
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    // GANTI DENGAN FUNGSI IMPORT()
+    component: () => import('../views/Home.vue')
   },
   {
     path: '/about',
     name: 'About',
-    component: About
+    // GANTI DENGAN FUNGSI IMPORT()
+    component: () => import('../views/About.vue')
   },
   {
     path: '/projects',
     name: 'Projects',
-    component: Projects
+    // GANTI DENGAN FUNGSI IMPORT()
+    component: () => import('../views/Projects.vue')
   },
   {
     path: '/gallery',
     name: 'Gallery',
-    component: Gallery
+    // GANTI DENGAN FUNGSI IMPORT()
+    component: () => import('../views/Gallery.vue')
   },
   {
     path: '/contact',
     name: 'Contact',
-    component: Contact
+    // GANTI DENGAN FUNGSI IMPORT()
+    component: () => import('../views/Contact.vue')
   }
-  // Analytics route disabled
-  // {
-  //   path: '/analytics',
-  //   name: 'Analytics',
-  //   component: Analytics
-  // }
+  // Analytics route disabled (sudah benar)
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    // Always scroll to top when navigating to a new page
-    // This ensures users start at the top of each page
+    // (Kode scroll behavior Anda sudah bagus, tidak perlu diubah)
     if (savedPosition) {
-      // If user used back/forward button, restore saved position
       return savedPosition
     } else {
-      // For all other navigation, scroll to top
       return { top: 0, behavior: 'smooth' }
     }
   }
