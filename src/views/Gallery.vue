@@ -170,13 +170,13 @@ export default {
       // Sample images dari Unsplash - ganti dengan data gambar Anda nanti
       images: [
         {
-          src: '../galeri/Detectme.png',
+          src: '../galeri/Detectme.webp',
           title: 'DetectMe',
           description: 'A system that helps pregnant mothers detect fetal conditions.',
           category: 'Mobile App'
         },
         {
-          src: '../galeri/rentit.png',
+          src: '../galeri/rentit.webp',
           title: 'Rent-It',
           description: 'Facility rental system at Telkom University campus',
           category: 'Website'
