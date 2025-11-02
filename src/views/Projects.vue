@@ -117,7 +117,20 @@
 
 <script>
 import ProjectModal from '@/components/ProjectModal.vue';
+import { useHead } from '@vueuse/head';
+
 export default {
+  setup() {
+    useHead({
+      title: 'My Projects | Portofolio Zhafran',
+      meta: [
+        {
+          name: 'description',
+          content: 'Lihat koleksi proyek web development dan UI/UX design saya.'
+        }
+      ]
+    })
+  },
   name: 'ProjectsView',
   components: {
     ProjectModal

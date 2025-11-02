@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { createHead } from '@vueuse/head'
 import App from './App.vue'
 import router from './router'
 // import i18n from './i18n' // Nonaktifkan i18n sementara
@@ -8,7 +9,9 @@ import './assets/dark-mode.css' // Dark mode styles
 import viewTrackingDB from './plugins/viewTrackingDB' // Database view counter
 
 const app = createApp(App)
+const head = createHead()
 
+app.use(head)
 app.use(router)
   // .use(i18n) // Nonaktifkan i18n sementara
   .use(Particles)

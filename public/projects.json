@@ -5,7 +5,13 @@
     "description": "As part of my internship assignment, I modernized the front-end design...",
     "imageUrl": "../galeri/ManifestL1.webp",
     "link": "https://my.jict.co.id/gboss-eunoia/",
-    "tags": ["Frontend Development", "UI/UX Enhancement", "System Monitoring", "User Experience", "Vue.js"],
+    "tags": [
+      "Frontend Development",
+      "UI/UX Enhancement",
+      "System Monitoring",
+      "User Experience",
+      "Vue.js"
+    ],
     "category": "Web Development",
     "features": [
       "Modernized user interface for better usability",
@@ -28,7 +34,12 @@
     "link": "https://siplongjar.com/",
     "github": "https://github.com/rasjidzz/cap-plongjar",
     "figma": "https://www.figma.com/design/JzMxkBh4CM8B18SBwH6RTr/UI-Sistem-Plottingan?node-id=2515-1038&t=t8OiDTzwDBauptRw-1",
-    "tags": ["System Design", "UCD Methodology", "Information System", "Final Project"],
+    "tags": [
+      "System Design",
+      "UCD Methodology",
+      "Information System",
+      "Final Project"
+    ],
     "category": ["Web Development", "UI/UX Design"],
     "features": [
       "Complete system architecture design",
@@ -50,7 +61,13 @@
     "imageUrl": "../galeri/Lmscheva.webp",
     "link": "#",
     "figma": "https://www.figma.com/design/VrFKV4lK8Esk2vEe32T0M8/LMS-Chevalier?node-id=0-1&t=2D62HaKtCBO5dfjO-1",
-    "tags": ["UI/UX Design", "LMS Design", "Mobile App", "Figma", "Design System"],
+    "tags": [
+      "UI/UX Design",
+      "LMS Design",
+      "Mobile App",
+      "Figma",
+      "Design System"
+    ],
     "category": "UI/UX Design",
     "features": [
       "Complete LMS interface design",
@@ -72,7 +89,14 @@
     "imageUrl": "../galeri/cardia.webp",
     "link": "https://cardiainsightt.humicprototyping.com/",
     "github": "",
-    "tags": ["Artificial Intelligence", "Healthcare Tech", "Machine Learning", "Medical Detection", "Flask", "React JS"],
+    "tags": [
+      "Artificial Intelligence",
+      "Healthcare Tech",
+      "Machine Learning",
+      "Medical Detection",
+      "Flask",
+      "React JS"
+    ],
     "category": "Web Development",
     "features": [
       "AI-powered cardiovascular analysis",
@@ -117,7 +141,13 @@
     "imageUrl": "../galeri/Detectme.webp",
     "link": "https://detectme.id/",
     "figma": "https://www.figma.com/design/4EdpOtL2y0FS0y62IAowVI/DetectME?node-id=0-1&t=yt0aqYR2vwLm58LM-1",
-    "tags": ["UI/UX Design", "Prototyping", "Design Assets", "Complete Design Process", "Figma"],
+    "tags": [
+      "UI/UX Design",
+      "Prototyping",
+      "Design Assets",
+      "Complete Design Process",
+      "Figma"
+    ],
     "category": "UI/UX Design",
     "features": [
       "Complete UI/UX design system",
