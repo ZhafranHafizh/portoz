@@ -134,141 +134,9 @@ export default {
       filters: ['All', 'Web Development', 'UI/UX Design', 'Mobile'],
       isMobile: false,
       resizeObserver: null,
-      projectsData: [
-        {
-          id: 1,
-          title: 'System Monitoring Update at PT. JICT (GBOSS/MyJICT)',
-          description: 'As part of my internship assignment, I modernized the front-end design for several core GBOSS/MYJICT displays. I also created several custom components, such as the application logo and icons, to give it a professional look. I was also responsible for making GBOSS responsive on all devices.',
-          imageUrl: '../galeri/ManifestL1.png',
-          link: 'https://my.jict.co.id/gboss-eunoia/',
-          tags: ['Frontend Development', 'UI/UX Enhancement', 'System Monitoring', 'User Experience', 'Vue.js'],
-          category: 'Web Development',
-          features: [
-            'Modernized user interface for better usability',
-            'Enhanced system monitoring capabilities',
-            'Improved user experience flow',
-            'Responsive design implementation',
-            'Performance optimization',
-            'Integration with existing GBOSS infrastructure'
-          ],
-          challenges: 'Working with legacy systems while implementing modern frontend practices and ensuring seamless integration with existing workflows at a major port terminal company.',
-          duration: 'Internship Period',
-          team: 'Development Team at PT. JICT',
-          role: 'Frontend Web Developer Intern'
-        },
-        {
-          id: 2,
-          title: 'Teaching Plotting Information System (Siplongjar)',
-          description: 'My final project, along with my group, was to create a system that could be used to plot courses and lecturers at the Telkom University Faculty of Informatics.',
-          imageUrl: '../galeri/Siplongjar.png',
-          link: 'https://siplongjar.com/',
-          github: 'https://github.com/rasjidzz/cap-plongjar',
-          figma: 'https://www.figma.com/design/JzMxkBh4CM8B18SBwH6RTr/UI-Sistem-Plottingan?node-id=2515-1038&t=t8OiDTzwDBauptRw-1',
-          tags: ['System Design', 'UCD Methodology', 'Information System', 'Final Project'],
-          category: ['Web Development', 'UI/UX Design'],
-          features: [
-            'Complete system architecture design',
-            'User-Centered Design implementation',
-            'Teaching assignment management',
-            'Automated plotting algorithms',
-            'Comprehensive user interface',
-            'Database design and optimization'
-          ],
-          challenges: 'Some of the challenges faced were that the previous system used Excel with many complex relationships and calculations that complied with faculty and even university standards.',
-          duration: 'Final Project Timeline',
-          team: 'Five Person',
-          role: 'System Designer & UI/UX Lead'
-        },
-        {
-          id: 3,
-          title: 'UI/UX Design for Chevalier LAB',
-          description: 'Professional UI/UX design project for Chevalier LAB, creating comprehensive designs for Learning Management System (LMS) and coffee shop application with modern, user-friendly interfaces.',
-          imageUrl: '../galeri/Lmscheva.png',
-          link: '#',
-          figma: 'https://www.figma.com/design/VrFKV4lK8Esk2vEe32T0M8/LMS-Chevalier?node-id=0-1&t=2D62HaKtCBO5dfjO-1',
-          tags: ['UI/UX Design', 'LMS Design', 'Mobile App', 'Figma', 'Design System'],
-          category: 'UI/UX Design',
-          features: [
-            'Complete LMS interface design',
-            'Coffee shop mobile app design',
-            'Design system development',
-            'User journey mapping',
-            'Interactive prototyping',
-            'Cross-platform design consistency'
-          ],
-          challenges: 'Creating intuitive designs for both educational and commercial applications while maintaining consistency across different platforms and user types.',
-          duration: 'Client Project Timeline',
-          team: 'Chevalier LAB Design Team',
-          role: 'Lead UI/UX Designer'
-        },
-        {
-          id: 4,
-          title: 'Cardiovascular Detection System with AI',
-          description: 'Advanced artificial intelligence project focused on cardiovascular disease detection, showcasing expertise in AI integration, medical technology, and complex system design.',
-          imageUrl: '../galeri/cardia.png',
-          link: 'https://cardiainsightt.humicprototyping.com/',
-          github: '',
-          tags: ['Artificial Intelligence', 'Healthcare Tech', 'Machine Learning', 'Medical Detection', 'Flask', 'React JS'],
-          category: 'Web Development',
-          features: [
-            'AI-powered cardiovascular analysis',
-            'Medical data processing',
-            'Real-time detection algorithms',
-            'Healthcare-compliant interface',
-            'Data visualization for medical professionals',
-            'Integration with medical devices'
-          ],
-          challenges: 'Developing a highly accurate AI system for medical applications while ensuring compliance with healthcare standards and creating an intuitive interface for medical professionals.',
-          duration: 'Research Project Timeline',
-          team: 'AI Research Team',
-          role: 'AI Developer & Interface Designer'
-        },
-        {
-          id: 5,
-          title: 'Mobile App "Rent-It"',
-          description: 'Comprehensive mobile application development project for rental services, demonstrating cross-platform development skills and mobile-first design approach.',
-          imageUrl: '../galeri/rentit.png',
-          link: '#',
-          github: 'https://github.com/SuryaaAulia/Rent-It-App-Flutter',
-          figma: 'https://www.figma.com/design/eudmS0XQSKFWt8dndjMIed/Rent-It?m=auto&t=dZyiGxhXRLTbMvL7-6',
-          tags: ['Flutter', 'Mobile App', 'Cross-Platform', 'Rental Service'],
-          category: ['Mobile', 'UI/UX Design'],
-          features: [
-            'Cross-platform mobile application',
-            'Rental booking system',
-            'Payment integration',
-            'User authentication',
-            'Real-time availability tracking',
-            'Push notifications'
-          ],
-          challenges: 'Creating a seamless rental experience across different mobile platforms while implementing secure payment processing and real-time inventory management.',
-          duration: 'Mobile Project Timeline',
-          team: 'Mobile Development Team',
-          role: 'Mobile Developer & UI Designer'
-        },
-        {
-          id: 6,
-          title: 'Design & Prototype for "DetectMe" Project',
-          description: 'End-to-end design project encompassing complete UI/UX design, prototyping, and asset creation for the DetectMe application, demonstrating full design process expertise.',
-          imageUrl: '../galeri/Detectme.png',
-          link: 'https://detectme.id/',
-          figma: 'https://www.figma.com/design/4EdpOtL2y0FS0y62IAowVI/DetectME?node-id=0-1&t=yt0aqYR2vwLm58LM-1',
-          tags: ['UI/UX Design', 'Prototyping', 'Design Assets', 'Complete Design Process', 'Figma'],
-          category: 'UI/UX Design',
-          features: [
-            'Complete UI/UX design system',
-            'Interactive prototypes',
-            'Development-ready assets',
-            'User research integration',
-            'Design documentation',
-            'Handoff to development team'
-          ],
-          challenges: 'Managing the complete design process from concept to development handoff while ensuring design consistency and creating comprehensive documentation for seamless development implementation.',
-          duration: 'Still in Development',
-          team: 'Design & Development Team',
-          role: 'Lead Designer & Design Process Manager'
-        }
-      ]
+      
+      
+      projectsData: [] 
     };
   },
   computed: {
@@ -298,7 +166,10 @@ export default {
   },
   mounted() {
     this.checkMobile();
-    this.initAnimations();
+    
+    // KITA PANGGIL FUNGSI BARU DI SINI
+    this.fetchProjects(); 
+    
     // Add resize listener for responsive updates
     window.addEventListener('resize', this.checkMobile);
   },
@@ -306,6 +177,24 @@ export default {
     window.removeEventListener('resize', this.checkMobile);
   },
   methods: {
+    async fetchProjects() {
+      try {
+        // Path '/projects.json' berfungsi karena filenya ada di folder 'public'
+        const response = await fetch('/projects.json'); 
+        const data = await response.json();
+        this.projectsData = data;
+
+        // Pindahkan initAnimations ke sini agar animasi
+        // baru berjalan SETELAH data siap
+        this.initAnimations();
+
+      } catch (error) {
+        console.error("Gagal mengambil data proyek:", error);
+        // Jika error, tetap jalankan animasi agar UI lain muncul
+        this.initAnimations(); 
+      }
+    },
+
     setFilter(filter) {
       this.activeFilter = filter;
       this.projectsVisible = false;
@@ -314,7 +203,6 @@ export default {
       }, 150);
     },
     getBentoClass(index) {
-      // Simplified pattern for better reliability
       const patterns = ['normal', 'wide', 'normal', 'large', 'normal', 'tall'];
       return patterns[index % patterns.length] || 'normal';
     },
@@ -341,7 +229,6 @@ export default {
       }
     },
     trackDownload() {
-      // Optional: Add analytics tracking for CV downloads
       console.log('CV downloaded at:', new Date().toISOString());
       // You can add Google Analytics or other tracking here
     },
@@ -368,6 +255,7 @@ export default {
       return truncated + (truncated.endsWith('.') ? '..' : '...');
     },
     initAnimations() {
+      // Fungsi ini dipanggil dari fetchProjects() setelah data dimuat
       setTimeout(() => this.titleVisible = true, 200);
       setTimeout(() => this.subtitleVisible = true, 400);
       setTimeout(() => this.filtersVisible = true, 600);
