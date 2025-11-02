@@ -10,6 +10,18 @@
           <p class="intro">
             Hi! I'm <strong>Zhafran Hafizh Izdihar Riyadi</strong>, A Software Engineer who is passionate about creating intuitive, functional, and high-quality digital products.
           </p>
+          <!-- Download CV Button -->
+          <div class="cv-download-section">
+            <a 
+              href="/cv/Zhafran_Resume_Latest.pdf" 
+              download="Zhafran_Hafizh_Resume_2025.pdf"
+              class="download-cv-btn"
+              @click="trackDownload"
+            >
+              <i class="fas fa-download"></i>
+              <span>Download My CV</span>
+            </a>
+          </div>
         </div>
       </div>
 
@@ -68,6 +80,11 @@ useHead({
 
 // 2. Animasi fade-in sederhana (tanpa parallax, tanpa fetch)
 const sectionVisible = ref(false)
+
+const trackDownload = () => {
+  console.log('CV downloaded at:', new Date().toISOString())
+  // You can add Google Analytics or other tracking here
+}
 
 onMounted(() => {
   setTimeout(() => {
@@ -169,6 +186,61 @@ onMounted(() => {
 .about-content.dark .profile-text h2 { color: #60a5fa; }
 .about-content.dark .profile-text .intro { color: #a1a1aa; }
 
+/* Download CV Button */
+.cv-download-section {
+  margin-top: 20px;
+}
+
+.download-cv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.download-cv-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+
+.download-cv-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+}
+
+.download-cv-btn:hover::before {
+  left: 0;
+}
+
+.download-cv-btn:active {
+  transform: translateY(-1px);
+}
+
+.download-cv-btn i {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.download-cv-btn:hover i {
+  transform: translateY(-2px);
+}
 
 /* 2. Bagian Story Content */
 .story-content {
@@ -265,6 +337,12 @@ onMounted(() => {
   .profile-text h1 { font-size: 2rem; }
   .profile-text h2 { font-size: 1.2rem; }
   .profile-text .intro { font-size: 1rem; }
+  
+  .download-cv-btn {
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    margin-top: 15px;
+  }
   
   .story-content {
     text-align: left;
