@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Navbar />
+    <DarkModeWarning />
     <!-- <MaintenanceTicker /> -->
     <main class="content">
       <router-view v-slot="{ Component }">
@@ -20,6 +21,7 @@ import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import MobileNotice from '@/components/MobileNotice.vue';
 import FloatingActionButton from '@/components/FloatingActionButton.vue';
+import DarkModeWarning from '@/components/DarkModeWarning.vue';
 // import MaintenanceTicker from '@/components/MaintenanceTicker.vue'; // <-- Impor komponen
 
 export default {
@@ -29,6 +31,7 @@ export default {
     Footer,
     MobileNotice,
     FloatingActionButton,
+    DarkModeWarning,
     // MaintenanceTicker
   }
 }

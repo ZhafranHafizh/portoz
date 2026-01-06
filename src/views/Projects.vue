@@ -786,7 +786,7 @@ export default {
 }
 
 .project-description {
-  color: #64748b;
+  color: #78716c;
   line-height: 1.6;
   margin-bottom: 20px;
   flex: 1;
@@ -807,12 +807,12 @@ export default {
 
 .tag {
   padding: 6px 12px;
-  background: #f1f5f9;
-  color: #475569;
+  background: #fef3e2;
+  color: #78716c;
   border-radius: 12px;
   font-size: 0.75rem;
   font-weight: 500;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #fed7aa;
 }
 
 :global(body.dark-theme) .tag {
@@ -866,7 +866,7 @@ export default {
 
 .stat-label {
   display: block;
-  color: #64748b;
+  color: #78716c;
   font-weight: 500;
   margin-top: 8px;
   text-transform: uppercase;
@@ -1162,7 +1162,7 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #fef3e2;
 }
 
 ::-webkit-scrollbar-thumb {

@@ -620,7 +620,7 @@ export default {
 }
 
 .modal-content::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #fef3e2;
 }
 
 .modal-content::-webkit-scrollbar-thumb {

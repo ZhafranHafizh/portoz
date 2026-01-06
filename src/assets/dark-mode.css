@@ -1,7 +1,8 @@
 /* Global Dark Mode Styles - Warm/Orange Theme */
 
 /* Base styles */
-body.dark-theme, html.dark-theme {
+body.dark-theme,
+html.dark-theme {
   background-color: #1c1917 !important;
   /* Stone 900 */
   color: #e7e5e4 !important;
