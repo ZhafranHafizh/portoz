@@ -44,7 +44,7 @@ export default {
           },
         },
         particles: {
-          color: { value: '#007bff' },
+          color: { value: '#f97316' },
           links: {
             color: '#555555', distance: 150, enable: true,
             opacity: 0.4, width: 1,
@@ -101,7 +101,7 @@ export default {
   align-items: center;
   min-height: 100vh;
   padding: 40px 20px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #fafaf9 0%, #e7e5e4 100%);
   font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
   overflow-y: auto;
@@ -109,7 +109,7 @@ export default {
 }
 
 :global(.dark) .home-view {
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+  background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%);
 }
 
 /* Styling untuk #tsparticles */
@@ -138,7 +138,7 @@ export default {
 }
 
 :global(.dark) .hero {
-  background-color: rgba(26, 26, 46, 0.9);
+  background-color: rgba(41, 37, 36, 0.9);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -166,9 +166,9 @@ export default {
   color: #e4e4e7;
 }
 
-.hero-title strong { color: #007bff; }
+.hero-title strong { color: #f97316; }
 
-:global(.dark) .hero-title strong { color: #60a5fa; }
+:global(.dark) .hero-title strong { color: #fb923c; }
 
 .hero-subtitle {
   font-size: 1.6rem; font-weight: 400; color: #555; margin-bottom: 25px;
@@ -178,9 +178,9 @@ export default {
   color: #a1a1aa;
 }
 
-.hero-subtitle span { font-weight: 600; color: #28a745; }
+.hero-subtitle span { font-weight: 600; color: #d97706; }
 
-:global(.dark) .hero-subtitle span { color: #34d399; }
+:global(.dark) .hero-subtitle span { color: #fbbf24; }
 
 .hero-description {
   font-size: 1.1rem; color: #666; line-height: 1.7; margin-bottom: 30px;
@@ -192,15 +192,15 @@ export default {
 }
 .cta-button {
   display: inline-flex; align-items: center; padding: 14px 30px;
-  background-image: linear-gradient(to right, #007bff 0%, #0056b3 100%);
+  background-image: linear-gradient(to right, #f97316 0%, #ea580c 100%);
   color: white; text-decoration: none; border-radius: 50px;
   font-size: 1.15rem; font-weight: 600; transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3); margin-top: 20px;
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3); margin-top: 20px;
 }
 .cta-button:hover {
-  background-image: linear-gradient(to right, #0056b3 0%, #007bff 100%);
+  background-image: linear-gradient(to right, #ea580c 0%, #f97316 100%);
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
 }
 .cta-button .arrow { margin-left: 8px; transition: transform 0.3s ease; }
 .cta-button:hover .arrow { transform: translateX(5px); }

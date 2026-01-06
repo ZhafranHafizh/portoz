@@ -124,11 +124,11 @@ onMounted(() => {
 
 /* Dark Mode */
 .about-view.dark {
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+  background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%);
 }
 
 .about-content.dark {
-  background-color: rgba(26, 26, 46, 0.9);
+  background-color: rgba(41, 37, 36, 0.9);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   color: #e4e4e7;
 }
@@ -158,7 +158,7 @@ onMounted(() => {
 }
 
 .about-content.dark .about-pic {
-  border-color: #1a1a2e;
+  border-color: #0c0a09;
 }
 
 .profile-text h1 {
@@ -171,7 +171,7 @@ onMounted(() => {
 .profile-text h2 {
   font-size: 1.5rem;
   font-weight: 400;
-  color: #007bff; /* Warna aksen */
+  color: #f97316; /* Warna aksen */
   margin: 10px 0;
 }
 
@@ -183,7 +183,7 @@ onMounted(() => {
 }
 
 .about-content.dark .profile-text h1 { color: #e4e4e7; }
-.about-content.dark .profile-text h2 { color: #60a5fa; }
+.about-content.dark .profile-text h2 { color: #fb923c; }
 .about-content.dark .profile-text .intro { color: #a1a1aa; }
 
 /* Download CV Button */
@@ -196,14 +196,14 @@ onMounted(() => {
   align-items: center;
   gap: 12px;
   padding: 12px 28px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   color: white;
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
   font-size: 0.95rem;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -215,14 +215,14 @@ onMounted(() => {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
   transition: left 0.3s ease;
   z-index: -1;
 }
 
 .download-cv-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 12px 35px rgba(249, 115, 22, 0.4);
 }
 
 .download-cv-btn:hover::before {
@@ -255,7 +255,7 @@ onMounted(() => {
   color: #333;
   margin-top: 40px;
   margin-bottom: 20px;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #f97316;
   padding-bottom: 8px;
   display: inline-block;
 }
@@ -265,7 +265,7 @@ onMounted(() => {
   margin-bottom: 20px;
 }
 
-.about-content.dark .story-content h3 { color: #e4e4e7; border-bottom-color: #60a5fa; }
+.about-content.dark .story-content h3 { color: #e4e4e7; border-bottom-color: #fb923c; }
 .about-content.dark .story-content p { color: #a1a1aa; }
 
 .skills-list {
@@ -287,32 +287,32 @@ onMounted(() => {
   position: absolute;
   left: 0;
   top: 0;
-  color: #28a745; /* Warna hijau sukses */
+  color: #d97706; /* Warna hijau sukses -> Amber/Brown */
   font-weight: 700;
   font-size: 1.2rem;
 }
 
 .about-content.dark .skills-list li { color: #a1a1aa; }
-.about-content.dark .skills-list li::before { color: #34d399; }
+.about-content.dark .skills-list li::before { color: #fbbf24; }
 
 /* Tombol CTA (Call to Action) */
 .cta-button {
   display: inline-block;
   padding: 14px 32px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   color: white;
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
   font-size: 1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
   margin-top: 20px;
 }
 
 .cta-button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 12px 35px rgba(249, 115, 22, 0.4);
 }
 
 /* Responsive */

@@ -285,21 +285,21 @@ export default {
 <style scoped>
 .projects-view {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #fafaf9 0%, #e7e5e4 100%);
   padding: 0;
   font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
   transition: background 0.3s ease;
 }
 
 :global(.dark) .projects-view {
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+  background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%);
 }
 
 /* Header Section */
 .header-section {
   padding: 80px 2rem 60px;
   text-align: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   color: white;
   position: relative;
   overflow: hidden;
@@ -307,7 +307,7 @@ export default {
 }
 
 :global(.dark) .header-section {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  background: linear-gradient(135deg, #292524 0%, #1c1917 100%);
 }
 
 .header-section::before {
@@ -343,7 +343,7 @@ export default {
 }
 
 .title-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #e8f4fd 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #fff7ed 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -383,14 +383,14 @@ export default {
   align-items: center;
   gap: 12px;
   padding: 16px 32px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #f97316 0%, #d97706 100%);
   color: white;
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
   font-size: 1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -402,14 +402,14 @@ export default {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  background: linear-gradient(135deg, #d97706 0%, #f97316 100%);
   transition: left 0.3s ease;
   z-index: -1;
 }
 
 .download-cv-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 12px 35px rgba(249, 115, 22, 0.4);
 }
 
 .download-cv-btn:hover::before {
@@ -461,7 +461,7 @@ export default {
 .filter-pill:hover,
 .filter-pill.active {
   background: white;
-  color: #667eea;
+  color: #f97316;
   border-color: white;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -547,7 +547,7 @@ export default {
 }
 
 :global(.dark) .bento-card {
-  background: #1a1a2e;
+  background: #292524;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
@@ -593,7 +593,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.8), rgba(217, 119, 6, 0.8));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -650,7 +650,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.95), rgba(118, 75, 162, 0.95));
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.95), rgba(217, 119, 6, 0.95));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -760,7 +760,7 @@ export default {
 .category-badge {
   display: inline-block;
   padding: 6px 12px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #f97316, #ea580c);
   color: white;
   border-radius: 20px;
   font-size: 0.75rem;

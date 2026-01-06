@@ -27,7 +27,7 @@
 .hint-toggle-btn:hover {
   background: var(--primary-color-dark);
   transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
 }
 
 .hint-toggle-btn:active {
@@ -42,9 +42,9 @@
 .interaction-hint {
   text-align: center;
   padding: 15px 25px;
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(249, 115, 22, 0.1);
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(102, 126, 234, 0.2);
+  border: 1px solid rgba(249, 115, 22, 0.2);
   transition: var(--transition-base);
   transform-origin: top;
 }
@@ -66,8 +66,8 @@
 }
 
 :global(.dark) .interaction-hint {
-  background: rgba(102, 126, 234, 0.15);
-  border-color: rgba(102, 126, 234, 0.3);
+  background: rgba(249, 115, 22, 0.15);
+  border-color: rgba(249, 115, 22, 0.3);
 }
 
 /* Filter Tabs */

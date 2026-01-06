@@ -1,843 +1,455 @@
-/* Global Dark Mode Styles */
+/* Global Dark Mode Styles - Warm/Orange Theme */
 
 /* Base styles */
 body.dark-theme {
-  background-color: #0f0f23 !important;
-  color: #e4e4e7 !important;
+  background-color: #1c1917 !important;
+  /* Stone 900 */
+  color: #e7e5e4 !important;
+  /* Stone 200 */
 }
 
-/* Navbar Dark Mode with subtle glassmorphism */
+/* Navbar Dark Mode */
 body.dark-theme .navbar {
-  background: rgba(255, 255, 255, 0.05) !important;
+  background: rgba(28, 25, 23, 0.8) !important;
+  /* Stone 900 */
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
-  color: #e4e4e7 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-}
-
-/* Ensure dark mode toggle is always visible */
-body.dark-theme .nav-actions {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-body.dark-theme .dark-mode-toggle {
-  opacity: 1 !important;
-  visibility: visible !important;
-  display: flex !important;
+  color: #e7e5e4 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
 }
 
 body.dark-theme .brand a {
-  color: #e4e4e7 !important;
+  color: #e7e5e4 !important;
 }
 
 body.dark-theme .brand a strong {
-  color: #60a5fa !important;
+  color: #fb923c !important;
+  /* Orange 400 */
 }
 
 body.dark-theme .brand a:hover {
-  color: #60a5fa !important;
+  color: #fb923c !important;
 }
 
 body.dark-theme .nav-links a {
-  color: #a1a1aa !important;
+  color: #a8a29e !important;
+  /* Stone 400 */
 }
 
 body.dark-theme .nav-links a::after {
-  background-color: #60a5fa !important;
+  background-color: #fb923c !important;
 }
 
 body.dark-theme .nav-links a:hover,
 body.dark-theme .nav-links a.router-link-exact-active {
-  color: #60a5fa !important;
+  color: #fb923c !important;
+}
+
+/* Mobile Menu Dark Mode */
+body.dark-theme .nav-links {
+  background: rgba(28, 25, 23, 0.98) !important;
+}
+
+body.dark-theme .hamburger span {
+  background: #e7e5e4 !important;
 }
 
 /* Home View Dark Mode */
 body.dark-theme .home-view {
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%) !important;
+  background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%) !important;
 }
 
 body.dark-theme .hero {
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.1),
-              0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  background: rgba(41, 37, 36, 0.4) !important;
+  /* Stone 800 */
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
 body.dark-theme .hero-title {
-  color: #e4e4e7 !important;
+  color: #e7e5e4 !important;
 }
 
 body.dark-theme .hero-title strong {
-  color: #60a5fa !important;
+  color: #f97316 !important;
+  /* Orange 500 */
 }
 
 body.dark-theme .hero-subtitle {
-  color: #a1a1aa !important;
+  color: #a8a29e !important;
 }
 
 body.dark-theme .hero-subtitle span {
-  color: #34d399 !important;
+  color: #fb923c !important;
 }
 
 body.dark-theme .hero-description {
-  color: #a1a1aa !important;
+  color: #a8a29e !important;
+}
+
+body.dark-theme .cta-button {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3) !important;
+}
+
+body.dark-theme .secondary-button {
+  border-color: #fb923c !important;
+  color: #fb923c !important;
+}
+
+body.dark-theme .secondary-button:hover {
+  background: rgba(251, 146, 60, 0.1) !important;
+}
+
+body.dark-theme .scroll-indicator {
+  color: #a8a29e !important;
 }
 
 /* About View Dark Mode */
 body.dark-theme .about-view {
-  background-color: #0f0f23 !important;
-  color: #e4e4e7 !important;
+  background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%) !important;
+  background-color: #1c1917 !important;
+  color: #e7e5e4 !important;
 }
 
-body.dark-theme .about-me-section {
-  background: rgba(255, 255, 255, 0.08) !important;
-  backdrop-filter: blur(25px) !important;
-  -webkit-backdrop-filter: blur(25px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.15), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.1),
-              0 1px 0 rgba(255, 255, 255, 0.1) !important;
+body.dark-theme .about-content {
+  background: rgba(41, 37, 36, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
-body.dark-theme .about-me-section h1 {
-  color: #e4e4e7 !important;
+body.dark-theme .profile-text h1 {
+  color: #f97316 !important;
 }
 
-body.dark-theme .text p {
-  color: #a1a1aa !important;
+body.dark-theme .profile-text h2 {
+  color: #e7e5e4 !important;
 }
 
-body.dark-theme .timeline-section {
-  background: rgba(255, 255, 255, 0.08) !important;
-  backdrop-filter: blur(25px) !important;
-  -webkit-backdrop-filter: blur(25px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.15), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.1),
-              0 1px 0 rgba(255, 255, 255, 0.1) !important;
+body.dark-theme .profile-text h2 strong {
+  color: #fb923c !important;
 }
 
-body.dark-theme .section-title {
-  color: #e4e4e7 !important;
+body.dark-theme .intro {
+  color: #a8a29e !important;
 }
 
-body.dark-theme .timeline::before {
-  background-color: #374151 !important;
+body.dark-theme .about-pic {
+  border-color: #0c0a09 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
 }
 
-body.dark-theme .timeline-marker {
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border-color: #60a5fa !important;
-  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.05), 
-              0 8px 25px rgba(96, 165, 250, 0.3) !important;
+body.dark-theme .story-content h3 {
+  color: #e7e5e4 !important;
+  border-bottom-color: #fb923c !important;
 }
 
-body.dark-theme .timeline-item:hover .timeline-marker {
-  border-color: #3b82f6 !important;
+body.dark-theme .story-content p {
+  color: #d6d3d1 !important;
 }
 
-body.dark-theme .timeline-year {
-  color: #60a5fa !important;
+body.dark-theme .skills-list li {
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: #d6d3d1 !important;
 }
 
-body.dark-theme .timeline-content {
-  background: rgba(255, 255, 255, 0.06) !important;
-  backdrop-filter: blur(15px) !important;
-  -webkit-backdrop-filter: blur(15px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+body.dark-theme .download-cv-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #e7e5e4 !important;
 }
 
-body.dark-theme .timeline-content h4 {
-  color: #e4e4e7 !important;
-}
-
-body.dark-theme .timeline-content li {
-  color: #a1a1aa !important;
-}
-
-body.dark-theme .timeline-content li strong {
-  color: #e4e4e7 !important;
+body.dark-theme .download-cv-btn:hover {
+  border-color: #fb923c !important;
+  color: #fb923c !important;
 }
 
 /* Projects View Dark Mode */
 body.dark-theme .projects-view {
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%) !important;
+  background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%) !important;
 }
 
 body.dark-theme .header-section {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+  background: linear-gradient(135deg, #292524 0%, #1c1917 100%) !important;
 }
 
-body.dark-theme .bento-card {
-  background: rgba(255, 255, 255, 0.08) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.15), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.1),
-              0 1px 0 rgba(255, 255, 255, 0.05) !important;
-}
-
-/* Enhanced hover effect for glassmorphism cards */
-body.dark-theme .bento-card:hover {
-  background: rgba(255, 255, 255, 0.12) !important;
-  backdrop-filter: blur(25px) !important;
-  -webkit-backdrop-filter: blur(25px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 35px 60px rgba(0, 0, 0, 0.2), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.15),
-              0 1px 0 rgba(255, 255, 255, 0.1) !important;
-  transform: translateY(-8px) scale(1.02) !important;
-}
-
-body.dark-theme .project-title {
-  color: #e4e4e7 !important;
-}
-
-body.dark-theme .project-description {
-  color: #a1a1aa !important;
-}
-
-body.dark-theme .tag {
-  background: #374151 !important;
-  color: #e4e4e7 !important;
-  border: 1px solid #4b5563 !important;
-}
-
-body.dark-theme .stats-section {
-  background: rgba(255, 255, 255, 0.06) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-}
-
-body.dark-theme .stat-label {
-  color: #a1a1aa !important;
-}
-
-/* Contact View Dark Mode */
-body.dark-theme .contact-view {
-  background-color: #0f0f23 !important;
-  color: #e4e4e7 !important;
-}
-
-body.dark-theme .floating-circle {
-  opacity: 0.05 !important;
-}
-
-/* Enhanced Contact View Styles */
 body.dark-theme .page-title {
-  background: linear-gradient(135deg, #e4e4e7 0%, #a1a1aa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #e7e5e4 !important;
+}
+
+body.dark-theme .title-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #fed7aa 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
 }
 
 body.dark-theme .page-subtitle {
-  color: #a1a1aa;
+  color: #a8a29e !important;
 }
 
-body.dark-theme .secondary-cta {
-  background: rgba(39, 39, 42, 0.9);
-  color: #e4e4e7;
-  border: 2px solid #3f3f46;
-}
-
-body.dark-theme .secondary-cta:hover {
-  background: rgba(63, 63, 70, 1);
-  border-color: #007bff;
-  color: #60a5fa;
-}
-
-body.dark-theme .section-header h2 {
-  color: #e4e4e7;
-}
-
-body.dark-theme .section-header p {
-  color: #a1a1aa;
-}
-
-body.dark-theme .contact-item {
-  background: rgba(39, 39, 42, 0.9);
-  border: 1px solid #3f3f46;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(12px);
-}
-
-body.dark-theme .contact-item.featured {
-  border: 2px solid #60a5fa;
-  box-shadow: 0 12px 40px rgba(96, 165, 250, 0.2);
-}
-
-body.dark-theme .contact-item:hover {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-}
-
-body.dark-theme .info-content h3 {
-  color: #e4e4e7;
-}
-
-body.dark-theme .info-content p {
-  color: #a1a1aa;
-}
-
-body.dark-theme .contact-link {
-  color: #60a5fa;
-  background: rgba(96, 165, 250, 0.1);
-  border: 1px solid rgba(96, 165, 250, 0.2);
-}
-
-body.dark-theme .contact-link:hover {
-  background: rgba(96, 165, 250, 0.15);
-  border-color: #60a5fa;
-}
-
-body.dark-theme .contact-stats {
-  color: #4ade80;
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px solid rgba(74, 222, 128, 0.2);
-}
-
-body.dark-theme .social-floating {
-  background: rgba(39, 39, 42, 0.9);
-  border: 1px solid #3f3f46;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(15px);
-}
-
-body.dark-theme .social-header i {
-  color: #60a5fa;
-}
-
-body.dark-theme .social-title {
-  color: #e4e4e7;
-}
-
-body.dark-theme .social-subtitle {
-  color: #a1a1aa;
-}
-
-/* Footer Dark Mode */
-body.dark-theme .app-footer {
-  background: rgba(255, 255, 255, 0.06) !important;
-  backdrop-filter: blur(15px) !important;
-  -webkit-backdrop-filter: blur(15px) !important;
-  color: #a1a1aa !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-}
-
-body.dark-theme .copyright strong {
-  color: #e4e4e7 !important;
-}
-
-body.dark-theme .copyright a {
-  color: #60a5fa !important;
-}
-
-body.dark-theme .social-links a {
-  color: #a1a1aa !important;
-}
-
-body.dark-theme .social-links a:hover {
-  color: #60a5fa !important;
-}
-
-/* Maintenance Ticker Dark Mode */
-body.dark-theme .led-board {
-  background: rgba(255, 255, 255, 0.05) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-}
-
-body.dark-theme .scrolling-content {
-  color: #60a5fa !important;
-}
-
-body.dark-theme .time {
-  color: #34d399 !important;
-}
-
-body.dark-theme .separator {
-  color: #a1a1aa !important;
-}
-
-/* Additional Glassmorphism Enhancements for Dark Mode */
-
-/* Enhanced glassmorphism for filter pills in Projects */
 body.dark-theme .filter-pill {
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(15px) !important;
-  -webkit-backdrop-filter: blur(15px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #a8a29e !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 body.dark-theme .filter-pill:hover,
 body.dark-theme .filter-pill.active {
-  background: rgba(255, 255, 255, 0.15) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  background: #f97316 !important;
+  color: white !important;
+  border-color: #f97316 !important;
 }
 
-/* Timeline marker glassmorphism effect */
-body.dark-theme .timeline-marker {
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border-color: #60a5fa !important;
-  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.05), 
-              0 8px 25px rgba(96, 165, 250, 0.3) !important;
+body.dark-theme .bento-card {
+  background: #292524 !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
 }
 
-/* Dark mode glassmorphism for category badges */
-body.dark-theme .category-badge {
-  background: rgba(96, 165, 250, 0.2) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border: 1px solid rgba(96, 165, 250, 0.3) !important;
-  box-shadow: 0 4px 15px rgba(96, 165, 250, 0.2) !important;
+body.dark-theme .project-title {
+  color: #e7e5e4 !important;
 }
 
-/* Enhanced glassmorphism for social buttons */
-body.dark-theme .social-btn {
-  backdrop-filter: blur(15px) !important;
-  -webkit-backdrop-filter: blur(15px) !important;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+body.dark-theme .project-description {
+  color: #a8a29e !important;
 }
 
-/* Glassmorphism for download CV button */
-body.dark-theme .download-cv-btn {
-  background: rgba(96, 165, 250, 0.15) !important;
-  backdrop-filter: blur(15px) !important;
-  -webkit-backdrop-filter: blur(15px) !important;
-  border: 1px solid rgba(96, 165, 250, 0.3) !important;
-  box-shadow: 0 15px 35px rgba(96, 165, 250, 0.2), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-}
-
-body.dark-theme .download-cv-btn:hover {
-  background: rgba(96, 165, 250, 0.25) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(96, 165, 250, 0.4) !important;
-  box-shadow: 0 20px 45px rgba(96, 165, 250, 0.3), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
-}
-
-/* Glassmorphism effect for dark mode toggle button */
-body.dark-theme .dark-mode-toggle .toggle-track {
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 
-              0 4px 15px rgba(0, 0, 0, 0.1) !important;
-}
-
-body.dark-theme .dark-mode-toggle .toggle-thumb {
-  background: rgba(255, 255, 255, 0.9) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
-}
-
-/* Enhanced glassmorphism for contact card icons */
-body.dark-theme .icon-wrapper {
-  backdrop-filter: blur(15px) !important;
-  -webkit-backdrop-filter: blur(15px) !important;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-}
-
-/* Subtle glassmorphism for tags in dark mode */
-body.dark-theme .tag {
-  background: rgba(255, 255, 255, 0.08) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Glassmorphism for maintenance ticker */
-body.dark-theme .led-board {
-  background: rgba(255, 255, 255, 0.05) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-}
-
-/* Animated glassmorphism effect on hover/focus */
-body.dark-theme .bento-card,
-body.dark-theme .contact-item,
-body.dark-theme .about-me-section,
-body.dark-theme .timeline-section,
-body.dark-theme .timeline-content {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-/* Subtle glow effect for glassmorphism cards */
-body.dark-theme .hero::before,
-body.dark-theme .about-me-section::before,
-body.dark-theme .timeline-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, 
-    rgba(96, 165, 250, 0.03) 0%, 
-    rgba(52, 211, 153, 0.03) 50%, 
-    rgba(96, 165, 250, 0.03) 100%) !important;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Project Modal Dark Mode & Glassmorphism */
-body.dark-theme .modal-overlay {
-  background: rgba(15, 15, 35, 0.85) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-}
-body.dark-theme .modal-container {
-  background: rgba(39, 39, 42, 0.85) !important;
-  border-radius: 24px !important;
-  box-shadow: 0 12px 48px rgba(0,0,0,0.7) !important;
-  border: 1.5px solid rgba(96, 165, 250, 0.10) !important;
-  backdrop-filter: blur(24px) !important;
-  -webkit-backdrop-filter: blur(24px) !important;
-}
-body.dark-theme .modal-header .close-btn {
-  background: rgba(30, 41, 59, 0.85) !important;
-  color: #e4e4e7 !important;
-  border: 1px solid rgba(96, 165, 250, 0.15) !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25) !important;
-}
-body.dark-theme .modal-header .close-btn i {
-  color: #e4e4e7 !important;
-}
-body.dark-theme .modal-content {
-  background: transparent !important;
-  color: #e4e4e7 !important;
-}
-body.dark-theme .modal-image-section {
-  background: #18181b !important;
-}
-body.dark-theme .modal-meta {
-  color: #e4e4e7 !important;
-}
-body.dark-theme .modal-category {
-  background: rgba(96, 165, 250, 0.18) !important;
-  color: #e4e4e7 !important;
-  border: 1px solid rgba(96, 165, 250, 0.25) !important;
-}
-body.dark-theme .modal-title {
-  color: #e4e4e7 !important;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.25);
-}
-body.dark-theme .modal-details {
-  background: transparent !important;
-}
-body.dark-theme .section-title {
-  color: #e4e4e7 !important;
-}
-body.dark-theme .modal-description,
-body.dark-theme .challenges-text,
-body.dark-theme .features-list li {
-  color: #a1a1aa !important;
-}
 body.dark-theme .tech-tag {
-  background: rgba(96, 165, 250, 0.18) !important;
-  color: #e4e4e7 !important;
-  border: 1px solid rgba(96, 165, 250, 0.25) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #fb923c !important;
 }
+
+body.dark-theme .view-details-btn {
+  background: rgba(251, 146, 60, 0.1) !important;
+  color: #fb923c !important;
+}
+
+body.dark-theme .view-details-btn:hover {
+  background: #fb923c !important;
+}
+
+/* Contact View Dark Mode */
+body.dark-theme .contact-view {
+  background-color: #1c1917 !important;
+  color: #e7e5e4 !important;
+}
+
+body.dark-theme .contact-card {
+  /* This is the container, remove background or keep transparent */
+  background: transparent !important;
+  border: none !important;
+}
+
+body.dark-theme .section-header h2 {
+  color: #e7e5e4 !important;
+}
+
+body.dark-theme .section-header p {
+  color: #a8a29e !important;
+}
+
+body.dark-theme .contact-item {
+  background: rgba(41, 37, 36, 0.4) !important;
+  /* Stone 800 */
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+body.dark-theme .contact-item h3 {
+  color: #e7e5e4 !important;
+}
+
+body.dark-theme .contact-item p {
+  color: #a8a29e !important;
+}
+
+body.dark-theme .icon-wrapper {
+  background: rgba(251, 146, 60, 0.1) !important;
+  color: #fb923c !important;
+}
+
+/* Specific icon gradients need to remain visible or be adjusted if too jarring */
+/* Keeping original gradients for icons as they distinguish the brands, but maybe dim them? 
+   No, brand colors are usually fine. */
+
+body.dark-theme .contact-link {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #fb923c !important;
+  border-color: rgba(251, 146, 60, 0.2) !important;
+}
+
+body.dark-theme .contact-link:hover {
+  background: rgba(251, 146, 60, 0.1) !important;
+}
+
+body.dark-theme .contact-stats {
+  background: rgba(217, 119, 6, 0.1) !important;
+  color: #fbbf24 !important;
+  /* Amber 400 */
+  border-color: rgba(217, 119, 6, 0.2) !important;
+}
+
+/* Social Floating Section Dark Mode */
+body.dark-theme .social-floating {
+  background: #292524 !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+body.dark-theme .social-title {
+  color: #e7e5e4 !important;
+}
+
+body.dark-theme .social-subtitle {
+  color: #a8a29e !important;
+}
+
+body.dark-theme .contact-label {
+  color: #a8a29e !important;
+}
+
+body.dark-theme .contact-value {
+  color: #e7e5e4 !important;
+}
+
+body.dark-theme .social-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #e7e5e4 !important;
+}
+
+body.dark-theme .social-btn:hover {
+  background: #f97316 !important;
+  color: white !important;
+}
+
+/* Footer Dark Mode */
+body.dark-theme .app-footer {
+  background-color: #1c1917 !important;
+  border-top-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+body.dark-theme .copyright strong {
+  color: #e7e5e4 !important;
+}
+
+body.dark-theme .copyright a {
+  color: #fb923c !important;
+}
+
+body.dark-theme .social-links a {
+  color: #a8a29e !important;
+}
+
+body.dark-theme .social-links a:hover {
+  color: #fb923c !important;
+}
+
+/* Maintenance Ticker Dark Mode */
+body.dark-theme .maintenance-ticker {
+  background: #292524 !important;
+  border-bottom-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+body.dark-theme .ticker-content {
+  color: #fb923c !important;
+}
+
+/* Project Modal Dark Mode */
+body.dark-theme .modal-container {
+  background: #1c1917 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-theme .modal-close {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #e7e5e4 !important;
+}
+
+/* Modal Content Text Fixes */
+body.dark-theme .section-title {
+  color: #e7e5e4 !important;
+}
+
+body.dark-theme .modal-description {
+  color: #a8a29e !important;
+}
+
+body.dark-theme .features-list li {
+  color: #a8a29e !important;
+}
+
+body.dark-theme .challenges-text {
+  color: #a8a29e !important;
+}
+
+/* Info Grid Dark Mode */
 body.dark-theme .info-item {
-  background: rgba(39, 39, 42, 0.85) !important;
-  border: 1px solid rgba(96, 165, 250, 0.10) !important;
-  color: #e4e4e7 !important;
+  background: #292524 !important;
+  /* Stone 800 */
+  border-color: rgba(255, 255, 255, 0.05) !important;
 }
+
 body.dark-theme .info-label {
-  color: #60a5fa !important;
+  color: #a8a29e !important;
 }
+
 body.dark-theme .info-value {
-  color: #e4e4e7 !important;
+  color: #e7e5e4 !important;
 }
-body.dark-theme .modal-actions {
-  border-top: 1px solid rgba(96, 165, 250, 0.15) !important;
-}
-body.dark-theme .action-btn.primary {
-  background: linear-gradient(135deg, #2563eb, #1e293b) !important;
-  color: #e4e4e7 !important;
-  border: 1px solid #2563eb !important;
-}
-body.dark-theme .action-btn.secondary {
-  background: rgba(39, 39, 42, 0.85) !important;
-  color: #e4e4e7 !important;
-  border: 1px solid #3f3f46 !important;
-}
+
+/* Modal Actions Dark Mode */
 body.dark-theme .action-btn.tertiary {
-  background: rgba(255,255,255,0.08) !important;
-  color: #e4e4e7 !important;
-  border: 1px solid #3f3f46 !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #e7e5e4 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
 }
-body.dark-theme .action-btn.primary:hover,
-body.dark-theme .action-btn.secondary:hover,
+
 body.dark-theme .action-btn.tertiary:hover {
-  filter: brightness(1.08) !important;
-  box-shadow: 0 4px 16px rgba(96, 165, 250, 0.18) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: #e7e5e4 !important;
 }
-body.dark-theme .modal-content::-webkit-scrollbar-track {
-  background: rgba(39, 39, 42, 0.5) !important;
+
+body.dark-theme .modal-title {
+  color: #e7e5e4 !important;
 }
-body.dark-theme .modal-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #2563eb, #60a5fa) !important;
+
+body.dark-theme .modal-category {
+  color: #fb923c !important;
+  background: rgba(251, 146, 60, 0.1) !important;
+}
+
+body.dark-theme .detail-item h3 {
+  color: #fb923c !important;
+}
+
+body.dark-theme .tech-tag {
+  background: #292524 !important;
+  border-color: rgba(251, 146, 60, 0.3) !important;
+  color: #fb923c !important;
+}
+
+body.dark-theme .modal-footer {
+  border-top-color: rgba(255, 255, 255, 0.1) !important;
+  background: #1c1917 !important;
 }
 
 /* Gallery View Dark Mode */
-body.dark-theme .gallery-container {
-  background: #0f0f23 !important;
-  color: #e4e4e7 !important;
+body.dark-theme .gallery-view {
+  background-color: #1c1917 !important;
 }
 
-body.dark-theme .header-section {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+body.dark-theme .gallery-header h1 {
+  color: #e7e5e4 !important;
 }
 
-body.dark-theme .gallery-content {
-  background: transparent !important;
-  color: #e4e4e7 !important;
+body.dark-theme .gallery-header p {
+  color: #a8a29e !important;
 }
 
-/* Gallery Filter and Hint Dark Mode */
-body.dark-theme .hint-toggle-btn {
-  background: #8b5cf6 !important;
-  color: white !important;
-  box-shadow: 0 2px 10px rgba(139, 92, 246, 0.2) !important;
+/* Scrollbar Dark Mode */
+body.dark-theme ::-webkit-scrollbar-track {
+  background: #292524 !important;
 }
 
-body.dark-theme .hint-toggle-btn:hover {
-  background: #7c3aed !important;
-  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
-}
-
-body.dark-theme .interaction-hint {
-  background: rgba(139, 92, 246, 0.15) !important;
-  border-color: rgba(139, 92, 246, 0.3) !important;
-}
-
-body.dark-theme .interaction-hint p {
-  color: #a1a1aa !important;
-}
-
-body.dark-theme .interaction-hint i {
-  color: #8b5cf6 !important;
-}
-
-body.dark-theme .filter-btn {
-  border-color: #374151 !important;
-  color: #e4e4e7 !important;
-}
-
-body.dark-theme .filter-btn:hover {
-  border-color: #8b5cf6 !important;
-  color: #8b5cf6 !important;
-}
-
-body.dark-theme .filter-btn.active {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
-  border-color: transparent !important;
-  color: white !important;
-}
-
-/* Gallery Grid and Cards Dark Mode */
-body.dark-theme .gallery-grid {
-  background: transparent !important;
-}
-
-body.dark-theme .gallery-item .card-3d {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
-}
-
-body.dark-theme .gallery-item .card-3d:hover {
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5) !important;
-}
-
-body.dark-theme .card-front,
-body.dark-theme .card-back {
-  background: #1a1a2e !important;
-}
-
-body.dark-theme .card-back {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
-}
-
-/* Gallery Card Back Content Dark Mode */
-body.dark-theme .card-back-content {
-  color: white !important;
-}
-
-body.dark-theme .card-back-header {
-  border-bottom-color: rgba(255, 255, 255, 0.2) !important;
-}
-
-body.dark-theme .card-back-header h3 {
-  color: white !important;
-}
-
-body.dark-theme .category-badge {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border-color: rgba(255, 255, 255, 0.3) !important;
-  color: white !important;
-}
-
-body.dark-theme .project-description,
-body.dark-theme .project-challenges p,
-body.dark-theme .project-results p,
-body.dark-theme .project-technologies p,
-body.dark-theme .project-learnings p,
-body.dark-theme .project-future p {
-  color: rgba(255, 255, 255, 0.9) !important;
-}
-
-body.dark-theme .project-objectives h4,
-body.dark-theme .project-challenges h4,
-body.dark-theme .project-results h4,
-body.dark-theme .project-technologies h4,
-body.dark-theme .project-learnings h4,
-body.dark-theme .project-future h4 {
-  color: white !important;
-}
-
-body.dark-theme .project-objectives li {
-  color: rgba(255, 255, 255, 0.9) !important;
-}
-
-body.dark-theme .detail-item {
-  color: rgba(255, 255, 255, 0.9) !important;
-}
-
-body.dark-theme .detail-item i {
-  color: rgba(255, 255, 255, 0.8) !important;
-}
-
-body.dark-theme .view-full-btn {
-  background: rgba(255, 255, 255, 0.15) !important;
-  border-color: rgba(255, 255, 255, 0.3) !important;
-  color: white !important;
-}
-
-body.dark-theme .view-full-btn:hover {
-  background: rgba(255, 255, 255, 0.25) !important;
-  border-color: rgba(255, 255, 255, 0.5) !important;
-}
-
-/* Gallery Flip Button Dark Mode */
-body.dark-theme .flip-btn {
-  background: rgba(0, 0, 0, 0.6) !important;
-  color: white !important;
-}
-
-body.dark-theme .flip-btn:hover {
-  background: rgba(0, 0, 0, 0.8) !important;
-}
-
-body.dark-theme .flip-btn-back {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border-color: rgba(255, 255, 255, 0.3) !important;
-}
-
-body.dark-theme .flip-btn-back:hover {
-  background: rgba(255, 255, 255, 0.3) !important;
-  border-color: rgba(255, 255, 255, 0.5) !important;
-}
-
-/* Gallery Modal Dark Mode */
-body.dark-theme .modal-overlay {
-  background: rgba(15, 15, 35, 0.9) !important;
-}
-
-body.dark-theme .modal-content {
-  background: #1a1a2e !important;
-  color: #e4e4e7 !important;
-}
-
-body.dark-theme .close-btn {
-  background: rgba(0, 0, 0, 0.5) !important;
-  color: white !important;
-}
-
-body.dark-theme .close-btn:hover {
-  background: rgba(0, 0, 0, 0.7) !important;
-}
-
-body.dark-theme .modal-info h3 {
-  color: #e4e4e7 !important;
-}
-
-body.dark-theme .modal-info p {
-  color: #a1a1aa !important;
-}
-
-body.dark-theme .category-tag {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
-  color: white !important;
-}
-
-/* Gallery Empty State Dark Mode */
-body.dark-theme .empty-state {
-  color: #a1a1aa !important;
-}
-
-body.dark-theme .empty-state i {
-  opacity: 0.3 !important;
-}
-
-body.dark-theme .empty-state h3 {
-  color: #e4e4e7 !important;
-}
-
-/* Gallery Focus Effects Dark Mode */
-body.dark-theme .gallery-item.blurred {
-  filter: blur(3px) brightness(0.4) saturate(0.7) !important;
-}
-
-body.dark-theme .gallery-grid.focus-mode::before {
-  background: rgba(0, 0, 0, 0.2) !important;
-}
-
-/* Gallery Scrollbar Dark Mode */
-body.dark-theme .card-back-body::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1) !important;
-}
-
-body.dark-theme .card-back-body::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.6) !important;
-  border-color: rgba(255, 255, 255, 0.3) !important;
-}
-
-body.dark-theme .card-back-body::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.8) !important;
-  border-color: rgba(255, 255, 255, 0.5) !important;
+body.dark-theme ::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%) !important;
 }

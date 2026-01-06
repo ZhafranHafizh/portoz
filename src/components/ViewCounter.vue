@@ -440,7 +440,7 @@ export default {
 
 .counter-badge .count {
   font-weight: 600;
-  color: var(--primary-color, #667eea);
+  color: var(--primary-color, #f97316);
 }
 
 .counter-badge .label {
@@ -539,7 +539,7 @@ export default {
 }
 
 .stat-item.primary {
-  background: linear-gradient(135deg, var(--primary-color, #667eea) 0%, rgba(102, 126, 234, 0.8) 100%);
+  background: linear-gradient(135deg, var(--primary-color, #f97316) 0%, rgba(249, 115, 22, 0.8) 100%);
   color: white;
   border-color: var(--primary-color, #667eea);
 }
@@ -556,7 +556,7 @@ export default {
 }
 
 .stat-item:not(.primary) .stat-icon {
-  background: var(--primary-color, #667eea);
+  background: var(--primary-color, #f97316);
   color: white;
 }
 
@@ -629,7 +629,7 @@ export default {
 
 .page-count {
   font-weight: 600;
-  color: var(--primary-color, #667eea);
+  color: var(--primary-color, #f97316);
 }
 
 .page-bar {
@@ -713,7 +713,7 @@ export default {
 
 .bar-fill {
   width: 100%;
-  background: var(--primary-color, #667eea);
+  background: var(--primary-color, #f97316);
   border-radius: 2px 2px 0 0;
   min-height: 2px;
   transition: height 0.3s ease;
@@ -751,9 +751,9 @@ export default {
 }
 
 .control-btn:hover {
-  background: var(--primary-color, #667eea);
+  background: var(--primary-color, #f97316);
   color: white;
-  border-color: var(--primary-color, #667eea);
+  border-color: var(--primary-color, #f97316);
 }
 
 .control-btn.danger:hover {

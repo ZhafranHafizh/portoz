@@ -51,7 +51,7 @@ export default {
 }
 
 :global(.dark) .app-footer {
-  background-color: #1a1a2e;
+  background-color: #1c1917;
   color: #a1a1aa;
   border-top: 1px solid #374151;
 }
@@ -80,13 +80,13 @@ export default {
 }
 
 .copyright a {
-  color: #007bff;
+  color: #f97316;
   text-decoration: none;
   font-weight: 600;
 }
 
 :global(.dark) .copyright a {
-  color: #60a5fa;
+  color: #fb923c;
 }
 
 .copyright a:hover {
@@ -124,12 +124,12 @@ export default {
 }
 
 .social-links a:hover {
-  color: #007bff;
+  color: #f97316;
   transform: translateY(-3px);
 }
 
 :global(.dark) .social-links a:hover {
-  color: #60a5fa;
+  color: #fb923c;
 }
 
 /* Responsif */

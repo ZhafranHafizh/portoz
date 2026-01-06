@@ -64,7 +64,7 @@ body {
 
 /* Dark mode global styles */
 body.dark-theme {
-  background-color: #0f0f23 !important;
+  background-color: #1c1917 !important;
   color: #e4e4e7 !important;
 }
 
@@ -93,13 +93,13 @@ body.dark-theme {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #f97316 0%, #d97706 100%);
   border-radius: 4px;
   transition: all 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  background: linear-gradient(135deg, #d97706 0%, #f97316 100%);
   transform: scale(1.1);
 }
 
@@ -110,27 +110,27 @@ body.dark-theme {
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #667eea #162637;
+  scrollbar-color: #f97316 #162637;
 }
 
 /* Dark mode scrollbar */
 body.dark-theme ::-webkit-scrollbar-track {
-  background: #1e293b;
+  background: #292524;
 }
 
 body.dark-theme ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
 }
 
 body.dark-theme ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  background: linear-gradient(135deg, #ea580c 0%, #fb923c 100%);
 }
 
 body.dark-theme ::-webkit-scrollbar-corner {
-  background: #1e293b;
+  background: #292524;
 }
 
 body.dark-theme * {
-  scrollbar-color: #4f46e5 #1e293b;
+  scrollbar-color: #fb923c #292524;
 }
 </style>

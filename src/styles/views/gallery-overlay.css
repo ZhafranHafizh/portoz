@@ -147,6 +147,7 @@
 
 /* Mobile specific adjustments */
 @media (max-width: 768px) {
+
   /* Always show flip button on mobile */
   .flip-btn {
     opacity: 1;

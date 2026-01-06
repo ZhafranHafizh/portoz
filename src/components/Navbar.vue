@@ -98,7 +98,7 @@ export default {
 
 /* Dark mode styles */
 .dark-theme .navbar {
-  background-color: #1a1a2e;
+  background-color: #1c1917;
   color: #e4e4e7;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
@@ -117,19 +117,19 @@ export default {
 
 .brand a strong {
   font-weight: 400;
-  color: #007bff;
+  color: #f97316;
 }
 
 .dark-theme .brand a strong {
-  color: #60a5fa;
+  color: #fb923c;
 }
 
 .brand a:hover {
-  color: #007bff;
+  color: #f97316;
 }
 
 .dark-theme .brand a:hover {
-  color: #60a5fa;
+  color: #fb923c;
 }
 
 .nav-links {
@@ -172,23 +172,23 @@ export default {
   height: 2px;
   bottom: -2px;
   left: 50%;
-  background-color: #007bff;
+  background-color: #f97316;
   transition: all 0.3s ease-in-out;
   transform: translateX(-50%);
 }
 
 .dark-theme .nav-links a::after {
-  background-color: #60a5fa;
+  background-color: #fb923c;
 }
 
 .nav-links a:hover,
 .nav-links a.router-link-exact-active {
-  color: #007bff;
+  color: #f97316;
 }
 
 .dark-theme .nav-links a:hover,
 .dark-theme .nav-links a.router-link-exact-active {
-  color: #60a5fa;
+  color: #fb923c;
 }
 
 .nav-links a:hover::after,
@@ -272,7 +272,7 @@ export default {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .dark-theme .nav-links {
-    background: rgba(26, 26, 46, 0.98);
+    background: rgba(28, 25, 23, 0.98);
   }
   .nav-links.open {
     transform: translateY(0);
@@ -300,11 +300,11 @@ export default {
     transition: all 0.3s ease;
   }
   .nav-links a:hover {
-    background: rgba(0, 123, 255, 0.1);
+    background: rgba(249, 115, 22, 0.1);
     transform: translateY(-2px);
   }
   .dark-theme .nav-links a:hover {
-    background: rgba(96, 165, 250, 0.1);
+    background: rgba(251, 146, 60, 0.1);
   }
 }
 @media (max-width: 480px) {

@@ -248,7 +248,7 @@ export default {
 .circle-1 {
   width: 200px;
   height: 200px;
-  background: linear-gradient(45deg, #007bff, #28a745);
+  background: linear-gradient(45deg, #f97316, #d97706);
   top: 10%;
   right: 10%;
   animation-delay: 0s;
@@ -257,7 +257,7 @@ export default {
 .circle-2 {
   width: 150px;
   height: 150px;
-  background: linear-gradient(45deg, #28a745, #ffc107);
+  background: linear-gradient(45deg, #d97706, #fbbf24);
   top: 60%;
   left: 5%;
   animation-delay: 3s;
@@ -266,7 +266,7 @@ export default {
 .circle-3 {
   width: 100px;
   height: 100px;
-  background: linear-gradient(45deg, #ffc107, #dc3545);
+  background: linear-gradient(45deg, #fbbf24, #ea580c);
   top: 30%;
   left: 20%;
   animation-delay: 6s;
@@ -278,7 +278,7 @@ export default {
   left: 0;
   width: 100%;
   height: 200px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23007bff' fill-opacity='0.05'%3E%3C/path%3E%3C/svg%3E") repeat-x;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23f97316' fill-opacity='0.05'%3E%3C/path%3E%3C/svg%3E") repeat-x;
   animation: waveMove 15s ease-in-out infinite;
 }
 
@@ -319,7 +319,7 @@ export default {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(45deg, #007bff, #28a745);
+  background: linear-gradient(45deg, #f97316, #d97706);
   color: white;
   padding: 10px 24px;
   border-radius: 50px;
@@ -329,7 +329,7 @@ export default {
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.8s ease;
-  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
 }
 
 .header-badge.visible {
@@ -344,7 +344,7 @@ export default {
 .page-title {
   font-size: 3.5rem;
   font-weight: 800;
-  color: #333;
+  color: #fff;
   margin-bottom: 32px;
   position: relative;
   display: inline-block;
@@ -352,10 +352,6 @@ export default {
   opacity: 0;
   transform: translateY(50px);
   transition: all 1s ease 0.2s;
-  background: linear-gradient(135deg, #333 0%, #555 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .page-title.visible {
@@ -371,7 +367,7 @@ export default {
   transform: translateX(-50%);
   width: 120px;
   height: 4px;
-  background: linear-gradient(45deg, #007bff, #28a745);
+  background: linear-gradient(45deg, #f97316, #d97706);
   border-radius: 2px;
   animation: lineExpand 1.2s ease 1s forwards;
   transform-origin: center;
@@ -384,7 +380,7 @@ export default {
 
 .page-subtitle {
   font-size: 1.25rem;
-  color: #666;
+  color: #e0e0e0;
   margin-bottom: 48px;
   line-height: 1.7;
   max-width: 680px;
@@ -403,7 +399,7 @@ export default {
 .header-divider {
   width: 120px;
   height: 4px;
-  background: linear-gradient(45deg, #007bff, #28a745);
+  background: linear-gradient(45deg, #f97316, #d97706);
   border-radius: 2px;
   margin: 18px 0 28px 0;
   opacity: 0.85;
@@ -440,13 +436,13 @@ export default {
 }
 
 .primary-cta {
-  background: linear-gradient(45deg, #007bff, #0056b3);
+  background: linear-gradient(45deg, #f97316, #ea580c);
   color: white;
 }
 
 .primary-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
 }
 
 .secondary-cta {
@@ -458,8 +454,8 @@ export default {
 .secondary-cta:hover {
   background: rgba(248, 249, 250, 1);
   transform: translateY(-2px);
-  border-color: #007bff;
-  color: #007bff;
+  border-color: #f97316;
+  color: #f97316;
 }
 
 /* Contact Cards */
@@ -527,8 +523,8 @@ export default {
 }
 
 .contact-item.featured {
-  border: 2px solid #007bff;
-  box-shadow: 0 12px 40px rgba(0, 123, 255, 0.15);
+  border: 2px solid #f97316;
+  box-shadow: 0 12px 40px rgba(249, 115, 22, 0.15);
 }
 
 .contact-item.visible {
@@ -548,7 +544,7 @@ export default {
 }
 
 .featured-badge {
-  background: linear-gradient(45deg, #007bff, #28a745);
+  background: linear-gradient(45deg, #f97316, #d97706);
   color: white;
   padding: 4px 12px;
   border-radius: 20px;
@@ -616,7 +612,7 @@ export default {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #007bff;
+  color: #f97316;
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
@@ -624,14 +620,14 @@ export default {
   position: relative;
   padding: 8px 16px;
   border-radius: 25px;
-  background: rgba(0, 123, 255, 0.1);
-  border: 1px solid rgba(0, 123, 255, 0.2);
+  background: rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.2);
 }
 
 .contact-link:hover {
-  background: rgba(0, 123, 255, 0.15);
+  background: rgba(249, 115, 22, 0.15);
   transform: translateX(5px);
-  border-color: #007bff;
+  border-color: #f97316;
 }
 
 .contact-stats {
@@ -640,12 +636,12 @@ export default {
   align-items: center;
   gap: 8px;
   font-size: 0.85rem;
-  color: #28a745;
+  color: #d97706;
   font-weight: 600;
   padding: 6px 12px;
-  background: rgba(40, 167, 69, 0.1);
+  background: rgba(217, 119, 6, 0.1);
   border-radius: 15px;
-  border: 1px solid rgba(40, 167, 69, 0.2);
+  border: 1px solid rgba(217, 119, 6, 0.2);
 }
 
 .contact-stats i {
@@ -681,7 +677,7 @@ export default {
   opacity: 0;
   transform: translateX(10px);
   transition: all 0.3s ease;
-  color: #007bff;
+  color: #f97316;
   font-size: 1.2rem;
 }
 
@@ -715,7 +711,7 @@ export default {
 
 .social-header i {
   font-size: 2rem;
-  color: #007bff;
+  color: #f97316;
   margin-bottom: 15px;
 }
 

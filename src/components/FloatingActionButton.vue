@@ -108,7 +108,7 @@ export default {
   right: 2rem;
   width: 3.5rem;
   height: 3.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #f97316 0%, #d97706 100%);
   border: none;
   border-radius: 50%;
   color: white;
@@ -125,7 +125,7 @@ export default {
 .floating-action-button:hover {
   transform: translateY(-2px) scale(1.1);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  background: linear-gradient(135deg, #d97706 0%, #f97316 100%);
 }
 
 .floating-action-button:active {
@@ -161,12 +161,12 @@ export default {
 
 /* Dark mode support */
 body.dark-theme .floating-action-button {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 body.dark-theme .floating-action-button:hover {
-  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  background: linear-gradient(135deg, #ea580c 0%, #fb923c 100%);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
 }
 

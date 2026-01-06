@@ -248,7 +248,7 @@ export default {
 /* Modal Header Section */
 .modal-header-section {
   padding: 40px 40px 20px 40px;
-  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%);
 }
 
 .modal-meta {
@@ -326,7 +326,7 @@ export default {
   content: '';
   width: 4px;
   height: 20px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #f97316, #ea580c);
   border-radius: 2px;
 }
 
@@ -346,7 +346,7 @@ export default {
 
 .tech-tag {
   padding: 8px 16px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #f97316, #ea580c);
   color: white;
   border-radius: 20px;
   font-size: 0.875rem;
@@ -371,7 +371,7 @@ export default {
 }
 
 .features-list i {
-  color: #10b981;
+  color: #f59e0b;
   margin-top: 2px;
   flex-shrink: 0;
 }
@@ -402,7 +402,7 @@ export default {
 
 .info-item i {
   font-size: 1.25rem;
-  color: #667eea;
+  color: #f97316;
 }
 
 .info-label {
@@ -444,13 +444,13 @@ export default {
 }
 
 .action-btn.primary {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #f97316, #ea580c);
   color: white;
 }
 
 .action-btn.primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4);
 }
 
 .action-btn.secondary {
@@ -624,7 +624,7 @@ export default {
 }
 
 .modal-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #f97316, #ea580c);
   border-radius: 3px;
 }
 </style>
