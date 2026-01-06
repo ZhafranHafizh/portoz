@@ -124,7 +124,7 @@ onMounted(() => {
 
 /* Dark Mode */
 .about-view.dark {
-  background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%);
+  background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%) !important;
 }
 
 .about-content.dark {

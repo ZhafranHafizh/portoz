@@ -652,7 +652,7 @@ Generated: ${new Date().toLocaleString()}`
 
 .page-percentage {
   font-weight: 600;
-  color: var(--primary-color, #667eea);
+  color: var(--primary-color, #f97316);
   font-size: 0.9rem;
 }
 
@@ -694,7 +694,7 @@ Generated: ${new Date().toLocaleString()}`
 }
 
 .time-btn.active {
-  background: var(--primary-color, #667eea);
+  background: var(--primary-color, #f97316);
   color: white;
 }
 
@@ -815,7 +815,7 @@ Generated: ${new Date().toLocaleString()}`
 }
 
 .export-btn:hover {
-  background: var(--primary-color, #667eea);
+  background: var(--primary-color, #f97316);
   color: white;
   border-color: var(--primary-color, #f97316);
 }

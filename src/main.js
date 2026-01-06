@@ -6,7 +6,7 @@ import router from './router'
 import Particles from "particles.vue3"
 import './composables/useDarkMode' // Initialize dark mode
 import './assets/dark-mode.css' // Dark mode styles
-import viewTrackingDB from './plugins/viewTrackingDB' // Database view counter
+
 
 const app = createApp(App)
 const head = createHead()
@@ -15,5 +15,5 @@ app.use(head)
 app.use(router)
   // .use(i18n) // Nonaktifkan i18n sementara
   .use(Particles)
-  .use(viewTrackingDB) // Database-powered view tracking
+
   .mount('#app')

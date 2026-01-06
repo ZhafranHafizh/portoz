@@ -509,9 +509,9 @@ export default {
 }
 
 .toggle-btn:hover {
-  background: var(--primary-color, #667eea);
+  background: var(--primary-color, #f97316);
   color: white;
-  border-color: var(--primary-color, #667eea);
+  border-color: var(--primary-color, #f97316);
 }
 
 /* Stats Overview */
@@ -541,7 +541,7 @@ export default {
 .stat-item.primary {
   background: linear-gradient(135deg, var(--primary-color, #f97316) 0%, rgba(249, 115, 22, 0.8) 100%);
   color: white;
-  border-color: var(--primary-color, #667eea);
+  border-color: var(--primary-color, #f97316);
 }
 
 .stat-icon {
@@ -641,7 +641,7 @@ export default {
 
 .page-bar-fill {
   height: 100%;
-  background: var(--primary-color, #667eea);
+  background: var(--primary-color, #f97316);
   border-radius: 3px;
   transition: width 0.3s ease;
 }
@@ -670,7 +670,7 @@ export default {
   width: 24px;
   height: 24px;
   border-radius: 6px;
-  background: var(--primary-color, #667eea);
+  background: var(--primary-color, #f97316);
   color: white;
   font-size: 0.8rem;
 }

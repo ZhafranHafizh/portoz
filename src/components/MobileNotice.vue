@@ -91,7 +91,7 @@ export default {
 }
 
 .dark-theme .mobile-notice {
-  background: #1f2937;
+  background: #1c1917;
   color: #e4e4e7;
 }
 
@@ -104,7 +104,7 @@ export default {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 12px;
-  color: #1f2937;
+  color: #1c1917;
 }
 
 .dark-theme .notice-title {
@@ -112,7 +112,7 @@ export default {
 }
 
 .notice-message {
-  color: #6b7280;
+  color: #78716c;
   line-height: 1.5;
   margin-bottom: 24px;
   font-size: 0.95rem;
@@ -147,7 +147,7 @@ export default {
 
 .btn-secondary {
   background: transparent;
-  color: #6b7280;
+  color: #78716c;
   border: 1px solid #d1d5db;
   padding: 10px 20px;
   border-radius: 8px;
@@ -164,12 +164,12 @@ export default {
 
 .dark-theme .btn-secondary {
   color: #9ca3af;
-  border-color: #4b5563;
+  border-color: #57534e;
 }
 
 .dark-theme .btn-secondary:hover {
-  background: #374151;
-  border-color: #6b7280;
+  background: #292524;
+  border-color: #78716c;
 }
 
 @keyframes fadeIn {

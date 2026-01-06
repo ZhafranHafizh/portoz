@@ -291,8 +291,8 @@ export default {
   transition: background 0.3s ease;
 }
 
-:global(.dark) .projects-view {
-  background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%);
+:global(body.dark-theme) .projects-view {
+  background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%) !important;
 }
 
 /* Header Section */
@@ -306,8 +306,8 @@ export default {
   transition: background 0.3s ease;
 }
 
-:global(.dark) .header-section {
-  background: linear-gradient(135deg, #292524 0%, #1c1917 100%);
+:global(body.dark-theme) .header-section {
+  background: linear-gradient(135deg, #292524 0%, #1c1917 100%) !important;
 }
 
 .header-section::before {
@@ -546,8 +546,8 @@ export default {
   position: relative;
 }
 
-:global(.dark) .bento-card {
-  background: #292524;
+:global(body.dark-theme) .bento-card {
+  background: #292524 !important;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
@@ -777,8 +777,8 @@ export default {
   line-height: 1.3;
 }
 
-:global(.dark) .project-title {
-  color: #e4e4e7;
+:global(body.dark-theme) .project-title {
+  color: #e4e4e7 !important;
 }
 
 .bento-item.large .project-title {
@@ -793,8 +793,8 @@ export default {
   font-size: 0.95rem;
 }
 
-:global(.dark) .project-description {
-  color: #a1a1aa;
+:global(body.dark-theme) .project-description {
+  color: #a1a1aa !important;
 }
 
 /* Project Tags */
@@ -815,15 +815,15 @@ export default {
   border: 1px solid #e2e8f0;
 }
 
-:global(.dark) .tag {
-  background: #374151;
-  color: #e4e4e7;
-  border: 1px solid #4b5563;
+:global(body.dark-theme) .tag {
+  background: #374151 !important;
+  color: #e4e4e7 !important;
+  border: 1px solid #4b5563 !important;
 }
 
 .tag-more {
   padding: 6px 12px;
-  background: #667eea;
+  background: #ea580c;
   color: white;
   border-radius: 12px;
   font-size: 0.75rem;
@@ -833,7 +833,7 @@ export default {
 /* Stats Section */
 .stats-section {
   padding: 60px 2rem;
-  background: white;
+  /* background removed to fix dark mode issue */
   display: flex;
   justify-content: center;
   gap: 60px;
@@ -842,9 +842,7 @@ export default {
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-:global(.dark) .stats-section {
-  background: #1a1a2e;
-}
+
 
 .stats-section.visible {
   opacity: 1;
@@ -859,7 +857,7 @@ export default {
   display: block;
   font-size: 3rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -876,8 +874,8 @@ export default {
   font-size: 0.875rem;
 }
 
-:global(.dark) .stat-label {
-  color: #a1a1aa;
+:global(body.dark-theme) .stat-label {
+  color: #a1a1aa !important;
 }
 
 /* Responsive Design */
@@ -1168,11 +1166,11 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #f97316, #ea580c);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #5a67d8, #6b46c1);
+  background: linear-gradient(135deg, #fb923c, #f97316);
 }
 </style>
