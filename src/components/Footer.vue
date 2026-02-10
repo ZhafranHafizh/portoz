@@ -4,7 +4,6 @@
       <p class="copyright">
         &copy; {{ currentYear }} <strong>Zhafran's Portfolio</strong>. Built with
         <a href="https://vuejs.org/" target="_blank" rel="noopener noreferrer">Vue.js</a>
-        and <span class="heart">&hearts;</span>.
       </p>
       <div class="social-links">
         <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
@@ -23,7 +22,7 @@
 
 <script>
 export default {
-  name: 'AppFooter', // Pastikan tidak ada spasi di akhir nama
+  name: 'AppFooter',
   data() {
     return {
       currentYear: new Date().getFullYear()
@@ -33,11 +32,6 @@ export default {
 </script>
 
 <style scoped>
-/* Pastikan Anda sudah mengimpor Font Awesome jika ingin menggunakan ikon */
-/* Anda bisa menambahkannya di public/index.html:
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-*/
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'); */
 
 .app-footer {
   background-color: #f8f9fa;
@@ -50,7 +44,7 @@ export default {
   transition: all 0.3s ease;
 }
 
-:global(.dark) .app-footer {
+:global(body.dark-theme) .app-footer {
   background-color: #1c1917;
   color: #a1a1aa;
   border-top: 1px solid #374151;
@@ -75,7 +69,7 @@ export default {
   color: #495057;
 }
 
-:global(.dark) .copyright strong {
+:global(body.dark-theme) .copyright strong {
   color: #e4e4e7;
 }
 
@@ -85,7 +79,7 @@ export default {
   font-weight: 600;
 }
 
-:global(.dark) .copyright a {
+:global(body.dark-theme) .copyright a {
   color: #fb923c;
 }
 
@@ -119,7 +113,7 @@ export default {
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
-:global(.dark) .social-links a {
+:global(body.dark-theme) .social-links a {
   color: #a1a1aa;
 }
 
@@ -128,7 +122,7 @@ export default {
   transform: translateY(-3px);
 }
 
-:global(.dark) .social-links a:hover {
+:global(body.dark-theme) .social-links a:hover {
   color: #fb923c;
 }
 

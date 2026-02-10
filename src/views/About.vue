@@ -1,6 +1,6 @@
 <template>
-  <div class="about-view" :class="{ 'dark': isDarkMode }">
-    <section class="about-content" :class="{ 'visible': sectionVisible, 'dark': isDarkMode }">
+  <div class="about-view">
+    <section class="about-content" :class="{ 'visible': sectionVisible }">
       
       <div class="profile-header">
         <img src="../../public/galeri/Profil.png" alt="My Photo" class="about-pic" :style="imageParallaxStyle">
@@ -62,10 +62,8 @@ export default {
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useHead } from '@vueuse/head'
-import { useDarkMode } from '@/composables/useDarkMode'
 
-// Setup dark mode
-const { isDarkMode } = useDarkMode()
+
 
 // Meta tags setup
 useHead({
@@ -123,11 +121,11 @@ onMounted(() => {
 }
 
 /* Dark Mode */
-.about-view.dark {
+:global(body.dark-theme) .about-view {
   background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%) !important;
 }
 
-.about-content.dark {
+:global(body.dark-theme) .about-content {
   background-color: rgba(41, 37, 36, 0.9);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   color: #e4e4e7;
@@ -143,7 +141,7 @@ onMounted(() => {
   border-bottom: 1px solid #e9ecef;
 }
 
-.about-content.dark .profile-header {
+:global(body.dark-theme) .about-content .profile-header {
   border-bottom-color: #374151;
 }
 
@@ -157,7 +155,7 @@ onMounted(() => {
   flex-shrink: 0; /* Mencegah gambar menyusut */
 }
 
-.about-content.dark .about-pic {
+:global(body.dark-theme) .about-content .about-pic {
   border-color: #0c0a09;
 }
 
@@ -182,9 +180,9 @@ onMounted(() => {
   margin: 0;
 }
 
-.about-content.dark .profile-text h1 { color: #e4e4e7; }
-.about-content.dark .profile-text h2 { color: #fb923c; }
-.about-content.dark .profile-text .intro { color: #a1a1aa; }
+:global(body.dark-theme) .about-content .profile-text h1 { color: #e4e4e7; }
+:global(body.dark-theme) .about-content .profile-text h2 { color: #fb923c; }
+:global(body.dark-theme) .about-content .profile-text .intro { color: #a1a1aa; }
 
 /* Download CV Button */
 .cv-download-section {
@@ -265,8 +263,8 @@ onMounted(() => {
   margin-bottom: 20px;
 }
 
-.about-content.dark .story-content h3 { color: #e4e4e7; border-bottom-color: #fb923c; }
-.about-content.dark .story-content p { color: #a1a1aa; }
+:global(body.dark-theme) .about-content .story-content h3 { color: #e4e4e7; border-bottom-color: #fb923c; }
+:global(body.dark-theme) .about-content .story-content p { color: #a1a1aa; }
 
 .skills-list {
   list-style: none;
@@ -292,8 +290,8 @@ onMounted(() => {
   font-size: 1.2rem;
 }
 
-.about-content.dark .skills-list li { color: #a1a1aa; }
-.about-content.dark .skills-list li::before { color: #fbbf24; }
+:global(body.dark-theme) .about-content .skills-list li { color: #a1a1aa; }
+:global(body.dark-theme) .about-content .skills-list li::before { color: #fbbf24; }
 
 /* Tombol CTA (Call to Action) */
 .cta-button {

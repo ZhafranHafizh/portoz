@@ -288,7 +288,6 @@ export default {
   background: linear-gradient(135deg, #fafaf9 0%, #e7e5e4 100%);
   padding: 0;
   font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-  transition: background 0.3s ease;
 }
 
 :global(body.dark-theme) .projects-view {
@@ -303,7 +302,6 @@ export default {
   color: white;
   position: relative;
   overflow: hidden;
-  transition: background 0.3s ease;
 }
 
 :global(body.dark-theme) .header-section {

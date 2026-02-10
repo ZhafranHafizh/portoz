@@ -105,10 +105,9 @@ export default {
   font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
   overflow-y: auto;
-  transition: background 0.3s ease;
 }
 
-:global(.dark) .home-view {
+:global(body.dark-theme) .home-view {
   background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%);
 }
 
@@ -137,7 +136,7 @@ export default {
   transition: all 0.3s ease;
 }
 
-:global(.dark) .hero {
+:global(body.dark-theme) .hero {
   background-color: rgba(41, 37, 36, 0.9);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
@@ -162,32 +161,32 @@ export default {
   margin-bottom: 10px; line-height: 1.2;
 }
 
-:global(.dark) .hero-title {
+:global(body.dark-theme) .hero-title {
   color: #e4e4e7;
 }
 
 .hero-title strong { color: #f97316; }
 
-:global(.dark) .hero-title strong { color: #fb923c; }
+:global(body.dark-theme) .hero-title strong { color: #fb923c; }
 
 .hero-subtitle {
   font-size: 1.6rem; font-weight: 400; color: #555; margin-bottom: 25px;
 }
 
-:global(.dark) .hero-subtitle {
+:global(body.dark-theme) .hero-subtitle {
   color: #a1a1aa;
 }
 
 .hero-subtitle span { font-weight: 600; color: #d97706; }
 
-:global(.dark) .hero-subtitle span { color: #fbbf24; }
+:global(body.dark-theme) .hero-subtitle span { color: #fbbf24; }
 
 .hero-description {
   font-size: 1.1rem; color: #666; line-height: 1.7; margin-bottom: 30px;
   max-width: 550px; margin-left: auto; margin-right: auto;
 }
 
-:global(.dark) .hero-description {
+:global(body.dark-theme) .hero-description {
   color: #a1a1aa;
 }
 .cta-button {
