@@ -13,7 +13,7 @@
           <!-- Download CV Button -->
           <div class="cv-download-section">
             <a 
-              href="/cv/Zhafran_Resume_Latest.pdf" 
+              href="" 
               download="Zhafran_Hafizh_Resume_2025.pdf"
               class="download-cv-btn"
               @click="trackDownload"

@@ -150,7 +150,7 @@ export default {
           description: 'For quick questions, casual conversations, and immediate collaboration discussions.',
           icon: 'fab fa-whatsapp',
           iconClass: 'whatsapp',
-          link: 'https://wa.me/6281311501365',
+          link: 'https://wa.me/',
           linkText: 'Start WhatsApp Chat',
           linkIcon: 'fab fa-whatsapp',
           stats: 'Available during business hours'
