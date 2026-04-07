@@ -116,6 +116,7 @@
 </template>
 
 <script>
+import { supabase } from '@/config/supabaseClient';
 import ProjectModal from '@/components/ProjectModal.vue';
 import { useHead } from '@vueuse/head';
 
@@ -192,18 +193,23 @@ export default {
   methods: {
     async fetchProjects() {
       try {
-        // Memanggil API Netlify Functions pengganti projects.json statis
-        const response = await fetch('/.netlify/functions/projects'); 
-        const data = await response.json();
-        this.projectsData = data;
+        const { data, error } = await supabase
+          .from('portfolio_projects')
+          .select('*')
+          .order('id', { ascending: true });
 
-        // Pindahkan initAnimations ke sini agar animasi
-        // baru berjalan SETELAH data siap
+        if (error) throw error;
+
+        // Map snake_case from DB to camelCase for existing template
+        this.projectsData = data.map(item => ({
+          ...item,
+          imageUrl: item.image_url // map image_url to imageUrl
+        }));
+
         this.initAnimations();
 
       } catch (error) {
-        console.error("Gagal mengambil data proyek:", error);
-        // Jika error, tetap jalankan animasi agar UI lain muncul
+        console.error("Gagal mengambil data proyek dari Supabase:", error);
         this.initAnimations(); 
       }
     },

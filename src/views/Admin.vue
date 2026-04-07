@@ -1,14 +1,21 @@
 <template>
   <div class="admin-view">
-    <div v-if="!isAuthenticated" class="login-container">
+    <div v-if="!session" class="login-container">
       <div class="login-box">
         <h2>Admin Login</h2>
-        <p>Please enter your password to access the CMS.</p>
-        <form @submit.prevent="login">
+        <p>Please enter your email and password to access the CMS.</p>
+        <form @submit.prevent="handleLogin">
+          <input 
+            type="email" 
+            v-model="email" 
+            placeholder="Email" 
+            required 
+            class="form-input"
+          />
           <input 
             type="password" 
-            v-model="passwordInput" 
-            placeholder="Admin Password" 
+            v-model="password" 
+            placeholder="Password" 
             required 
             class="form-input"
           />
@@ -25,7 +32,7 @@
         <h1>Portfolio Projects CMS</h1>
         <div class="header-actions">
           <button @click="openAddModal" class="btn btn-primary">+ Add New Project</button>
-          <button @click="logout" class="btn btn-secondary">Logout</button>
+          <button @click="handleLogout" class="btn btn-secondary">Logout</button>
         </div>
       </div>
 
@@ -46,10 +53,10 @@
             <tr v-for="project in projects" :key="project.id">
               <td>{{ project.id }}</td>
               <td>
-                <img :src="project.imageUrl || 'https://via.placeholder.com/50'" alt="thumbnail" class="thumbnail" />
+                <img :src="project.image_url || 'https://via.placeholder.com/50'" alt="thumbnail" class="thumbnail" />
               </td>
               <td class="td-title">{{ project.title }}</td>
-              <td>{{ Array.isArray(project.category) ? project.category.join(', ') : project.category }}</td>
+              <td>{{ getCategoryString(project.category) }}</td>
               <td class="action-buttons">
                 <button @click="openEditModal(project)" class="btn btn-sm btn-edit">Edit</button>
                 <button @click="confirmDelete(project.id)" class="btn btn-sm btn-delete">Delete</button>
@@ -85,8 +92,10 @@
                 <textarea v-model="formData.description" class="form-input" rows="3"></textarea>
               </div>
               <div class="form-group">
-                <label>Image URL</label>
-                <input type="text" v-model="formData.imageUrl" class="form-input" placeholder="../galeri/image.webp or pure URL" />
+                <label>Image Upload (Bucket: images) *</label>
+                <input type="file" @change="handleFileUpload" class="form-input" accept="image/*" />
+                <p v-if="uploading" class="status-info">Uploading image...</p>
+                <img v-if="formData.image_url" :src="formData.image_url" class="preview-img" alt="preview" />
               </div>
               <div class="form-group">
                 <label>Live Link</label>
@@ -128,7 +137,7 @@
             
             <div class="form-actions">
               <button type="button" class="btn btn-secondary" @click="showModal = false">Cancel</button>
-              <button type="submit" class="btn btn-primary" :disabled="saving">
+              <button type="submit" class="btn btn-primary" :disabled="saving || uploading">
                 {{ saving ? 'Saving...' : 'Save Project' }}
               </button>
             </div>
@@ -140,15 +149,19 @@
 </template>
 
 <script>
+import { supabase } from '@/config/supabaseClient';
+
 export default {
   name: 'AdminView',
   data() {
     return {
-      isAuthenticated: false,
-      passwordInput: '',
+      session: null,
+      email: '',
+      password: '',
       loginError: '',
       loading: false,
       saving: false,
+      uploading: false,
       projects: [],
       showModal: false,
       isEditing: false,
@@ -156,11 +169,15 @@ export default {
     }
   },
   mounted() {
-    const savedPassword = sessionStorage.getItem('adminToken');
-    if (savedPassword) {
-      this.passwordInput = savedPassword;
-      this.fetchProjects(true); // Attempt silent login
-    }
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      this.session = session;
+      if (this.session) this.fetchProjects();
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      this.session = session;
+      if (this.session) this.fetchProjects();
+    });
   },
   methods: {
     getDefaultFormData() {
@@ -168,7 +185,7 @@ export default {
         id: null,
         title: '',
         description: '',
-        imageUrl: '',
+        image_url: '',
         link: '',
         github: '',
         figma: '',
@@ -181,44 +198,61 @@ export default {
         role: ''
       };
     },
-    async login() {
+    async handleLogin() {
+      this.loading = true;
       this.loginError = '';
-      this.loading = true;
-      await this.fetchProjects(false);
-    },
-    logout() {
-      sessionStorage.removeItem('adminToken');
-      this.isAuthenticated = false;
-      this.passwordInput = '';
-    },
-    async fetchProjects(isSilent = false) {
-      this.loading = true;
-      try {
-        const response = await fetch('/.netlify/functions/projects');
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch projects');
-        }
-        
-        const data = await response.json();
-        this.projects = data;
-        
-        // If we reach here and it's a login attempt, we check if password is correct 
-        // by making a test protected call, or we just assume it's true until we try to write.
-        // Let's do a dummy validation by sending a small request or just trusting it until a POST fails.
-        // Actually, let's just authenticate them and only error out during POST/PUT.
-        // But better yet, we can't test unless we try a protected endpoint. 
-        // We'll trust the password entry for reading, but it will fail on write if wrong.
-        
-        this.isAuthenticated = true;
-        sessionStorage.setItem('adminToken', this.passwordInput);
-      } catch (err) {
-        if (!isSilent) {
-          this.loginError = 'Error fetching data. Check your connection.';
-        }
-      } finally {
-        this.loading = false;
+      const { error } = await supabase.auth.signInWithPassword({
+        email: this.email,
+        password: this.password,
+      });
+      if (error) {
+        this.loginError = error.message;
       }
+      this.loading = false;
+    },
+    async handleLogout() {
+      await supabase.auth.signOut();
+      this.projects = [];
+    },
+    async fetchProjects() {
+      this.loading = true;
+      const { data, error } = await supabase
+        .from('portfolio_projects')
+        .select('*')
+        .order('id', { ascending: true });
+      
+      if (error) {
+        console.error('Error fetching projects:', error);
+      } else {
+        this.projects = data;
+      }
+      this.loading = false;
+    },
+    async handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      this.uploading = true;
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `project-images/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('images')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        alert('Error uploading image: ' + uploadError.message);
+        this.uploading = false;
+        return;
+      }
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('images')
+        .getPublicUrl(filePath);
+
+      this.formData.image_url = publicUrl;
+      this.uploading = false;
     },
     openAddModal() {
       this.isEditing = false;
@@ -227,7 +261,6 @@ export default {
     },
     openEditModal(project) {
       this.isEditing = true;
-      // Convert arrays/json to strings for forms
       this.formData = {
         ...project,
         tags: Array.isArray(project.tags) ? project.tags.join(', ') : project.tags || '',
@@ -236,76 +269,64 @@ export default {
       };
       this.showModal = true;
     },
-    getFormattedData() {
-      // Convert comma strings back to array
-      return {
-        ...this.formData,
+    getCategoryString(category) {
+      return Array.isArray(category) ? category.join(', ') : category;
+    },
+    async saveProject() {
+      this.saving = true;
+      
+      // Clean up data
+      const projectData = {
+        title: this.formData.title,
+        description: this.formData.description,
+        image_url: this.formData.image_url,
+        link: this.formData.link,
+        github: this.formData.github,
+        figma: this.formData.figma,
         tags: this.formData.tags.split(',').map(t => t.trim()).filter(Boolean),
         category: this.formData.category.includes(',') 
           ? this.formData.category.split(',').map(c => c.trim()).filter(Boolean)
           : this.formData.category.trim(),
-        features: this.formData.features.split('\n').map(f => f.trim()).filter(Boolean)
+        features: this.formData.features.split('\n').map(f => f.trim()).filter(Boolean),
+        challenges: this.formData.challenges,
+        duration: this.formData.duration,
+        team: this.formData.team,
+        role: this.formData.role,
+        updated_at: new Date().toISOString()
       };
-    },
-    async saveProject() {
-      this.saving = true;
-      const url = '/.netlify/functions/projects';
-      const method = this.isEditing ? 'PUT' : 'POST';
-      const payload = this.getFormattedData();
 
-      try {
-        const response = await fetch(url, {
-          method,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': this.passwordInput
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) {
-          if (response.status === 401) {
-            this.loginError = 'Invalid Password! Failed to save.';
-            this.logout();
-            this.showModal = false;
-            throw new Error('Unauthorized');
-          }
-          throw new Error('Failed to save');
-        }
-
-        await this.fetchProjects(); // Refresh table
-        this.showModal = false;
-      } catch (err) {
-        alert(err.message || 'An error occurred while saving.');
-      } finally {
-        this.saving = false;
+      let error;
+      if (this.isEditing) {
+        ({ error } = await supabase
+          .from('portfolio_projects')
+          .update(projectData)
+          .eq('id', this.formData.id));
+      } else {
+        ({ error } = await supabase
+          .from('portfolio_projects')
+          .insert([projectData]));
       }
+
+      if (error) {
+        alert('Error saving project: ' + error.message);
+      } else {
+        await this.fetchProjects();
+        this.showModal = false;
+      }
+      this.saving = false;
     },
     async confirmDelete(id) {
       if (!confirm('Are you sure you want to delete this project?')) return;
       
-      try {
-        const response = await fetch('/.netlify/functions/projects', {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': this.passwordInput
-          },
-          body: JSON.stringify({ id })
-        });
+      const { error } = await supabase
+        .from('portfolio_projects')
+        .delete()
+        .eq('id', id);
 
-        if (!response.ok) {
-           if (response.status === 401) {
-            this.logout();
-            alert('Unauthorized. Please login again.');
-            return;
-          }
-          throw new Error('Failed to delete');
-        }
-
-        await this.fetchProjects(); // Refresh table
-      } catch (err) {
-        alert(err.message || 'An error occurred while deleting.');
+      if (error) {
+        alert('Error deleting project: ' + error.message);
+      } else {
+        await this.fetchProjects();
       }
     }
   }
@@ -320,7 +341,6 @@ export default {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Light theme specifically forced for Admin to differentiate from main site */
 .login-container {
   display: flex;
   align-items: center;
@@ -402,14 +422,10 @@ export default {
   margin-right: 8px;
 }
 
-.btn-edit:hover { background-color: #d97706; }
-
 .btn-delete {
   background-color: #ef4444;
   color: white;
 }
-
-.btn-delete:hover { background-color: #dc2626; }
 
 .error-text {
   color: #ef4444;
@@ -434,10 +450,6 @@ export default {
 .header-actions {
   display: flex;
   gap: 12px;
-}
-
-.header-actions .btn {
-  width: auto;
 }
 
 .cms-content {
@@ -481,10 +493,16 @@ export default {
   white-space: nowrap;
 }
 
-.empty-state {
-  text-align: center;
-  padding: 40px !important;
-  color: #6b7280;
+.preview-img {
+  max-width: 200px;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+.status-info {
+  font-size: 12px;
+  color: #3b82f6;
+  margin: 5px 0;
 }
 
 /* Modal */
@@ -560,10 +578,6 @@ export default {
   color: #374151;
 }
 
-textarea.form-input {
-  resize: vertical;
-}
-
 .form-actions {
   margin-top: 24px;
   display: flex;
@@ -571,10 +585,6 @@ textarea.form-input {
   gap: 12px;
   padding-top: 20px;
   border-top: 1px solid #e5e7eb;
-}
-
-.form-actions .btn {
-  width: auto;
 }
 
 @media (max-width: 768px) {

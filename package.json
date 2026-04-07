@@ -11,6 +11,7 @@
     "@emailjs/browser": "^4.4.1",
     "@neondatabase/serverless": "^1.0.1",
     "@netlify/neon": "^0.1.2",
+    "@supabase/supabase-js": "^2.102.1",
     "@vueuse/head": "^2.0.0",
     "core-js": "^3.8.3",
     "particles.vue3": "^2.12.0",
