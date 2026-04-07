@@ -192,8 +192,8 @@ export default {
   methods: {
     async fetchProjects() {
       try {
-        // Path '/projects.json' berfungsi karena filenya ada di folder 'public'
-        const response = await fetch('/projects.json'); 
+        // Memanggil API Netlify Functions pengganti projects.json statis
+        const response = await fetch('/.netlify/functions/projects'); 
         const data = await response.json();
         this.projectsData = data;
 

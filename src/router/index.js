@@ -33,6 +33,11 @@ const routes = [
     name: 'Contact',
     // GANTI DENGAN FUNGSI IMPORT()
     component: () => import('../views/Contact.vue')
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('../views/Admin.vue')
   }
   // Analytics route disabled (sudah benar)
 ]
