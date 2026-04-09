@@ -344,7 +344,7 @@ export default {
 .page-title {
   font-size: 3.5rem;
   font-weight: 800;
-  color: #fff;
+  color: #1f2937;
   margin-bottom: 32px;
   position: relative;
   display: inline-block;
@@ -352,6 +352,10 @@ export default {
   opacity: 0;
   transform: translateY(50px);
   transition: all 1s ease 0.2s;
+}
+
+:global(body.dark-theme) .page-title {
+  color: #fff;
 }
 
 .page-title.visible {
