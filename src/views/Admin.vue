@@ -1033,9 +1033,14 @@ export default {
           // Handle skills separately
           const skillsItem = data.find(item => item.page === 'about' && item.section === 'expertise' && item.key === 'skills');
           if (skillsItem && skillsItem.value) {
-            this.siteContent.about.expertise.skills_raw = typeof skillsItem.value === 'string' 
+            // Set skills_raw to the JSON string from database
+            const skillsJson = typeof skillsItem.value === 'string' 
               ? skillsItem.value 
               : JSON.stringify(skillsItem.value, null, 2);
+            this.siteContent.about.expertise.skills_raw = skillsJson;
+          } else {
+            // Initialize with default empty array if no skills in DB
+            this.siteContent.about.expertise.skills_raw = '[]';
           }
         }
       } catch (error) {
@@ -1107,7 +1112,7 @@ export default {
       try {
         // Save all content items
         const contentToSave = [];
-        
+
         // Home content
         Object.entries(this.siteContent.home.hero).forEach(([key, value]) => {
           contentToSave.push({
@@ -1122,19 +1127,8 @@ export default {
         Object.entries(this.siteContent.about).forEach(([section, data]) => {
           Object.entries(data).forEach(([key, value]) => {
             if (key === 'skills_raw') {
-              // Handle skills separately as JSONB
-              try {
-                const parsedSkills = JSON.parse(value);
-                contentToSave.push({
-                  page: 'about',
-                  section: 'expertise',
-                  key: 'skills',
-                  value: parsedSkills
-                });
-              } catch (e) {
-                alert('Invalid JSON format for skills. Please check the format.');
-                hasError = true;
-              }
+              // Skip - skills will be saved from skillsList computed property
+              return;
             } else {
               contentToSave.push({
                 page: 'about',
@@ -1145,6 +1139,21 @@ export default {
             }
           });
         });
+
+        // Save skills from skillsList computed property
+        try {
+          const skills = this.skillsList;
+          if (skills && skills.length > 0) {
+            contentToSave.push({
+              page: 'about',
+              section: 'expertise',
+              key: 'skills',
+              value: skills
+            });
+          }
+        } catch (e) {
+          console.error('Error processing skills:', e);
+        }
 
         // Upsert each content item
         for (const item of contentToSave) {
@@ -1164,7 +1173,7 @@ export default {
       } catch (error) {
         alert('Error saving site content: ' + error.message);
       }
-      
+
       this.savingSiteContent = false;
     },
 
