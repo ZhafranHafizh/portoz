@@ -258,9 +258,36 @@
                     <textarea v-model="siteContent.about.expertise.intro" class="form-input" rows="2"></textarea>
                   </div>
                   <div class="form-group">
-                    <label>Skills (JSON array - advanced)</label>
-                    <textarea v-model="siteContent.about.expertise.skills_raw" class="form-input form-textarea-mono" rows="8" placeholder='[{"title":"Skill","desc":"Description"}]'></textarea>
-                    <p class="hint-text">Format: JSON array of {"title":"...","desc":"..."}</p>
+                    <label>Skills</label>
+                    <div class="skills-editor">
+                      <div v-for="(skill, index) in skillsList" :key="index" class="skill-item">
+                        <div class="skill-header">
+                          <span class="skill-number">{{ index + 1 }}</span>
+                          <button v-if="skillsList.length > 1" @click="removeSkill(index)" class="btn-remove-skill" type="button">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                        </div>
+                        <div class="skill-fields">
+                          <input 
+                            type="text" 
+                            v-model="skill.title" 
+                            class="form-input" 
+                            placeholder="Skill title (e.g., UI/UX Design)"
+                            @input="updateSkillsJson"
+                          />
+                          <textarea 
+                            v-model="skill.desc" 
+                            class="form-input" 
+                            rows="2"
+                            placeholder="Skill description"
+                            @input="updateSkillsJson"
+                          ></textarea>
+                        </div>
+                      </div>
+                      <button @click="addSkill" class="btn-add-skill" type="button">
+                        <i class="fas fa-plus"></i> Add Skill
+                      </button>
+                    </div>
                   </div>
 
                   <h4>Connect Section</h4>
@@ -646,6 +673,19 @@ export default {
     }
   },
   computed: {
+    skillsList: {
+      get() {
+        try {
+          const skills = JSON.parse(this.siteContent.about.expertise.skills_raw || '[]');
+          return Array.isArray(skills) ? skills : [{ title: '', desc: '' }];
+        } catch (e) {
+          return [{ title: '', desc: '' }];
+        }
+      },
+      set(value) {
+        this.siteContent.about.expertise.skills_raw = JSON.stringify(value, null, 2);
+      }
+    },
     parsedSkills() {
       try {
         const skills = JSON.parse(this.siteContent.about.expertise.skills_raw);
@@ -833,6 +873,19 @@ export default {
     formatBold(text) {
       if (!text) return '';
       return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    },
+    addSkill() {
+      const currentSkills = this.skillsList;
+      currentSkills.push({ title: '', desc: '' });
+      this.skillsList = currentSkills;
+    },
+    removeSkill(index) {
+      const currentSkills = this.skillsList;
+      currentSkills.splice(index, 1);
+      this.skillsList = currentSkills;
+    },
+    updateSkillsJson() {
+      // Skills JSON akan otomatis terupdate karena v-model di skillsList
     },
     async saveProject() {
       this.savingProject = true;
@@ -1827,6 +1880,80 @@ export default {
 
 .preview-skills li strong {
   color: #374151;
+}
+
+/* Skills Editor */
+.skills-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skill-item {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.skill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.skill-number {
+  font-weight: 600;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.btn-remove-skill {
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.2s;
+}
+
+.btn-remove-skill:hover {
+  background: #dc2626;
+}
+
+.skill-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skill-fields input,
+.skill-fields textarea {
+  margin-bottom: 0;
+}
+
+.btn-add-skill {
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+
+.btn-add-skill:hover {
+  background: #059669;
 }
 
 .content-section {
