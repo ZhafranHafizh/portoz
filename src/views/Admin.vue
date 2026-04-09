@@ -176,8 +176,10 @@
             </h3>
             <div v-if="expandedSections.home" class="section-body">
               <div class="form-group">
-                <label>Profile Image Path/URL</label>
-                <input type="text" v-model="siteContent.home.hero.profile_image" class="form-input" />
+                <label>Profile Image</label>
+                <input type="file" @change="handleHomeProfileUpload" class="form-input" accept="image/*" />
+                <p v-if="uploadingProfileImage" class="status-info">Uploading image...</p>
+                <img v-if="siteContent.home.hero.profile_image" :src="siteContent.home.hero.profile_image" class="preview-img" alt="preview" />
               </div>
               <div class="form-group">
                 <label>Hero Title (supports **bold**)</label>
@@ -215,8 +217,10 @@
             <div v-if="expandedSections.about" class="section-body">
               <h4>Profile Section</h4>
               <div class="form-group">
-                <label>Profile Image Path/URL</label>
-                <input type="text" v-model="siteContent.about.profile.image" class="form-input" />
+                <label>Profile Image</label>
+                <input type="file" @change="handleAboutProfileUpload" class="form-input" accept="image/*" />
+                <p v-if="uploadingAboutImage" class="status-info">Uploading image...</p>
+                <img v-if="siteContent.about.profile.image" :src="siteContent.about.profile.image" class="preview-img" alt="preview" />
               </div>
               <div class="form-group">
                 <label>Heading</label>
@@ -534,6 +538,8 @@ export default {
       // Site Content
       loadingSiteContent: false,
       savingSiteContent: false,
+      uploadingProfileImage: false,
+      uploadingAboutImage: false,
       siteContentError: '',
       siteContent: {
         home: {
@@ -900,6 +906,58 @@ export default {
     toggleSection(section) {
       // Vue 3: Direct assignment
       this.expandedSections[section] = !this.expandedSections[section];
+    },
+    async handleHomeProfileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      this.uploadingProfileImage = true;
+      const fileExt = file.name.split('.').pop();
+      const fileName = `home-profile-${Date.now()}.${fileExt}`;
+      const filePath = `profile-images/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('images')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        alert('Error uploading image: ' + uploadError.message);
+        this.uploadingProfileImage = false;
+        return;
+      }
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('images')
+        .getPublicUrl(filePath);
+
+      this.siteContent.home.hero.profile_image = publicUrl;
+      this.uploadingProfileImage = false;
+    },
+    async handleAboutProfileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      this.uploadingAboutImage = true;
+      const fileExt = file.name.split('.').pop();
+      const fileName = `about-profile-${Date.now()}.${fileExt}`;
+      const filePath = `profile-images/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('images')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        alert('Error uploading image: ' + uploadError.message);
+        this.uploadingAboutImage = false;
+        return;
+      }
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('images')
+        .getPublicUrl(filePath);
+
+      this.siteContent.about.profile.image = publicUrl;
+      this.uploadingAboutImage = false;
     },
     async saveAllSiteContent() {
       this.savingSiteContent = true;
