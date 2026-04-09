@@ -8,27 +8,39 @@
 
     <section class="hero" :style="heroParallaxStyle">
       <div class="profile-image-container" :style="profileParallaxStyle">
-        <img src="../../public/galeri/Profil.png" alt="Foto Profil Zhafran Hafizh" class="profile-pic">
+        <img :src="homeContent.hero.profile_image" alt="Profile Photo" class="profile-pic">
       </div>
-      <h1 class="hero-title">Hello, I'm <strong>Zhafran Hafizh</strong>!</h1>
-      <h2 class="hero-subtitle">A <span>Software Engineer</span> Bridging Design, Development, and Quality</h2>
+      <h1 class="hero-title" v-html="formatBold(homeContent.hero.title)"></h1>
+      <h2 class="hero-subtitle" v-html="formatBold(homeContent.hero.subtitle)"></h2>
       <p class="hero-description">
-        Hello! This is where design meets code. As a product development enthusiast, I excel at creating intuitive UI/UX, implementing robust front-end interfaces, and ensuring software quality. Take a look at my end-to-end projects.
+        {{ homeContent.hero.description }}
       </p>
-      <router-link to="/projects" class="cta-button">
-        See my works <span class="arrow">&rarr;</span>
+      <router-link :to="homeContent.hero.cta_link" class="cta-button">
+        {{ homeContent.hero.cta_text }} <span class="arrow">&rarr;</span>
       </router-link>
     </section>
   </div>
 </template>
 
 <script>
+import { supabase } from '@/config/supabaseClient';
 
 export default {
   name: 'HomeView',
   data() {
     return {
       scrollY: 0,
+      loading: true,
+      homeContent: {
+        hero: {
+          profile_image: '../../public/galeri/Profil.png',
+          title: "Hello, I'm **Zhafran Hafizh**!",
+          subtitle: 'A Software Engineer Bridging Design, Development, and Quality',
+          description: 'Hello! This is where design meets code. As a product development enthusiast, I excel at creating intuitive UI/UX, implementing robust front-end interfaces, and ensuring software quality. Take a look at my end-to-end projects.',
+          cta_text: 'See my works',
+          cta_link: '/projects'
+        }
+      },
       particlesOptions: {
         background: { color: { value: 'transparent' } },
         fpsLimit: 60,
@@ -63,12 +75,44 @@ export default {
     };
   },
   mounted() {
+    this.fetchHomeContent();
     window.addEventListener('scroll', this.handleScroll);
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    formatBold(text) {
+      if (!text) return '';
+      return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    },
+    async fetchHomeContent() {
+      try {
+        const { data, error } = await supabase
+          .from('site_content')
+          .select('*')
+          .eq('page', 'home');
+
+        if (error) {
+          console.error('Error fetching home content:', error);
+        } else if (data && data.length > 0) {
+          // Map database content to the data structure
+          data.forEach(item => {
+            if (item.section === 'hero' && Object.prototype.hasOwnProperty.call(this.homeContent.hero, item.key)) {
+              let value = item.value;
+              // Remove surrounding quotes if present
+              if (typeof value === 'string' && value.startsWith('"') && value.endsWith('"')) {
+                value = value.slice(1, -1);
+              }
+              this.homeContent.hero[item.key] = value;
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+      this.loading = false;
+    },
     handleScroll() {
       this.scrollY = window.scrollY;
     }

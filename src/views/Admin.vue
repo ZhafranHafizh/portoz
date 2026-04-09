@@ -49,6 +49,18 @@
         >
           <i class="fas fa-images"></i> Gallery
         </button>
+        <button 
+          :class="['tab-btn', { active: activeTab === 'sitecontent' }]"
+          @click="activeTab = 'sitecontent'"
+        >
+          <i class="fas fa-file-alt"></i> Site Content
+        </button>
+        <button 
+          :class="['tab-btn', { active: activeTab === 'cvmanager' }]"
+          @click="activeTab = 'cvmanager'"
+        >
+          <i class="fas fa-file-pdf"></i> CV Manager
+        </button>
       </div>
 
       <div class="cms-content">
@@ -131,10 +143,189 @@
             </tbody>
           </table>
         </div>
+
+        <!-- Site Content Tab -->
+      <div v-if="activeTab === 'sitecontent'">
+        <div class="tab-header">
+          <h2>Site Content Management</h2>
+          <button @click="saveAllSiteContent" class="btn btn-primary" :disabled="savingSiteContent">
+            {{ savingSiteContent ? 'Saving...' : 'Save All Changes' }}
+          </button>
+        </div>
+
+        <div v-if="loadingSiteContent" class="loading-state">Loading site content...</div>
+
+        <div v-else class="site-content-editor">
+          <!-- Home Page Section -->
+          <div class="content-section">
+            <h3>
+              <button class="section-toggle" @click="toggleSection('home')">
+                <i :class="expandedSections.home ? 'fas fa-chevron-down' : 'fas fa-chevron-right'"></i>
+                Home Page
+              </button>
+            </h3>
+            <div v-if="expandedSections.home" class="section-body">
+              <div class="form-group">
+                <label>Profile Image Path/URL</label>
+                <input type="text" v-model="siteContent.home.hero.profile_image" class="form-input" />
+              </div>
+              <div class="form-group">
+                <label>Hero Title (supports **bold**)</label>
+                <textarea v-model="siteContent.home.hero.title" class="form-input" rows="2"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Hero Subtitle</label>
+                <textarea v-model="siteContent.home.hero.subtitle" class="form-input" rows="2"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Hero Description</label>
+                <textarea v-model="siteContent.home.hero.description" class="form-input" rows="4"></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>CTA Button Text</label>
+                  <input type="text" v-model="siteContent.home.hero.cta_text" class="form-input" />
+                </div>
+                <div class="form-group">
+                  <label>CTA Button Link</label>
+                  <input type="text" v-model="siteContent.home.hero.cta_link" class="form-input" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- About Page Section -->
+          <div class="content-section">
+            <h3>
+              <button class="section-toggle" @click="toggleSection('about')">
+                <i :class="expandedSections.about ? 'fas fa-chevron-down' : 'fas fa-chevron-right'"></i>
+                About Page
+              </button>
+            </h3>
+            <div v-if="expandedSections.about" class="section-body">
+              <h4>Profile Section</h4>
+              <div class="form-group">
+                <label>Profile Image Path/URL</label>
+                <input type="text" v-model="siteContent.about.profile.image" class="form-input" />
+              </div>
+              <div class="form-group">
+                <label>Heading</label>
+                <input type="text" v-model="siteContent.about.profile.heading" class="form-input" />
+              </div>
+              <div class="form-group">
+                <label>Tagline (use ** for bold)</label>
+                <textarea v-model="siteContent.about.profile.tagline" class="form-input" rows="2"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Introduction</label>
+                <textarea v-model="siteContent.about.profile.intro" class="form-input" rows="3"></textarea>
+              </div>
+
+              <h4>Philosophy Section</h4>
+              <div class="form-group">
+                <label>Heading</label>
+                <input type="text" v-model="siteContent.about.philosophy.heading" class="form-input" />
+              </div>
+              <div class="form-group">
+                <label>Content</label>
+                <textarea v-model="siteContent.about.philosophy.content" class="form-input" rows="5"></textarea>
+              </div>
+
+              <h4>Expertise Section</h4>
+              <div class="form-group">
+                <label>Heading</label>
+                <input type="text" v-model="siteContent.about.expertise.heading" class="form-input" />
+              </div>
+              <div class="form-group">
+                <label>Intro Text</label>
+                <textarea v-model="siteContent.about.expertise.intro" class="form-input" rows="2"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Skills (JSON array - advanced)</label>
+                <textarea v-model="siteContent.about.expertise.skills_raw" class="form-input form-textarea-mono" rows="8" placeholder='[{"title":"Skill","desc":"Description"}]'></textarea>
+                <p class="hint-text">Format: JSON array of {"title":"...","desc":"..."}</p>
+              </div>
+
+              <h4>Connect Section</h4>
+              <div class="form-group">
+                <label>Heading</label>
+                <input type="text" v-model="siteContent.about.connect.heading" class="form-input" />
+              </div>
+              <div class="form-group">
+                <label>Content</label>
+                <textarea v-model="siteContent.about.connect.content" class="form-input" rows="3"></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>CTA Button Text</label>
+                  <input type="text" v-model="siteContent.about.connect.cta_text" class="form-input" />
+                </div>
+                <div class="form-group">
+                  <label>CTA Button Link</label>
+                  <input type="text" v-model="siteContent.about.connect.cta_link" class="form-input" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Add/Edit Project Modal -->
-      <div v-if="showProjectModal" class="modal-overlay" @click.self="showProjectModal = false">
+      <!-- CV Manager Tab -->
+      <div v-if="activeTab === 'cvmanager'">
+        <div class="tab-header">
+          <h2>CV Management</h2>
+          <button @click="openUploadCVModal" class="btn btn-primary">+ Upload New CV</button>
+        </div>
+
+        <div v-if="loadingCV" class="loading-state">Loading CV files...</div>
+
+        <table v-else class="projects-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Filename</th>
+              <th>Uploaded At</th>
+              <th>Version Note</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="cv in cvFiles" :key="cv.id">
+              <td>{{ cv.id }}</td>
+              <td>{{ cv.filename }}</td>
+              <td>{{ new Date(cv.uploaded_at).toLocaleDateString() }}</td>
+              <td>{{ cv.version_note || '-' }}</td>
+              <td>
+                <span :class="cv.is_active ? 'status-active' : 'status-inactive'">
+                  {{ cv.is_active ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+              <td class="action-buttons">
+                <button v-if="!cv.is_active" @click="setActiveCV(cv.id)" class="btn btn-sm btn-activate">Activate</button>
+                <button @click="confirmDeleteCV(cv.id)" class="btn btn-sm btn-delete">Delete</button>
+              </td>
+            </tr>
+            <tr v-if="cvFiles.length === 0">
+              <td colspan="6" class="empty-state">No CV files found. Upload your first CV!</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="cv-info-box">
+          <h4><i class="fas fa-info-circle"></i> How it works</h4>
+          <ul>
+            <li>Upload your CV as a PDF file</li>
+            <li>Only one CV can be "Active" at a time - this is the one users will download</li>
+            <li>Click "Activate" to make an older version the active download</li>
+            <li>The active CV will be used on the About page and Project pages</li>
+          </ul>
+        </div>
+      </div>
+    </div> <!-- Close cms-content and cms-container -->
+
+    <!-- Add/Edit Project Modal -->
+    <div v-if="showProjectModal" class="modal-overlay" @click.self="showProjectModal = false">
         <div class="modal-content">
           <div class="modal-header">
             <h2>{{ isEditingProject ? 'Edit Project' : 'Add New Project' }}</h2>
@@ -258,6 +449,44 @@
         </div>
       </div>
     </div>
+
+    <!-- Upload CV Modal -->
+    <div v-if="showUploadCVModal" class="modal-overlay" @click.self="showUploadCVModal = false">
+      <div class="modal-content modal-small">
+        <div class="modal-header">
+          <h2>Upload New CV</h2>
+          <button class="close-btn" @click="showUploadCVModal = false">&times;</button>
+        </div>
+
+        <form @submit.prevent="uploadCV" class="project-form">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label>CV File (PDF) *</label>
+              <input type="file" @change="handleCVFileUpload" class="form-input" accept=".pdf" required />
+              <p v-if="uploadingCV" class="status-info">Uploading CV file...</p>
+              <p v-if="cvForm.filename" class="status-info">Selected: {{ cvForm.filename }}</p>
+            </div>
+            <div class="form-group full-width">
+              <label>Version Note (optional)</label>
+              <input type="text" v-model="cvForm.version_note" class="form-input" placeholder="e.g., Updated for 2025" />
+            </div>
+            <div class="form-group full-width">
+              <label>
+                <input type="checkbox" v-model="cvForm.is_active" style="margin-right: 8px;" />
+                Set as Active CV (will be available for download)
+              </label>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" @click="showUploadCVModal = false">Cancel</button>
+            <button type="submit" class="btn btn-primary" :disabled="uploadingCV || savingCV">
+              {{ uploadingCV ? 'Uploading...' : savingCV ? 'Saving...' : 'Upload CV' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -290,7 +519,39 @@ export default {
       galleryImages: [],
       showGalleryModal: false,
       isEditingGallery: false,
-      galleryForm: this.getDefaultGalleryData()
+      galleryForm: this.getDefaultGalleryData(),
+      
+      // Site Content
+      loadingSiteContent: false,
+      savingSiteContent: false,
+      siteContent: {
+        home: {
+          hero: {
+            profile_image: '',
+            title: '',
+            subtitle: '',
+            description: '',
+            cta_text: '',
+            cta_link: ''
+          }
+        },
+        about: {
+          profile: { image: '', heading: '', tagline: '', intro: '' },
+          philosophy: { heading: '', content: '' },
+          expertise: { heading: '', intro: '', skills_raw: '' },
+          connect: { heading: '', content: '', cta_text: '', cta_link: '' }
+        }
+      },
+      expandedSections: { home: true, about: true },
+      
+      // CV Manager
+      loadingCV: false,
+      savingCV: false,
+      uploadingCV: false,
+      cvFiles: [],
+      showUploadCVModal: false,
+      cvForm: { filename: '', file_url: '', version_note: '', is_active: false },
+      cvFileToUpload: null
     }
   },
   mounted() {
@@ -299,6 +560,8 @@ export default {
       if (this.session) {
         this.fetchProjects();
         this.fetchGalleryImages();
+        this.fetchSiteContent();
+        this.fetchCVFiles();
       }
     });
 
@@ -307,6 +570,8 @@ export default {
       if (this.session) {
         this.fetchProjects();
         this.fetchGalleryImages();
+        this.fetchSiteContent();
+        this.fetchCVFiles();
       }
     });
   },
@@ -565,6 +830,259 @@ export default {
         alert('Error deleting gallery image: ' + error.message);
       } else {
         await this.fetchGalleryImages();
+      }
+    },
+    
+    // Site Content Methods
+    async fetchSiteContent() {
+      this.loadingSiteContent = true;
+      const { data, error } = await supabase
+        .from('site_content')
+        .select('*');
+
+      if (error) {
+        console.error('Error fetching site content:', error);
+      } else {
+        // Map database data to the siteContent structure
+        data.forEach(item => {
+          const page = item.page;
+          const section = item.section;
+          const key = item.key;
+          const value = typeof item.value === 'string' ? item.value : JSON.stringify(item.value);
+          
+          if (this.siteContent[page] && this.siteContent[page][section]) {
+            this.$set(this.siteContent[page][section], key, value.replace(/^"|"$/g, ''));
+          }
+        });
+        
+        // Handle skills separately
+        const skillsItem = data.find(item => item.page === 'about' && item.section === 'expertise' && item.key === 'skills');
+        if (skillsItem) {
+          this.siteContent.about.expertise.skills_raw = JSON.stringify(skillsItem.value, null, 2);
+        }
+      }
+      this.loadingSiteContent = false;
+    },
+    toggleSection(section) {
+      this.$set(this.expandedSections, section, !this.expandedSections[section]);
+    },
+    async saveAllSiteContent() {
+      this.savingSiteContent = true;
+      let hasError = false;
+
+      try {
+        // Save all content items
+        const contentToSave = [];
+        
+        // Home content
+        Object.entries(this.siteContent.home.hero).forEach(([key, value]) => {
+          contentToSave.push({
+            page: 'home',
+            section: 'hero',
+            key,
+            value: key === 'profile_image' ? value : `"${value}"`
+          });
+        });
+
+        // About content
+        Object.entries(this.siteContent.about).forEach(([section, data]) => {
+          Object.entries(data).forEach(([key, value]) => {
+            if (key === 'skills_raw') {
+              // Handle skills separately as JSONB
+              try {
+                const parsedSkills = JSON.parse(value);
+                contentToSave.push({
+                  page: 'about',
+                  section: 'expertise',
+                  key: 'skills',
+                  value: parsedSkills
+                });
+              } catch (e) {
+                alert('Invalid JSON format for skills. Please check the format.');
+                hasError = true;
+              }
+            } else {
+              contentToSave.push({
+                page: 'about',
+                section,
+                key,
+                value: `"${value}"`
+              });
+            }
+          });
+        });
+
+        // Upsert each content item
+        for (const item of contentToSave) {
+          const { error } = await supabase
+            .from('site_content')
+            .upsert(item, { onConflict: 'page,section,key' });
+
+          if (error) {
+            console.error('Error saving content:', error);
+            hasError = true;
+          }
+        }
+
+        if (!hasError) {
+          alert('All site content saved successfully!');
+        }
+      } catch (error) {
+        alert('Error saving site content: ' + error.message);
+      }
+      
+      this.savingSiteContent = false;
+    },
+
+    // CV Management Methods
+    async fetchCVFiles() {
+      this.loadingCV = true;
+      const { data, error } = await supabase
+        .from('cv_files')
+        .select('*')
+        .order('uploaded_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching CV files:', error);
+      } else {
+        this.cvFiles = data;
+      }
+      this.loadingCV = false;
+    },
+    openUploadCVModal() {
+      this.cvForm = { filename: '', file_url: '', version_note: '', is_active: false };
+      this.cvFileToUpload = null;
+      this.showUploadCVModal = true;
+    },
+    async handleCVFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      if (file.type !== 'application/pdf') {
+        alert('Please upload a PDF file only.');
+        return;
+      }
+
+      this.uploadingCV = true;
+      this.cvFileToUpload = file;
+      this.cvForm.filename = file.name;
+
+      const fileExt = file.name.split('.').pop();
+      const fileName = `cv_${Date.now()}.${fileExt}`;
+      const filePath = `cvs/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('images')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        alert('Error uploading CV: ' + uploadError.message);
+        this.uploadingCV = false;
+        return;
+      }
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('images')
+        .getPublicUrl(filePath);
+
+      this.cvForm.file_url = publicUrl;
+      this.uploadingCV = false;
+    },
+    async uploadCV() {
+      if (!this.cvForm.file_url) {
+        alert('Please upload a CV file first.');
+        return;
+      }
+
+      this.savingCV = true;
+
+      try {
+        // If setting as active, deactivate all others first
+        if (this.cvForm.is_active) {
+          await supabase
+            .from('cv_files')
+            .update({ is_active: false })
+            .neq('id', 0); // Will update all in next step
+        }
+
+        const { error } = await supabase
+          .from('cv_files')
+          .insert([{
+            filename: this.cvForm.filename,
+            file_url: this.cvForm.file_url,
+            version_note: this.cvForm.version_note,
+            is_active: this.cvForm.is_active
+          }]);
+
+        if (error) {
+          alert('Error uploading CV: ' + error.message);
+        } else {
+          // If this is active, deactivate others
+          if (this.cvForm.is_active) {
+            const { data: newCV } = await supabase
+              .from('cv_files')
+              .select('id')
+              .order('uploaded_at', { ascending: false })
+              .limit(1);
+            
+            if (newCV && newCV[0]) {
+              await supabase
+                .from('cv_files')
+                .update({ is_active: false })
+                .neq('id', newCV[0].id);
+              
+              await supabase
+                .from('cv_files')
+                .update({ is_active: true })
+                .eq('id', newCV[0].id);
+            }
+          }
+          
+          await this.fetchCVFiles();
+          this.showUploadCVModal = false;
+        }
+      } catch (error) {
+        alert('Error uploading CV: ' + error.message);
+      }
+      
+      this.savingCV = false;
+    },
+    async setActiveCV(id) {
+      if (!confirm('Set this CV as the active one for downloads?')) return;
+
+      try {
+        // Deactivate all
+        await supabase
+          .from('cv_files')
+          .update({ is_active: false });
+
+        // Activate selected one
+        const { error } = await supabase
+          .from('cv_files')
+          .update({ is_active: true })
+          .eq('id', id);
+
+        if (error) {
+          alert('Error activating CV: ' + error.message);
+        } else {
+          await this.fetchCVFiles();
+        }
+      } catch (error) {
+        alert('Error activating CV: ' + error.message);
+      }
+    },
+    async confirmDeleteCV(id) {
+      if (!confirm('Are you sure you want to delete this CV file?')) return;
+
+      const { error } = await supabase
+        .from('cv_files')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        alert('Error deleting CV: ' + error.message);
+      } else {
+        await this.fetchCVFiles();
       }
     }
   }
@@ -876,6 +1394,141 @@ export default {
 @media (max-width: 768px) {
   .form-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Site Content Editor Styles */
+.site-content-editor {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.content-section {
+  margin-bottom: 30px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.content-section h3 {
+  margin: 0;
+  padding: 0;
+}
+
+.section-toggle {
+  width: 100%;
+  padding: 16px 20px;
+  background: #f9fafb;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-toggle:hover {
+  background: #f3f4f6;
+}
+
+.section-body {
+  padding: 20px;
+}
+
+.section-body h4 {
+  margin: 20px 0 10px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-textarea-mono {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+}
+
+.hint-text {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 5px;
+}
+
+/* CV Manager Styles */
+.cv-info-box {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+}
+
+.cv-info-box h4 {
+  margin: 0 0 10px 0;
+  color: #0369a1;
+  font-size: 14px;
+}
+
+.cv-info-box ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #0c4a6e;
+  font-size: 13px;
+}
+
+.cv-info-box li {
+  margin-bottom: 5px;
+}
+
+.status-active {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #dcfce7;
+  color: #166534;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-inactive {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #f3f4f6;
+  color: #6b7280;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.btn-activate {
+  background-color: #22c55e;
+  color: white;
+  margin-right: 8px;
+}
+
+.btn-activate:hover {
+  background-color: #16a34a;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .tab-btn {
+    padding: 10px 16px;
+    font-size: 14px;
   }
 }
 </style>

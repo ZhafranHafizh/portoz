@@ -3,20 +3,19 @@
     <section class="about-content" :class="{ 'visible': sectionVisible }">
       
       <div class="profile-header">
-        <img src="../../public/galeri/Profil.png" alt="My Photo" class="about-pic" :style="imageParallaxStyle">
+        <img :src="aboutContent.profile.image" alt="My Photo" class="about-pic" :style="imageParallaxStyle">
         <div class="profile-text">
-          <h1>About Me</h1>
-          <h2>Linking <strong> Ideas, Design, </strong> and <strong>Code</strong>.</h2>
-          <p class="intro">
-            Hi! I'm <strong>Zhafran Hafizh Izdihar Riyadi</strong>, A Software Engineer who is passionate about creating intuitive, functional, and high-quality digital products.
-          </p>
+          <h1>{{ aboutContent.profile.heading }}</h1>
+          <h2 v-html="formatBold(aboutContent.profile.tagline)"></h2>
+          <p class="intro" v-html="formatBold(aboutContent.profile.intro)"></p>
           <!-- Download CV Button -->
           <div class="cv-download-section">
-            <a 
-              href="" 
-              download="Zhafran_Hafizh_Resume_2025.pdf"
+            <a
+              :href="cvDownloadUrl || '#'"
+              :download="cvDownloadUrl ? cvDownloadUrl.split('/').pop() : 'CV.pdf'"
               class="download-cv-btn"
               @click="trackDownload"
+              :title="cvDownloadUrl ? 'Download CV' : 'CV will be available after upload'"
             >
               <i class="fas fa-download"></i>
               <span>Download My CV</span>
@@ -26,27 +25,21 @@
       </div>
 
       <div class="story-content">
-        <h3>My Philosophy</h3>
-        <p>
-          I believe that the best technology is technology that “disappears,” allowing users to focus on their goals rather than on how to use the tool. For me, “bridging design and development” is not just a technical matter, but a matter of empathy. Understanding what users need (from a UI/UX perspective) and translating that into clean, efficient, and scalable code (from a front-end perspective).
-        </p>
+        <h3>{{ aboutContent.philosophy.heading }}</h3>
+        <p>{{ aboutContent.philosophy.content }}</p>
 
-        <h3>My Core Expertise</h3>
-        <p>
-          My journey in the software world has given me expertise in various fields. I most often work with:
-        </p>
+        <h3>{{ aboutContent.expertise.heading }}</h3>
+        <p>{{ aboutContent.expertise.intro }}</p>
         <ul class="skills-list">
-          <li><strong>UI/UX Design:</strong> Creating wireframes, interactive prototypes, and design systems using Figma.</li>
-          <li><strong>Front-End Development:</strong> Bringing designs to life as responsive and fast web applications using <strong>Vue.js</strong>.</li>
-          <li><strong>Quality Assurance & DevOps:</strong> Ensuring software runs bug-free and implementing CI/CD processes for efficient deployments.</li>
+          <li v-for="(skill, index) in aboutContent.expertise.skills" :key="index">
+            <strong>{{ skill.title }}:</strong> {{ skill.desc }}
+          </li>
         </ul>
 
-        <h3>Let's Connect</h3>
-        <p>
-          I'm always open to collaborating on challenging projects or just discussing technology and design. If you're looking for someone who can understand the big picture while also paying attention to technical details, I'd love to hear from you.
-        </p>
-        <router-link to="/contact" class="cta-button">
-            Contact Me →
+        <h3>{{ aboutContent.connect.heading }}</h3>
+        <p>{{ aboutContent.connect.content }}</p>
+        <router-link :to="aboutContent.connect.cta_link" class="cta-button">
+            {{ aboutContent.connect.cta_text }}
         </router-link>
       </div>
 
@@ -62,8 +55,7 @@ export default {
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useHead } from '@vueuse/head'
-
-
+import { supabase } from '@/config/supabaseClient'
 
 // Meta tags setup
 useHead({
@@ -79,6 +71,102 @@ useHead({
 // 2. Animasi fade-in sederhana (tanpa parallax, tanpa fetch)
 const sectionVisible = ref(false)
 
+// About content state
+const aboutContent = ref({
+  profile: {
+    image: '../../public/galeri/Profil.png',
+    heading: 'About Me',
+    tagline: 'Linking  Ideas, Design,  and Code.',
+    intro: "Hi! I'm **Zhafran Hafizh Izdihar Riyadi**, A Software Engineer who is passionate about creating intuitive, functional, and high-quality digital products."
+  },
+  philosophy: {
+    heading: 'My Philosophy',
+    content: 'I believe that the best technology is technology that "disappears," allowing users to focus on their goals rather than on how to use the tool. For me, "bridging design and development" is not just a technical matter, but a matter of empathy. Understanding what users need (from a UI/UX perspective) and translating that into clean, efficient, and scalable code (from a front-end perspective).'
+  },
+  expertise: {
+    heading: 'My Core Expertise',
+    intro: 'My journey in the software world has given me expertise in various fields. I most often work with:',
+    skills: [
+      {title: 'UI/UX Design', desc: 'Creating wireframes, interactive prototypes, and design systems using Figma.'},
+      {title: 'Front-End Development', desc: 'Bringing designs to life as responsive and fast web applications using Vue.js.'},
+      {title: 'Quality Assurance & DevOps', desc: 'Ensuring software runs bug-free and implementing CI/CD processes for efficient deployments.'}
+    ]
+  },
+  connect: {
+    heading: "Let's Connect",
+    content: "I'm always open to collaborating on challenging projects or just discussing technology and design. If you're looking for someone who can understand the big picture while also paying attention to technical details, I'd love to hear from you.",
+    cta_text: 'Contact Me →',
+    cta_link: '/contact'
+  }
+})
+
+// CV download URL
+const cvDownloadUrl = ref('')
+
+// Simple parallax style placeholder (can be enhanced later)
+const imageParallaxStyle = ref({})
+
+const formatBold = (text) => {
+  if (!text) return '';
+  return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+}
+
+const fetchAboutContent = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('site_content')
+      .select('*')
+      .eq('page', 'about');
+
+    if (error) {
+      console.error('Error fetching about content:', error);
+      return;
+    }
+
+    if (data && data.length > 0) {
+      // Map database content
+      data.forEach(item => {
+        const section = item.section;
+        const key = item.key;
+        
+        if (aboutContent.value[section]) {
+          let value = item.value;
+          // Remove surrounding quotes
+          if (typeof value === 'string' && value.startsWith('"') && value.endsWith('"')) {
+            value = value.slice(1, -1);
+          }
+          // Handle skills separately (JSONB)
+          if (key === 'skills' && Array.isArray(value)) {
+            aboutContent.value[section].skills = value;
+          } else {
+            aboutContent.value[section][key] = value;
+          }
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+const fetchActiveCV = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('cv_files')
+      .select('file_url, filename')
+      .eq('is_active', true)
+      .single();
+
+    if (error) {
+      console.error('Error fetching CV:', error);
+    } else if (data && data.file_url) {
+      cvDownloadUrl.value = data.file_url;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
 const trackDownload = () => {
   console.log('CV downloaded at:', new Date().toISOString())
   // You can add Google Analytics or other tracking here
@@ -87,7 +175,11 @@ const trackDownload = () => {
 onMounted(() => {
   setTimeout(() => {
     sectionVisible.value = true
-  }, 100)
+  }, 100);
+  
+  // Fetch content from database
+  fetchAboutContent();
+  fetchActiveCV();
 })
 </script>
 
