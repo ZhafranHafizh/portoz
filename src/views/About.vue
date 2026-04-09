@@ -6,8 +6,8 @@
         <img :src="aboutContent.profile.image" alt="My Photo" class="about-pic" :style="imageParallaxStyle">
         <div class="profile-text">
           <h1>{{ aboutContent.profile.heading }}</h1>
-          <h2 v-html="formatBold(aboutContent.profile.tagline)"></h2>
-          <p class="intro" v-html="formatBold(aboutContent.profile.intro)"></p>
+          <h2 v-html="aboutContent.profile.tagline"></h2>
+          <p class="intro" v-html="aboutContent.profile.intro"></p>
           <!-- Download CV Button -->
           <div class="cv-download-section">
             <a
@@ -105,11 +105,6 @@ const cvDownloadUrl = ref('')
 
 // Simple parallax style placeholder (can be enhanced later)
 const imageParallaxStyle = ref({})
-
-const formatBold = (text) => {
-  if (!text) return '';
-  return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-}
 
 const fetchAboutContent = async () => {
   try {

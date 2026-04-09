@@ -1,7 +1,7 @@
 <template>
   <div class="gallery-container">
     <!-- Header section -->
-    <div class="header-section">
+    <div class="gallery-header">
       <div class="header-content">
         <h1 class="page-title" :class="{ 'visible': titleVisible }">
           <span class="title-gradient">Gallery</span>

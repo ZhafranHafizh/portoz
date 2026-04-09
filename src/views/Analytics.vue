@@ -1,7 +1,7 @@
 <template>
   <div class="analytics-view">
     <!-- Header Section -->
-    <div class="header-section">
+    <div class="analytics-header">
       <div class="header-content">
         <h1 class="page-title" :class="{ 'visible': titleVisible }">
           <span class="title-gradient">Analytics Dashboard</span>
@@ -452,7 +452,7 @@ Generated: ${new Date().toLocaleString()}`
 }
 
 /* Header Section */
-.header-section {
+.analytics-header {
   padding: 80px 2rem 60px;
   text-align: center;
   background: linear-gradient(135deg, #f97316 0%, #d97706 100%);
@@ -830,7 +830,7 @@ Generated: ${new Date().toLocaleString()}`
 }
 
 /* Dark Mode Support */
-body.dark-theme .header-section {
+body.dark-theme .analytics-header {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 }
 

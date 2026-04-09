@@ -1,6 +1,6 @@
 /* Gallery Header Styles */
 
-.header-section {
+.gallery-header {
   padding: 80px 2rem 60px;
   text-align: center;
   background: var(--gradient-primary);
@@ -10,7 +10,7 @@
   transition: var(--transition-base);
 }
 
-.header-section::before {
+.gallery-header::before {
   content: '';
   position: absolute;
   top: 0;

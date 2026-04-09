@@ -1,7 +1,7 @@
 <template>
   <div class="projects-view">
     <!-- Header section -->
-    <div class="header-section">
+    <div class="projects-header">
       <div class="header-content">
         <h1 class="page-title" :class="{ 'visible': titleVisible }">
           <span class="title-gradient">My Projects</span>
@@ -301,7 +301,7 @@ export default {
 }
 
 /* Header Section */
-.header-section {
+.projects-header {
   padding: 80px 2rem 60px;
   text-align: center;
   background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
@@ -310,11 +310,11 @@ export default {
   overflow: hidden;
 }
 
-:global(body.dark-theme) .header-section {
+:global(body.dark-theme) .projects-header {
   background: linear-gradient(135deg, #292524 0%, #1c1917 100%) !important;
 }
 
-.header-section::before {
+.projects-header::before {
   content: '';
   position: absolute;
   top: 0;
@@ -931,7 +931,7 @@ export default {
 }
 
 @media (max-width: 768px) {
-  .header-section {
+  .projects-header {
     padding: 60px 1.5rem 40px;
   }
   
@@ -1035,7 +1035,7 @@ export default {
 }
 
 @media (max-width: 480px) {
-  .header-section {
+  .projects-header {
     padding: 40px 1rem 30px;
   }
   

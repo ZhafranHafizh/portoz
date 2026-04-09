@@ -10,11 +10,9 @@
       <div class="profile-image-container" :style="profileParallaxStyle">
         <img :src="homeContent.hero.profile_image" alt="Profile Photo" class="profile-pic">
       </div>
-      <h1 class="hero-title" v-html="formatBold(homeContent.hero.title)"></h1>
-      <h2 class="hero-subtitle" v-html="formatBold(homeContent.hero.subtitle)"></h2>
-      <p class="hero-description">
-        {{ homeContent.hero.description }}
-      </p>
+      <h1 class="hero-title" v-html="homeContent.hero.title"></h1>
+      <h2 class="hero-subtitle" v-html="homeContent.hero.subtitle"></h2>
+      <p class="hero-description" v-html="homeContent.hero.description"></p>
       <router-link :to="homeContent.hero.cta_link" class="cta-button">
         {{ homeContent.hero.cta_text }} <span class="arrow">&rarr;</span>
       </router-link>
@@ -81,10 +79,6 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
-    formatBold(text) {
-      if (!text) return '';
-      return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    },
     async fetchHomeContent() {
       try {
         const { data, error } = await supabase

@@ -191,16 +191,28 @@
                     <img v-if="siteContent.home.hero.profile_image" :src="siteContent.home.hero.profile_image" class="preview-img" alt="preview" />
                   </div>
                   <div class="form-group">
-                    <label>Hero Title (supports **bold**)</label>
-                    <textarea v-model="siteContent.home.hero.title" class="form-input" rows="2"></textarea>
+                    <label>Hero Title</label>
+                    <RichTextEditor 
+                      v-model="siteContent.home.hero.title" 
+                      placeholder="Enter hero title (e.g., Hello, I'm **Zhafran Hafizh**!)"
+                      :height="100"
+                    />
                   </div>
                   <div class="form-group">
                     <label>Hero Subtitle</label>
-                    <textarea v-model="siteContent.home.hero.subtitle" class="form-input" rows="2"></textarea>
+                    <RichTextEditor 
+                      v-model="siteContent.home.hero.subtitle" 
+                      placeholder="Enter subtitle"
+                      :height="100"
+                    />
                   </div>
                   <div class="form-group">
                     <label>Hero Description</label>
-                    <textarea v-model="siteContent.home.hero.description" class="form-input" rows="4"></textarea>
+                    <RichTextEditor 
+                      v-model="siteContent.home.hero.description" 
+                      placeholder="Enter description"
+                      :height="200"
+                    />
                   </div>
                   <div class="form-row">
                     <div class="form-group">
@@ -236,12 +248,20 @@
                     <input type="text" v-model="siteContent.about.profile.heading" class="form-input" />
                   </div>
                   <div class="form-group">
-                    <label>Tagline (use ** for bold)</label>
-                    <textarea v-model="siteContent.about.profile.tagline" class="form-input" rows="2"></textarea>
+                    <label>Tagline</label>
+                    <RichTextEditor 
+                      v-model="siteContent.about.profile.tagline" 
+                      placeholder="Enter tagline"
+                      :height="100"
+                    />
                   </div>
                   <div class="form-group">
                     <label>Introduction</label>
-                    <textarea v-model="siteContent.about.profile.intro" class="form-input" rows="3"></textarea>
+                    <RichTextEditor 
+                      v-model="siteContent.about.profile.intro" 
+                      placeholder="Enter introduction"
+                      :height="150"
+                    />
                   </div>
 
                   <h4>Philosophy Section</h4>
@@ -251,7 +271,11 @@
                   </div>
                   <div class="form-group">
                     <label>Content</label>
-                    <textarea v-model="siteContent.about.philosophy.content" class="form-input" rows="5"></textarea>
+                    <RichTextEditor 
+                      v-model="siteContent.about.philosophy.content" 
+                      placeholder="Enter philosophy content"
+                      :height="250"
+                    />
                   </div>
 
                   <h4>Expertise Section</h4>
@@ -303,7 +327,11 @@
                   </div>
                   <div class="form-group">
                     <label>Content</label>
-                    <textarea v-model="siteContent.about.connect.content" class="form-input" rows="3"></textarea>
+                    <RichTextEditor 
+                      v-model="siteContent.about.connect.content" 
+                      placeholder="Enter connect content"
+                      :height="150"
+                    />
                   </div>
                   <div class="form-row">
                     <div class="form-group">
@@ -346,8 +374,8 @@
                     <div class="preview-profile-image">
                       <img :src="siteContent.home.hero.profile_image || 'https://via.placeholder.com/180'" alt="Profile" class="preview-pic">
                     </div>
-                    <h1 class="preview-title" v-html="formatBold(siteContent.home.hero.title)"></h1>
-                    <h2 class="preview-subtitle" v-html="formatBold(siteContent.home.hero.subtitle)"></h2>
+                    <h1 class="preview-title" v-html="siteContent.home.hero.title"></h1>
+                    <h2 class="preview-subtitle" v-html="siteContent.home.hero.subtitle"></h2>
                     <p class="preview-description">{{ siteContent.home.hero.description }}</p>
                     <a class="preview-cta" :href="siteContent.home.hero.cta_link">
                       {{ siteContent.home.hero.cta_text }} <span class="arrow">→</span>
@@ -361,8 +389,8 @@
                     <img :src="siteContent.about.profile.image || 'https://via.placeholder.com/180'" alt="Profile" class="preview-about-pic">
                     <div class="preview-profile-text">
                       <h1>{{ siteContent.about.profile.heading }}</h1>
-                      <h2 v-html="formatBold(siteContent.about.profile.tagline)"></h2>
-                      <p class="preview-intro" v-html="formatBold(siteContent.about.profile.intro)"></p>
+                      <h2 v-html="siteContent.about.profile.tagline"></h2>
+                      <p class="preview-intro" v-html="siteContent.about.profile.intro"></p>
                     </div>
                   </div>
                   <div class="preview-story">
@@ -664,9 +692,13 @@
 
 <script>
 import { supabase } from '@/config/supabaseClient';
+import RichTextEditor from '@/components/RichTextEditor.vue';
 
 export default {
   name: 'AdminView',
+  components: {
+    RichTextEditor
+  },
   data() {
     return {
       session: null,
@@ -937,10 +969,6 @@ export default {
     },
     getCategoryString(category) {
       return Array.isArray(category) ? category.join(', ') : category;
-    },
-    formatBold(text) {
-      if (!text) return '';
-      return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     },
     addSkill() {
       const currentSkills = this.skillsList;

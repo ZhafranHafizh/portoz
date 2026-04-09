@@ -9,7 +9,7 @@
     </div>
 
     <!-- Header section with parallax -->
-    <div class="header-section" :style="headerParallaxStyle">
+    <div class="contact-header" :style="headerParallaxStyle">
       <div class="header-content-wrapper">
         <h1 class="page-title" :class="{ 'visible': titleVisible }">Get In Touch</h1>
         <p class="page-subtitle" :class="{ 'visible': subtitleVisible }">
@@ -294,7 +294,7 @@ export default {
 }
 
 /* Header Section */
-.header-section {
+.contact-header {
   margin-bottom: 100px;
   transition: transform 0.1s ease-out;
   padding: 40px 0;
@@ -807,7 +807,7 @@ export default {
     font-size: 2.8rem;
   }
   
-  .header-section {
+  .contact-header {
     padding: 30px 0;
     min-height: 360px;
   }
@@ -881,7 +881,7 @@ export default {
   }
   
   /* Disable parallax on mobile */
-  .header-section,
+  .contact-header,
   .contact-cards-container {
     transform: none !important;
   }
@@ -893,7 +893,7 @@ export default {
     margin: 30px auto;
   }
   
-  .header-section {
+  .contact-header {
     padding: 20px 15px;
     min-height: 300px;
   }
@@ -1042,7 +1042,7 @@ export default {
     margin: 20px auto;
   }
   
-  .header-section {
+  .contact-header {
     padding: 15px 8px;
     min-height: 280px;
   }

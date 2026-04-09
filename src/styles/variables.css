@@ -60,6 +60,9 @@ body.dark-theme {
 }
 
 /* Dark mode header section override */
-body.dark-theme .header-section {
+body.dark-theme .gallery-header,
+body.dark-theme .projects-header,
+body.dark-theme .contact-header,
+body.dark-theme .analytics-header {
   background: var(--gradient-dark) !important;
 }

@@ -171,7 +171,10 @@ body.dark-theme .projects-view {
   background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%) !important;
 }
 
-body.dark-theme .header-section {
+body.dark-theme .gallery-header,
+body.dark-theme .projects-header,
+body.dark-theme .contact-header,
+body.dark-theme .analytics-header {
   background: linear-gradient(135deg, #292524 0%, #1c1917 100%) !important;
 }
 
