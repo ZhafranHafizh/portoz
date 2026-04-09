@@ -10,9 +10,11 @@
       <div class="profile-image-container" :style="profileParallaxStyle">
         <img :src="homeContent.hero.profile_image" alt="Profile Photo" class="profile-pic">
       </div>
-      <h1 class="hero-title" v-html="homeContent.hero.title"></h1>
-      <h2 class="hero-subtitle" v-html="homeContent.hero.subtitle"></h2>
-      <p class="hero-description" v-html="homeContent.hero.description"></p>
+      <div class="tiptap-content">
+        <h1 class="hero-title" v-html="homeContent.hero.title"></h1>
+        <h2 class="hero-subtitle" v-html="homeContent.hero.subtitle"></h2>
+        <p class="hero-description" v-html="homeContent.hero.description"></p>
+      </div>
       <router-link :to="homeContent.hero.cta_link" class="cta-button">
         {{ homeContent.hero.cta_text }} <span class="arrow">&rarr;</span>
       </router-link>
@@ -194,12 +196,21 @@ export default {
 }
 .profile-pic:hover { transform: scale(1.05); }
 .hero-title {
-  font-size: 2.8rem; font-weight: 700; color: #333;
+  font-size: 2.8rem; font-weight: 700;
   margin-bottom: 10px; line-height: 1.2;
+  color: #333;
+}
+
+:global(body:not(.dark-theme)) .tiptap-content .hero-title {
+  color: unset; /* Allow inline styles from Tiptap in light mode */
 }
 
 :global(body.dark-theme) .hero-title {
   color: #e4e4e7;
+}
+
+:global(body.dark-theme) .tiptap-content .hero-title[style] {
+  color: revert; /* Respect inline style in dark mode too */
 }
 
 .hero-title strong { color: #f97316; }
@@ -207,11 +218,20 @@ export default {
 :global(body.dark-theme) .hero-title strong { color: #fb923c; }
 
 .hero-subtitle {
-  font-size: 1.6rem; font-weight: 400; color: #555; margin-bottom: 25px;
+  font-size: 1.6rem; font-weight: 400; margin-bottom: 25px;
+  color: #555;
+}
+
+:global(body:not(.dark-theme)) .tiptap-content .hero-subtitle {
+  color: unset; /* Allow inline styles from Tiptap */
 }
 
 :global(body.dark-theme) .hero-subtitle {
   color: #a1a1aa;
+}
+
+:global(body.dark-theme) .tiptap-content .hero-subtitle[style] {
+  color: revert; /* Respect inline style in dark mode */
 }
 
 .hero-subtitle span { font-weight: 600; color: #d97706; }
@@ -219,12 +239,26 @@ export default {
 :global(body.dark-theme) .hero-subtitle span { color: #fbbf24; }
 
 .hero-description {
-  font-size: 1.1rem; color: #666; line-height: 1.7; margin-bottom: 30px;
+  font-size: 1.1rem; line-height: 1.7; margin-bottom: 30px;
   max-width: 550px; margin-left: auto; margin-right: auto;
+  color: #666;
+}
+
+:global(body:not(.dark-theme)) .tiptap-content .hero-description {
+  color: unset; /* Allow inline styles from Tiptap */
 }
 
 :global(body.dark-theme) .hero-description {
   color: #a1a1aa;
+}
+
+:global(body.dark-theme) .tiptap-content .hero-description[style] {
+  color: revert; /* Respect inline style in dark mode */
+}
+
+/* Tiptap content wrapper */
+.tiptap-content {
+  display: contents; /* Makes wrapper "disappear" for styling purposes */
 }
 .cta-button {
   display: inline-flex; align-items: center; padding: 14px 30px;

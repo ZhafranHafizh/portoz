@@ -6,8 +6,10 @@
         <img :src="aboutContent.profile.image" alt="My Photo" class="about-pic" :style="imageParallaxStyle">
         <div class="profile-text">
           <h1>{{ aboutContent.profile.heading }}</h1>
-          <h2 v-html="aboutContent.profile.tagline"></h2>
-          <p class="intro" v-html="aboutContent.profile.intro"></p>
+          <div class="tiptap-content">
+            <h2 v-html="aboutContent.profile.tagline"></h2>
+            <p class="intro" v-html="aboutContent.profile.intro"></p>
+          </div>
           <!-- Download CV Button -->
           <div class="cv-download-section">
             <a
@@ -26,7 +28,9 @@
 
       <div class="story-content">
         <h3>{{ aboutContent.philosophy.heading }}</h3>
-        <p>{{ aboutContent.philosophy.content }}</p>
+        <div class="tiptap-content">
+          <p v-html="aboutContent.philosophy.content"></p>
+        </div>
 
         <h3>{{ aboutContent.expertise.heading }}</h3>
         <p>{{ aboutContent.expertise.intro }}</p>
@@ -37,7 +41,9 @@
         </ul>
 
         <h3>{{ aboutContent.connect.heading }}</h3>
-        <p>{{ aboutContent.connect.content }}</p>
+        <div class="tiptap-content">
+          <p v-html="aboutContent.connect.content"></p>
+        </div>
         <router-link :to="aboutContent.connect.cta_link" class="cta-button">
             {{ aboutContent.connect.cta_text }}
         </router-link>
@@ -261,6 +267,15 @@ onMounted(() => {
   margin: 10px 0;
 }
 
+/* Allow Tiptap inline styles to work */
+:global(body:not(.dark-theme)) .tiptap-content h2,
+:global(body:not(.dark-theme)) .tiptap-content .intro {
+  color: unset;
+}
+
+:global(body.dark-theme) .about-content .profile-text h2 { color: #fb923c; }
+:global(body.dark-theme) .about-content .tiptap-content h2[style] { color: revert; }
+
 .profile-text .intro {
   font-size: 1.1rem;
   line-height: 1.7;
@@ -268,9 +283,18 @@ onMounted(() => {
   margin: 0;
 }
 
-:global(body.dark-theme) .about-content .profile-text h1 { color: #e4e4e7; }
-:global(body.dark-theme) .about-content .profile-text h2 { color: #fb923c; }
+/* Allow Tiptap inline styles to work */
+:global(body:not(.dark-theme)) .tiptap-content .intro {
+  color: unset;
+}
+
 :global(body.dark-theme) .about-content .profile-text .intro { color: #a1a1aa; }
+:global(body.dark-theme) .about-content .tiptap-content .intro[style] { color: revert; }
+
+/* Tiptap content wrapper */
+.tiptap-content {
+  display: contents;
+}
 
 /* Download CV Button */
 .cv-download-section {
