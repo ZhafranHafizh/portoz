@@ -148,12 +148,22 @@
       <div v-if="activeTab === 'sitecontent'">
         <div class="tab-header">
           <h2>Site Content Management</h2>
-          <button @click="saveAllSiteContent" class="btn btn-primary" :disabled="savingSiteContent">
-            {{ savingSiteContent ? 'Saving...' : 'Save All Changes' }}
-          </button>
+          <div style="display: flex; gap: 10px;">
+            <button @click="fetchSiteContent" class="btn btn-secondary" :disabled="loadingSiteContent">
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <button @click="saveAllSiteContent" class="btn btn-primary" :disabled="savingSiteContent">
+              {{ savingSiteContent ? 'Saving...' : 'Save All Changes' }}
+            </button>
+          </div>
         </div>
 
         <div v-if="loadingSiteContent" class="loading-state">Loading site content...</div>
+        <div v-else-if="siteContentError" class="error-state">
+          <i class="fas fa-exclamation-triangle"></i>
+          <p>{{ siteContentError }}</p>
+          <button @click="fetchSiteContent" class="btn btn-primary">Retry</button>
+        </div>
 
         <div v-else class="site-content-editor">
           <!-- Home Page Section -->
@@ -524,6 +534,7 @@ export default {
       // Site Content
       loadingSiteContent: false,
       savingSiteContent: false,
+      siteContentError: '',
       siteContent: {
         home: {
           hero: {
@@ -836,30 +847,52 @@ export default {
     // Site Content Methods
     async fetchSiteContent() {
       this.loadingSiteContent = true;
-      const { data, error } = await supabase
-        .from('site_content')
-        .select('*');
+      try {
+        const { data, error } = await supabase
+          .from('site_content')
+          .select('*');
 
-      if (error) {
-        console.error('Error fetching site content:', error);
-      } else {
-        // Map database data to the siteContent structure
-        data.forEach(item => {
-          const page = item.page;
-          const section = item.section;
-          const key = item.key;
-          const value = typeof item.value === 'string' ? item.value : JSON.stringify(item.value);
-          
-          if (this.siteContent[page] && this.siteContent[page][section]) {
-            this.$set(this.siteContent[page][section], key, value.replace(/^"|"$/g, ''));
-          }
-        });
-        
-        // Handle skills separately
-        const skillsItem = data.find(item => item.page === 'about' && item.section === 'expertise' && item.key === 'skills');
-        if (skillsItem) {
-          this.siteContent.about.expertise.skills_raw = JSON.stringify(skillsItem.value, null, 2);
+        if (error) {
+          console.error('Error fetching site content:', error);
+          this.siteContentError = 'Failed to load content: ' + error.message;
+          this.loadingSiteContent = false;
+          return;
         }
+
+        if (data && data.length > 0) {
+          // Map database data to the siteContent structure
+          data.forEach(item => {
+            const page = item.page;
+            const section = item.section;
+            const key = item.key;
+            let value = item.value;
+            
+            // Handle JSONB vs string
+            if (typeof value === 'object') {
+              value = JSON.stringify(value);
+            } else if (typeof value === 'string') {
+              // Remove surrounding quotes if present
+              if (value.startsWith('"') && value.endsWith('"')) {
+                value = value.slice(1, -1);
+              }
+            }
+            
+            if (this.siteContent[page] && this.siteContent[page][section]) {
+              this.$set(this.siteContent[page][section], key, value);
+            }
+          });
+          
+          // Handle skills separately
+          const skillsItem = data.find(item => item.page === 'about' && item.section === 'expertise' && item.key === 'skills');
+          if (skillsItem && skillsItem.value) {
+            this.siteContent.about.expertise.skills_raw = typeof skillsItem.value === 'string' 
+              ? skillsItem.value 
+              : JSON.stringify(skillsItem.value, null, 2);
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        this.siteContentError = 'Failed to load content: ' + error.message;
       }
       this.loadingSiteContent = false;
     },
@@ -1472,6 +1505,31 @@ export default {
   background: #f0f9ff;
   border: 1px solid #bae6fd;
   border-radius: 8px;
+}
+
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.error-state i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: #ef4444;
+}
+
+.error-state p {
+  font-size: 14px;
+  color: #991b1b;
+  margin: 0 0 20px 0;
+  max-width: 500px;
 }
 
 .cv-info-box h4 {

@@ -145,7 +145,8 @@ const fetchAboutContent = async () => {
       });
     }
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error fetching about content:', error);
+    // Keep fallback content
   }
 }
 
@@ -158,12 +159,12 @@ const fetchActiveCV = async () => {
       .single();
 
     if (error) {
-      console.error('Error fetching CV:', error);
+      console.warn('No active CV found or error fetching CV:', error.message);
     } else if (data && data.file_url) {
       cvDownloadUrl.value = data.file_url;
     }
   } catch (error) {
-    console.error('Error:', error);
+    console.warn('Error fetching CV:', error.message);
   }
 }
 

@@ -30,7 +30,6 @@ export default {
   data() {
     return {
       scrollY: 0,
-      loading: true,
       homeContent: {
         hero: {
           profile_image: '../../public/galeri/Profil.png',
@@ -109,9 +108,9 @@ export default {
           });
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error fetching home content:', error);
+        // Keep fallback content - don't error out
       }
-      this.loading = false;
     },
     handleScroll() {
       this.scrollY = window.scrollY;
