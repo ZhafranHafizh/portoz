@@ -13,6 +13,12 @@
     </div>
 
     <div class="gallery-content">
+      <div v-if="loading" class="loading-state">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Loading gallery...</p>
+      </div>
+
+      <div v-else>
       <div class="hint-container">
         <button class="hint-toggle-btn" @click="toggleHint" :title="showHint ? 'Sembunyikan panduan' : 'Tampilkan panduan'">
           <i :class="showHint ? 'fas fa-eye-slash' : 'fas fa-question-circle'"></i>
@@ -132,6 +138,7 @@
         <h3>Segera Hadir</h3>
         <p>Gambar galeri akan segera ditambahkan. Nantikan!</p>
       </div>
+      </div> <!-- Close v-else wrapper -->
     </div>
 
     <!-- Modal for image preview -->
@@ -154,6 +161,8 @@
 </template>
 
 <script>
+import { supabase } from '@/config/supabaseClient';
+
 export default {
   name: 'GalleryView',
   data() {
@@ -165,48 +174,9 @@ export default {
       selectedImage: null,
       flippedCards: [],
       showHint: false,
-      categories: ['All', 'UI/UX Desing', 'Website', 'Mobile App', 'Branding'],
-      
-      // Sample images dari Unsplash - ganti dengan data gambar Anda nanti
-      images: [
-        {
-          src: '../galeri/Detectme.webp',
-          title: 'DetectMe',
-          description: 'A system that helps pregnant mothers detect fetal conditions.',
-          category: 'Mobile App'
-        },
-        {
-          src: '../galeri/rentit.webp',
-          title: 'Rent-It',
-          description: 'Facility rental system at Telkom University campus',
-          category: 'Website'
-        },
-        {
-          src: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&h=600&fit=crop&crop=center',
-          title: 'Brand Identity Design',
-          description: 'Identitas visual lengkap untuk startup teknologi',
-          category: 'Branding'
-        },
-        {
-          src: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&h=600&fit=crop&crop=center',
-          title: 'Dashboard Analytics',
-          description: 'Interface dashboard untuk analytics dan monitoring data real-time',
-          category: 'UI/UX Desing'
-        },
-        {
-          src: 'https://images.unsplash.com/photo-1555421689-491a97ff2040?w=800&h=600&fit=crop&crop=center',
-          title: 'Restaurant Website',
-          description: 'Desain website restaurant dengan focus pada visual makanan yang menarik',
-          category: 'Website'
-        },
-        {
-          src: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&h=600&fit=crop&crop=center',
-          title: 'Fitness Mobile App',
-          description: 'Aplikasi mobile untuk tracking workout dan program fitness personal',
-          category: 'Mobile App'
-        }
-        // Tambahkan gambar lainnya di sini
-      ]
+      categories: ['All', 'UI/UX Design', 'Website', 'Mobile App', 'Branding'],
+      images: [],
+      loading: true
     }
   },
   computed: {
@@ -215,9 +185,33 @@ export default {
         return this.images;
       }
       return this.images.filter(image => image.category === this.activeCategory);
+    },
+    galleryReady() {
+      return !this.loading;
     }
   },
   methods: {
+    async fetchGalleryImages() {
+      this.loading = true;
+      const { data, error } = await supabase
+        .from('gallery_images')
+        .select('*')
+        .order('display_order', { ascending: true });
+
+      if (error) {
+        console.error('Error fetching gallery images:', error);
+      } else {
+        // Map Supabase data to the format expected by the template
+        this.images = data.map(item => ({
+          src: item.image_url,
+          title: item.title,
+          description: item.description || '',
+          category: item.category,
+          id: item.id
+        }));
+      }
+      this.loading = false;
+    },
     setActiveCategory(category) {
       this.activeCategory = category;
     },
@@ -382,6 +376,9 @@ export default {
     }
   },
   mounted() {
+    // Fetch gallery images from Supabase
+    this.fetchGalleryImages();
+    
     // Trigger animations with delay
     setTimeout(() => this.titleVisible = true, 200);
     setTimeout(() => this.subtitleVisible = true, 400);
@@ -395,6 +392,27 @@ export default {
 
 <style scoped>
 @import '@/styles/views/gallery.css';
+
+/* Loading state */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #6b7280;
+}
+
+.loading-state i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: #3b82f6;
+}
+
+.loading-state p {
+  font-size: 16px;
+  margin: 0;
+}
 
 /* Gallery-specific dynamic classes and effects */
 .gallery-item:nth-child(odd) {

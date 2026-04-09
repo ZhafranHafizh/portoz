@@ -5,18 +5,18 @@
         <h2>Admin Login</h2>
         <p>Please enter your email and password to access the CMS.</p>
         <form @submit.prevent="handleLogin">
-          <input 
-            type="email" 
-            v-model="email" 
-            placeholder="Email" 
-            required 
+          <input
+            type="email"
+            v-model="email"
+            placeholder="Email"
+            required
             class="form-input"
           />
-          <input 
-            type="password" 
-            v-model="password" 
-            placeholder="Password" 
-            required 
+          <input
+            type="password"
+            v-model="password"
+            placeholder="Password"
+            required
             class="form-input"
           />
           <button type="submit" class="btn btn-primary" :disabled="loading">
@@ -29,116 +29,229 @@
 
     <div v-else class="cms-container">
       <div class="cms-header">
-        <h1>Portfolio Projects CMS</h1>
+        <h1>Portfolio CMS</h1>
         <div class="header-actions">
-          <button @click="openAddModal" class="btn btn-primary">+ Add New Project</button>
           <button @click="handleLogout" class="btn btn-secondary">Logout</button>
         </div>
       </div>
 
-      <div class="cms-content">
-        <div v-if="loading" class="loading-state">Loading projects...</div>
-        
-        <table v-else class="projects-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Image</th>
-              <th>Title</th>
-              <th>Category</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="project in projects" :key="project.id">
-              <td>{{ project.id }}</td>
-              <td>
-                <img :src="project.image_url || 'https://via.placeholder.com/50'" alt="thumbnail" class="thumbnail" />
-              </td>
-              <td class="td-title">{{ project.title }}</td>
-              <td>{{ getCategoryString(project.category) }}</td>
-              <td class="action-buttons">
-                <button @click="openEditModal(project)" class="btn btn-sm btn-edit">Edit</button>
-                <button @click="confirmDelete(project.id)" class="btn btn-sm btn-delete">Delete</button>
-              </td>
-            </tr>
-            <tr v-if="projects.length === 0">
-              <td colspan="5" class="empty-state">No projects found. Try adding one!</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Tab Navigation -->
+      <div class="tab-navigation">
+        <button 
+          :class="['tab-btn', { active: activeTab === 'projects' }]"
+          @click="activeTab = 'projects'"
+        >
+          <i class="fas fa-folder"></i> Projects
+        </button>
+        <button 
+          :class="['tab-btn', { active: activeTab === 'gallery' }]"
+          @click="activeTab = 'gallery'"
+        >
+          <i class="fas fa-images"></i> Gallery
+        </button>
       </div>
 
-      <!-- Add/Edit Modal -->
-      <div v-if="showModal" class="modal-overlay" @click.self="showModal = false">
+      <div class="cms-content">
+        <!-- Projects Tab -->
+        <div v-if="activeTab === 'projects'">
+          <div class="tab-header">
+            <h2>Projects Management</h2>
+            <button @click="openAddProjectModal" class="btn btn-primary">+ Add New Project</button>
+          </div>
+
+          <div v-if="loading" class="loading-state">Loading projects...</div>
+
+          <table v-else class="projects-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="project in projects" :key="project.id">
+                <td>{{ project.id }}</td>
+                <td>
+                  <img :src="project.image_url || 'https://via.placeholder.com/50'" alt="thumbnail" class="thumbnail" />
+                </td>
+                <td class="td-title">{{ project.title }}</td>
+                <td>{{ getCategoryString(project.category) }}</td>
+                <td class="action-buttons">
+                  <button @click="openEditProjectModal(project)" class="btn btn-sm btn-edit">Edit</button>
+                  <button @click="confirmDeleteProject(project.id)" class="btn btn-sm btn-delete">Delete</button>
+                </td>
+              </tr>
+              <tr v-if="projects.length === 0">
+                <td colspan="5" class="empty-state">No projects found. Try adding one!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Gallery Tab -->
+        <div v-if="activeTab === 'gallery'">
+          <div class="tab-header">
+            <h2>Gallery Management</h2>
+            <button @click="openAddGalleryModal" class="btn btn-primary">+ Add Gallery Image</button>
+          </div>
+
+          <div v-if="loadingGallery" class="loading-state">Loading gallery...</div>
+
+          <table v-else class="projects-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Order</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="image in galleryImages" :key="image.id">
+                <td>{{ image.id }}</td>
+                <td>
+                  <img :src="image.image_url || 'https://via.placeholder.com/50'" alt="thumbnail" class="thumbnail" />
+                </td>
+                <td class="td-title">{{ image.title }}</td>
+                <td>{{ image.category }}</td>
+                <td>{{ image.display_order }}</td>
+                <td class="action-buttons">
+                  <button @click="openEditGalleryModal(image)" class="btn btn-sm btn-edit">Edit</button>
+                  <button @click="confirmDeleteGallery(image.id)" class="btn btn-sm btn-delete">Delete</button>
+                </td>
+              </tr>
+              <tr v-if="galleryImages.length === 0">
+                <td colspan="6" class="empty-state">No gallery images found. Try adding one!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Add/Edit Project Modal -->
+      <div v-if="showProjectModal" class="modal-overlay" @click.self="showProjectModal = false">
         <div class="modal-content">
           <div class="modal-header">
-            <h2>{{ isEditing ? 'Edit Project' : 'Add New Project' }}</h2>
-            <button class="close-btn" @click="showModal = false">&times;</button>
+            <h2>{{ isEditingProject ? 'Edit Project' : 'Add New Project' }}</h2>
+            <button class="close-btn" @click="showProjectModal = false">&times;</button>
           </div>
-          
+
           <form @submit.prevent="saveProject" class="project-form">
             <div class="form-grid">
               <div class="form-group">
                 <label>Title *</label>
-                <input type="text" v-model="formData.title" required class="form-input" />
+                <input type="text" v-model="projectForm.title" required class="form-input" />
               </div>
               <div class="form-group">
                 <label>Category (comma separated for multiple)</label>
-                <input type="text" v-model="formData.category" class="form-input" />
+                <input type="text" v-model="projectForm.category" class="form-input" />
               </div>
               <div class="form-group full-width">
                 <label>Description</label>
-                <textarea v-model="formData.description" class="form-input" rows="3"></textarea>
+                <textarea v-model="projectForm.description" class="form-input" rows="3"></textarea>
               </div>
               <div class="form-group">
                 <label>Image Upload (Bucket: images) *</label>
-                <input type="file" @change="handleFileUpload" class="form-input" accept="image/*" />
-                <p v-if="uploading" class="status-info">Uploading image...</p>
-                <img v-if="formData.image_url" :src="formData.image_url" class="preview-img" alt="preview" />
+                <input type="file" @change="handleProjectFileUpload" class="form-input" accept="image/*" />
+                <p v-if="uploadingProject" class="status-info">Uploading image...</p>
+                <img v-if="projectForm.image_url" :src="projectForm.image_url" class="preview-img" alt="preview" />
               </div>
               <div class="form-group">
                 <label>Live Link</label>
-                <input type="text" v-model="formData.link" class="form-input" />
+                <input type="text" v-model="projectForm.link" class="form-input" />
               </div>
               <div class="form-group">
                 <label>GitHub Link</label>
-                <input type="text" v-model="formData.github" class="form-input" />
+                <input type="text" v-model="projectForm.github" class="form-input" />
               </div>
               <div class="form-group">
                 <label>Figma Link</label>
-                <input type="text" v-model="formData.figma" class="form-input" />
+                <input type="text" v-model="projectForm.figma" class="form-input" />
               </div>
               <div class="form-group full-width">
                 <label>Tags (comma separated)</label>
-                <input type="text" v-model="formData.tags" class="form-input" placeholder="Vue.js, Frontend, UI/UX" />
+                <input type="text" v-model="projectForm.tags" class="form-input" placeholder="Vue.js, Frontend, UI/UX" />
               </div>
               <div class="form-group full-width">
                 <label>Features (one per line)</label>
-                <textarea v-model="formData.features" class="form-input" rows="4"></textarea>
+                <textarea v-model="projectForm.features" class="form-input" rows="4"></textarea>
               </div>
               <div class="form-group full-width">
                 <label>Challenges</label>
-                <textarea v-model="formData.challenges" class="form-input" rows="2"></textarea>
+                <textarea v-model="projectForm.challenges" class="form-input" rows="2"></textarea>
               </div>
               <div class="form-group">
                 <label>Duration / Timeline</label>
-                <input type="text" v-model="formData.duration" class="form-input" />
+                <input type="text" v-model="projectForm.duration" class="form-input" />
               </div>
               <div class="form-group">
                 <label>Team Size/Name</label>
-                <input type="text" v-model="formData.team" class="form-input" />
+                <input type="text" v-model="projectForm.team" class="form-input" />
               </div>
               <div class="form-group">
                 <label>Your Role</label>
-                <input type="text" v-model="formData.role" class="form-input" />
+                <input type="text" v-model="projectForm.role" class="form-input" />
               </div>
             </div>
-            
+
             <div class="form-actions">
-              <button type="button" class="btn btn-secondary" @click="showModal = false">Cancel</button>
-              <button type="submit" class="btn btn-primary" :disabled="saving || uploading">
-                {{ saving ? 'Saving...' : 'Save Project' }}
+              <button type="button" class="btn btn-secondary" @click="showProjectModal = false">Cancel</button>
+              <button type="submit" class="btn btn-primary" :disabled="savingProject || uploadingProject">
+                {{ savingProject ? 'Saving...' : 'Save Project' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Add/Edit Gallery Modal -->
+      <div v-if="showGalleryModal" class="modal-overlay" @click.self="showGalleryModal = false">
+        <div class="modal-content modal-small">
+          <div class="modal-header">
+            <h2>{{ isEditingGallery ? 'Edit Gallery Image' : 'Add Gallery Image' }}</h2>
+            <button class="close-btn" @click="showGalleryModal = false">&times;</button>
+          </div>
+
+          <form @submit.prevent="saveGalleryImage" class="project-form">
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label>Title *</label>
+                <input type="text" v-model="galleryForm.title" required class="form-input" />
+              </div>
+              <div class="form-group full-width">
+                <label>Description</label>
+                <textarea v-model="galleryForm.description" class="form-input" rows="3"></textarea>
+              </div>
+              <div class="form-group full-width">
+                <label>Image Upload (Bucket: gallery) *</label>
+                <input type="file" @change="handleGalleryFileUpload" class="form-input" accept="image/*" />
+                <p v-if="uploadingGallery" class="status-info">Uploading image...</p>
+                <img v-if="galleryForm.image_url" :src="galleryForm.image_url" class="preview-img" alt="preview" />
+              </div>
+              <div class="form-group">
+                <label>Category *</label>
+                <select v-model="galleryForm.category" class="form-input" required>
+                  <option value="UI/UX Design">UI/UX Design</option>
+                  <option value="Website">Website</option>
+                  <option value="Mobile App">Mobile App</option>
+                  <option value="Branding">Branding</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Display Order</label>
+                <input type="number" v-model.number="galleryForm.display_order" class="form-input" min="0" />
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" @click="showGalleryModal = false">Cancel</button>
+              <button type="submit" class="btn btn-primary" :disabled="savingGallery || uploadingGallery">
+                {{ savingGallery ? 'Saving...' : 'Save Gallery Image' }}
               </button>
             </div>
           </form>
@@ -159,28 +272,46 @@ export default {
       email: '',
       password: '',
       loginError: '',
+      activeTab: 'projects',
+      
+      // Projects
       loading: false,
-      saving: false,
-      uploading: false,
+      savingProject: false,
+      uploadingProject: false,
       projects: [],
-      showModal: false,
-      isEditing: false,
-      formData: this.getDefaultFormData()
+      showProjectModal: false,
+      isEditingProject: false,
+      projectForm: this.getDefaultProjectData(),
+      
+      // Gallery
+      loadingGallery: false,
+      savingGallery: false,
+      uploadingGallery: false,
+      galleryImages: [],
+      showGalleryModal: false,
+      isEditingGallery: false,
+      galleryForm: this.getDefaultGalleryData()
     }
   },
   mounted() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       this.session = session;
-      if (this.session) this.fetchProjects();
+      if (this.session) {
+        this.fetchProjects();
+        this.fetchGalleryImages();
+      }
     });
 
     supabase.auth.onAuthStateChange((_event, session) => {
       this.session = session;
-      if (this.session) this.fetchProjects();
+      if (this.session) {
+        this.fetchProjects();
+        this.fetchGalleryImages();
+      }
     });
   },
   methods: {
-    getDefaultFormData() {
+    getDefaultProjectData() {
       return {
         id: null,
         title: '',
@@ -198,6 +329,16 @@ export default {
         role: ''
       };
     },
+    getDefaultGalleryData() {
+      return {
+        id: null,
+        title: '',
+        description: '',
+        image_url: '',
+        category: 'Website',
+        display_order: 0
+      };
+    },
     async handleLogin() {
       this.loading = true;
       this.loginError = '';
@@ -213,6 +354,7 @@ export default {
     async handleLogout() {
       await supabase.auth.signOut();
       this.projects = [];
+      this.galleryImages = [];
     },
     async fetchProjects() {
       this.loading = true;
@@ -220,7 +362,7 @@ export default {
         .from('portfolio_projects')
         .select('*')
         .order('id', { ascending: true });
-      
+
       if (error) {
         console.error('Error fetching projects:', error);
       } else {
@@ -228,11 +370,25 @@ export default {
       }
       this.loading = false;
     },
-    async handleFileUpload(event) {
+    async fetchGalleryImages() {
+      this.loadingGallery = true;
+      const { data, error } = await supabase
+        .from('gallery_images')
+        .select('*')
+        .order('display_order', { ascending: true });
+
+      if (error) {
+        console.error('Error fetching gallery images:', error);
+      } else {
+        this.galleryImages = data;
+      }
+      this.loadingGallery = false;
+    },
+    async handleProjectFileUpload(event) {
       const file = event.target.files[0];
       if (!file) return;
 
-      this.uploading = true;
+      this.uploadingProject = true;
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `project-images/${fileName}`;
@@ -243,7 +399,7 @@ export default {
 
       if (uploadError) {
         alert('Error uploading image: ' + uploadError.message);
-        this.uploading = false;
+        this.uploadingProject = false;
         return;
       }
 
@@ -251,56 +407,92 @@ export default {
         .from('images')
         .getPublicUrl(filePath);
 
-      this.formData.image_url = publicUrl;
-      this.uploading = false;
+      this.projectForm.image_url = publicUrl;
+      this.uploadingProject = false;
     },
-    openAddModal() {
-      this.isEditing = false;
-      this.formData = this.getDefaultFormData();
-      this.showModal = true;
+    async handleGalleryFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      this.uploadingGallery = true;
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `gallery/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('images')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        alert('Error uploading image: ' + uploadError.message);
+        this.uploadingGallery = false;
+        return;
+      }
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('images')
+        .getPublicUrl(filePath);
+
+      this.galleryForm.image_url = publicUrl;
+      this.uploadingGallery = false;
     },
-    openEditModal(project) {
-      this.isEditing = true;
-      this.formData = {
+    openAddProjectModal() {
+      this.isEditingProject = false;
+      this.projectForm = this.getDefaultProjectData();
+      this.showProjectModal = true;
+    },
+    openEditProjectModal(project) {
+      this.isEditingProject = true;
+      this.projectForm = {
         ...project,
         tags: Array.isArray(project.tags) ? project.tags.join(', ') : project.tags || '',
         category: Array.isArray(project.category) ? project.category.join(', ') : project.category || '',
         features: Array.isArray(project.features) ? project.features.join('\n') : project.features || ''
       };
-      this.showModal = true;
+      this.showProjectModal = true;
+    },
+    openAddGalleryModal() {
+      this.isEditingGallery = false;
+      this.galleryForm = this.getDefaultGalleryData();
+      this.showGalleryModal = true;
+    },
+    openEditGalleryModal(image) {
+      this.isEditingGallery = true;
+      this.galleryForm = { ...image };
+      this.showGalleryModal = true;
     },
     getCategoryString(category) {
       return Array.isArray(category) ? category.join(', ') : category;
     },
     async saveProject() {
-      this.saving = true;
-      
+      this.savingProject = true;
+
       // Clean up data
       const projectData = {
-        title: this.formData.title,
-        description: this.formData.description,
-        image_url: this.formData.image_url,
-        link: this.formData.link,
-        github: this.formData.github,
-        figma: this.formData.figma,
-        tags: this.formData.tags.split(',').map(t => t.trim()).filter(Boolean),
-        category: this.formData.category.includes(',') 
-          ? this.formData.category.split(',').map(c => c.trim()).filter(Boolean)
-          : this.formData.category.trim(),
-        features: this.formData.features.split('\n').map(f => f.trim()).filter(Boolean),
-        challenges: this.formData.challenges,
-        duration: this.formData.duration,
-        team: this.formData.team,
-        role: this.formData.role,
+        title: this.projectForm.title,
+        description: this.projectForm.description,
+        image_url: this.projectForm.image_url,
+        link: this.projectForm.link,
+        github: this.projectForm.github,
+        figma: this.projectForm.figma,
+        tags: this.projectForm.tags.split(',').map(t => t.trim()).filter(Boolean),
+        category: this.projectForm.category.includes(',')
+          ? this.projectForm.category.split(',').map(c => c.trim()).filter(Boolean)
+          : this.projectForm.category.trim(),
+        features: this.projectForm.features.split('\n').map(f => f.trim()).filter(Boolean),
+        challenges: this.projectForm.challenges,
+        duration: this.projectForm.duration,
+        team: this.projectForm.team,
+        role: this.projectForm.role,
         updated_at: new Date().toISOString()
       };
 
       let error;
-      if (this.isEditing) {
+      if (this.isEditingProject) {
         ({ error } = await supabase
           .from('portfolio_projects')
           .update(projectData)
-          .eq('id', this.formData.id));
+          .eq('id', this.projectForm.id));
       } else {
         ({ error } = await supabase
           .from('portfolio_projects')
@@ -311,13 +503,45 @@ export default {
         alert('Error saving project: ' + error.message);
       } else {
         await this.fetchProjects();
-        this.showModal = false;
+        this.showProjectModal = false;
       }
-      this.saving = false;
+      this.savingProject = false;
     },
-    async confirmDelete(id) {
+    async saveGalleryImage() {
+      this.savingGallery = true;
+
+      const imageData = {
+        title: this.galleryForm.title,
+        description: this.galleryForm.description,
+        image_url: this.galleryForm.image_url,
+        category: this.galleryForm.category,
+        display_order: this.galleryForm.display_order,
+        updated_at: new Date().toISOString()
+      };
+
+      let error;
+      if (this.isEditingGallery) {
+        ({ error } = await supabase
+          .from('gallery_images')
+          .update(imageData)
+          .eq('id', this.galleryForm.id));
+      } else {
+        ({ error } = await supabase
+          .from('gallery_images')
+          .insert([imageData]));
+      }
+
+      if (error) {
+        alert('Error saving gallery image: ' + error.message);
+      } else {
+        await this.fetchGalleryImages();
+        this.showGalleryModal = false;
+      }
+      this.savingGallery = false;
+    },
+    async confirmDeleteProject(id) {
       if (!confirm('Are you sure you want to delete this project?')) return;
-      
+
       const { error } = await supabase
         .from('portfolio_projects')
         .delete()
@@ -327,6 +551,20 @@ export default {
         alert('Error deleting project: ' + error.message);
       } else {
         await this.fetchProjects();
+      }
+    },
+    async confirmDeleteGallery(id) {
+      if (!confirm('Are you sure you want to delete this gallery image?')) return;
+
+      const { error } = await supabase
+        .from('gallery_images')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        alert('Error deleting gallery image: ' + error.message);
+      } else {
+        await this.fetchGalleryImages();
       }
     }
   }
@@ -452,6 +690,50 @@ export default {
   gap: 12px;
 }
 
+.tab-navigation {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0;
+}
+
+.tab-btn {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-btn:hover {
+  color: #3b82f6;
+}
+
+.tab-btn.active {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+}
+
+.tab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tab-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #1f2937;
+}
+
 .cms-content {
   background: white;
   border-radius: 8px;
@@ -528,6 +810,10 @@ export default {
   max-height: 90vh;
   display: flex;
   flex-direction: column;
+}
+
+.modal-small {
+  max-width: 600px;
 }
 
 .modal-header {
