@@ -1,20 +1,199 @@
 <template>
-  <div class="rich-text-editor">
-    <Editor
-      v-model="editorContent"
-      :init="editorConfig"
-      @input="updateContent"
+  <div class="rich-text-editor" :class="{ 'is-focused': isFocused }">
+    <!-- Toolbar -->
+    <div v-if="editor" class="editor-toolbar" role="toolbar">
+      <!-- Text formatting -->
+      <div class="toolbar-group">
+        <button 
+          type="button"
+          @click="editor.chain().focus().toggleBold().run()" 
+          :class="{ 'is-active': editor.isActive('bold') }"
+          title="Bold (Ctrl+B)"
+        >
+          <i class="fas fa-bold"></i>
+        </button>
+        <button 
+          type="button"
+          @click="editor.chain().focus().toggleItalic().run()" 
+          :class="{ 'is-active': editor.isActive('italic') }"
+          title="Italic (Ctrl+I)"
+        >
+          <i class="fas fa-italic"></i>
+        </button>
+        <button 
+          type="button"
+          @click="editor.chain().focus().toggleUnderline().run()" 
+          :class="{ 'is-active': editor.isActive('underline') }"
+          title="Underline (Ctrl+U)"
+        >
+          <i class="fas fa-underline"></i>
+        </button>
+        <button 
+          type="button"
+          @click="editor.chain().focus().toggleStrike().run()" 
+          :class="{ 'is-active': editor.isActive('strike') }"
+          title="Strikethrough"
+        >
+          <i class="fas fa-strikethrough"></i>
+        </button>
+      </div>
+
+      <!-- Headings -->
+      <div class="toolbar-group">
+        <select 
+          @change="setHeading($event)" 
+          :value="currentHeading"
+          title="Heading"
+          class="toolbar-select"
+        >
+          <option value="paragraph">Paragraph</option>
+          <option value="1">Heading 1</option>
+          <option value="2">Heading 2</option>
+          <option value="3">Heading 3</option>
+          <option value="4">Heading 4</option>
+        </select>
+      </div>
+
+      <!-- Font family -->
+      <div class="toolbar-group">
+        <select 
+          @change="setFontFamily($event)" 
+          :value="currentFontFamily"
+          title="Font Family"
+          class="toolbar-select"
+        >
+          <option value="default">Font</option>
+          <option value="Poppins">Poppins</option>
+          <option value="Arial">Arial</option>
+          <option value="Georgia">Georgia</option>
+          <option value="Courier New">Courier New</option>
+          <option value="Times New Roman">Times New Roman</option>
+          <option value="Verdana">Verdana</option>
+        </select>
+      </div>
+
+      <!-- Font size -->
+      <div class="toolbar-group">
+        <select 
+          @change="setFontSize($event)" 
+          :value="currentFontSize"
+          title="Font Size"
+          class="toolbar-select"
+        >
+          <option value="">Size</option>
+          <option value="12px">12px</option>
+          <option value="14px">14px</option>
+          <option value="16px">16px</option>
+          <option value="18px">18px</option>
+          <option value="20px">20px</option>
+          <option value="24px">24px</option>
+          <option value="28px">28px</option>
+          <option value="32px">32px</option>
+          <option value="36px">36px</option>
+          <option value="48px">48px</option>
+        </select>
+      </div>
+
+      <!-- Text color -->
+      <div class="toolbar-group">
+        <input 
+          type="color" 
+          :value="textColor" 
+          @input="setTextColor($event)"
+          title="Text Color"
+          class="color-picker"
+        />
+      </div>
+
+      <!-- Alignment -->
+      <div class="toolbar-group">
+        <button 
+          type="button"
+          @click="editor.chain().focus().setTextAlign('left').run()" 
+          :class="{ 'is-active': editor.isActive({ textAlign: 'left' }) }"
+          title="Align Left"
+        >
+          <i class="fas fa-align-left"></i>
+        </button>
+        <button 
+          type="button"
+          @click="editor.chain().focus().setTextAlign('center').run()" 
+          :class="{ 'is-active': editor.isActive({ textAlign: 'center' }) }"
+          title="Align Center"
+        >
+          <i class="fas fa-align-center"></i>
+        </button>
+        <button 
+          type="button"
+          @click="editor.chain().focus().setTextAlign('right').run()" 
+          :class="{ 'is-active': editor.isActive({ textAlign: 'right' }) }"
+          title="Align Right"
+        >
+          <i class="fas fa-align-right"></i>
+        </button>
+      </div>
+
+      <!-- Lists -->
+      <div class="toolbar-group">
+        <button 
+          type="button"
+          @click="editor.chain().focus().toggleBulletList().run()" 
+          :class="{ 'is-active': editor.isActive('bulletList') }"
+          title="Bullet List"
+        >
+          <i class="fas fa-list-ul"></i>
+        </button>
+        <button 
+          type="button"
+          @click="editor.chain().focus().toggleOrderedList().run()" 
+          :class="{ 'is-active': editor.isActive('orderedList') }"
+          title="Numbered List"
+        >
+          <i class="fas fa-list-ol"></i>
+        </button>
+      </div>
+
+      <!-- Insert -->
+      <div class="toolbar-group">
+        <button 
+          type="button"
+          @click="addLink"
+          title="Insert Link"
+        >
+          <i class="fas fa-link"></i>
+        </button>
+        <button 
+          type="button"
+          @click="editor.chain().focus().unsetAllMarks().run()"
+          title="Clear Formatting"
+        >
+          <i class="fas fa-eraser"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Editor Content -->
+    <editor-content 
+      :editor="editor" 
+      class="editor-content"
+      :style="{ minHeight: height + 'px' }"
     />
   </div>
 </template>
 
 <script>
-import Editor from '@tinymce/tinymce-vue';
+import { Editor, EditorContent } from '@tiptap/vue-3';
+import StarterKit from '@tiptap/starter-kit';
+import Underline from '@tiptap/extension-underline';
+import Color from '@tiptap/extension-color';
+import TextStyle from '@tiptap/extension-text-style';
+import TextAlign from '@tiptap/extension-text-align';
+import FontFamily from '@tiptap/extension-font-family';
 
 export default {
   name: 'RichTextEditor',
   components: {
-    Editor
+    EditorContent
   },
   props: {
     modelValue: {
@@ -27,118 +206,115 @@ export default {
     },
     height: {
       type: Number,
-      default: 300
-    },
-    menubar: {
-      type: Boolean,
-      default: false
+      default: 200
     }
   },
   emits: ['update:modelValue'],
   data() {
     return {
-      editorContent: this.modelValue,
-      editorConfig: {
-        height: this.height,
-        menubar: this.menubar,
-        branding: false,
-        statusbar: true,
-        license_key: 'gpl', // Use GPL license (self-hosted, no API key needed)
-        plugins: [
-          'advlist',
-          'autolink',
-          'lists',
-          'link',
-          'image',
-          'charmap',
-          'preview',
-          'anchor',
-          'searchreplace',
-          'visualblocks',
-          'code',
-          'fullscreen',
-          'insertdatetime',
-          'media',
-          'table',
-          'code',
-          'help',
-          'wordcount',
-          'textcolor'
-        ],
-        toolbar: [
-          'undo redo | blocks | fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor',
-          'alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | removeformat code fullscreen help'
-        ].join(' | '),
-        toolbar_mode: 'sliding',
-        font_family_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Poppins=poppins; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva',
-        font_size_formats: '8px 10px 12px 14px 16px 18px 20px 24px 28px 32px 36px 48px 64px 72px',
-        content_style: `
-          body { 
-            font-family: 'Poppins', sans-serif; 
-            font-size: 14px; 
-            line-height: 1.6;
-          }
-          img { 
-            max-width: 100%; 
-            height: auto; 
-          }
-          a { 
-            color: #f97316; 
-          }
-          blockquote {
-            border-left: 4px solid #f97316;
-            padding-left: 16px;
-            margin-left: 0;
-            color: #6b7280;
-          }
-        `,
-        placeholder: this.placeholder,
-        skin: 'oxide',
-        content_css: 'default',
-        style_formats: [
-          { title: 'Heading 1', format: 'h1' },
-          { title: 'Heading 2', format: 'h2' },
-          { title: 'Heading 3', format: 'h3' },
-          { title: 'Paragraph', format: 'p' },
-          { title: 'Blockquote', format: 'blockquote' },
-          { title: 'Code', format: 'code' },
-          { title: 'Bold', icon: 'bold', format: 'bold' },
-          { title: 'Italic', icon: 'italic', format: 'italic' },
-          { title: 'Underline', icon: 'underline', format: 'underline' },
-          { title: 'Strikethrough', icon: 'strikethrough', format: 'strikethrough' },
-          {
-            title: 'Colors',
-            items: [
-              { title: 'Orange Text', inline: 'span', styles: { color: '#f97316' } },
-              { title: 'Dark Text', inline: 'span', styles: { color: '#1f2937' } },
-              { title: 'Gray Text', inline: 'span', styles: { color: '#6b7280' } },
-              { title: 'Orange Background', inline: 'span', styles: { background: '#f97316', color: '#ffffff' } },
-              { title: 'Yellow Background', inline: 'span', styles: { background: '#fef3c7' } }
-            ]
-          }
-        ],
-        images_upload_handler: (blobInfo) => new Promise((resolve) => {
-          // For now, return blob URL. Can be integrated with Supabase storage later
-          resolve('data:' + blobInfo.blob().type + ';base64,' + blobInfo.base64());
-        }),
-        setup: (editor) => {
-          editor.on('init', () => {
-            this.$emit('update:modelValue', this.editorContent);
-          });
-        }
-      }
+      editor: null,
+      isFocused: false,
+      textColor: '#000000'
     };
   },
-  watch: {
-    modelValue(newValue) {
-      if (newValue !== this.editorContent) {
-        this.editorContent = newValue;
-      }
+  computed: {
+    currentHeading() {
+      if (!this.editor) return 'paragraph';
+      if (this.editor.isActive('heading', { level: 1 })) return '1';
+      if (this.editor.isActive('heading', { level: 2 })) return '2';
+      if (this.editor.isActive('heading', { level: 3 })) return '3';
+      if (this.editor.isActive('heading', { level: 4 })) return '4';
+      return 'paragraph';
+    },
+    currentFontFamily() {
+      if (!this.editor) return 'default';
+      return this.editor.getAttributes('textStyle').fontFamily || 'default';
+    },
+    currentFontSize() {
+      if (!this.editor) return '';
+      return this.editor.getAttributes('textStyle').fontSize || '';
     }
   },
+  watch: {
+    modelValue(value) {
+      const isSame = this.editor?.getHTML() === value;
+      if (isSame) return;
+      this.editor?.commands.setContent(value, false);
+    }
+  },
+  mounted() {
+    this.editor = new Editor({
+      content: this.modelValue,
+      extensions: [
+        StarterKit.configure({
+          heading: {
+            levels: [1, 2, 3, 4]
+          }
+        }),
+        Underline,
+        TextStyle,
+        Color,
+        TextAlign.configure({
+          types: ['heading', 'paragraph'],
+          alignments: ['left', 'center', 'right', 'justify']
+        }),
+        FontFamily.configure({
+          types: ['textStyle']
+        })
+      ],
+      editorProps: {
+        attributes: {
+          class: 'tiptap-editor-inner',
+          placeholder: this.placeholder
+        }
+      },
+      onUpdate: ({ editor }) => {
+        this.$emit('update:modelValue', editor.getHTML());
+      },
+      onFocus: () => {
+        this.isFocused = true;
+      },
+      onBlur: () => {
+        this.isFocused = false;
+      }
+    });
+  },
+  beforeUnmount() {
+    this.editor?.destroy();
+  },
   methods: {
-    updateContent() {
-      this.$emit('update:modelValue', this.editorContent);
+    setHeading(event) {
+      const level = parseInt(event.target.value);
+      if (isNaN(level)) {
+        this.editor.chain().focus().setParagraph().run();
+      } else {
+        this.editor.chain().focus().toggleHeading({ level }).run();
+      }
+    },
+    setFontFamily(event) {
+      const fontFamily = event.target.value;
+      if (fontFamily === 'default') {
+        this.editor.chain().focus().unsetFontFamily().run();
+      } else {
+        this.editor.chain().focus().setFontFamily(fontFamily).run();
+      }
+    },
+    setFontSize(event) {
+      const fontSize = event.target.value;
+      if (fontSize) {
+        this.editor.chain().focus().setFontSize(fontSize).run();
+      }
+    },
+    setTextColor(event) {
+      const color = event.target.value;
+      this.textColor = color;
+      this.editor.chain().focus().setColor(color).run();
+    },
+    addLink() {
+      const url = prompt('Enter URL:');
+      if (url) {
+        this.editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+      }
     }
   }
 };
@@ -146,49 +322,200 @@ export default {
 
 <style scoped>
 .rich-text-editor {
-  width: 100%;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
   overflow: hidden;
+  transition: border-color 0.2s;
+  background: white;
 }
 
-.rich-text-editor :deep(.tox-tinymce) {
-  border-radius: 8px !important;
-  border: 1px solid #e5e7eb !important;
+.rich-text-editor.is-focused {
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
 }
 
-.rich-text-editor :deep(.tox-editor-header) {
-  border-bottom: 1px solid #e5e7eb !important;
+/* Toolbar */
+.editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  align-items: center;
 }
 
-.rich-text-editor :deep(.tox-statusbar) {
-  border-top: 1px solid #e5e7eb !important;
+.toolbar-group {
+  display: flex;
+  gap: 2px;
+  padding: 0 6px;
+  border-right: 1px solid #d1d5db;
 }
 
-/* Custom orange theme for toolbar icons on hover */
-.rich-text-editor :deep(.tox .tox-tbtn:hover) {
-  background-color: #fff7ed !important;
+.toolbar-group:last-child {
+  border-right: none;
 }
 
-.rich-text-editor :deep(.tox .tox-tbtn--enabled) {
-  background-color: #ffedd5 !important;
+.editor-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 6px 8px;
+  background: white;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #374151;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
 }
 
-.rich-text-editor :deep(.tox .tox-tbtn--enabled svg) {
-  color: #f97316 !important;
+.editor-toolbar button:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
 }
 
-/* Active toolbar button */
-.rich-text-editor :deep(.tox .tox-tbtn:active) {
-  background-color: #fed7aa !important;
+.editor-toolbar button.is-active {
+  background: #ffedd5;
+  border-color: #f97316;
+  color: #ea580c;
 }
 
-/* Dropdown menu hover */
-.rich-text-editor :deep(.tox .tox-collection__item--active) {
-  background-color: #fff7ed !important;
+.editor-toolbar button:active {
+  background: #fed7aa;
 }
 
-/* Button focus */
-.rich-text-editor :deep(.tox .tox-tbtn:focus) {
-  background-color: #ffedd5 !important;
+.toolbar-select {
+  height: 32px;
+  padding: 4px 8px;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
+}
+
+.toolbar-select:hover {
+  border-color: #f97316;
+}
+
+.toolbar-select:focus {
+  outline: none;
+  border-color: #f97316;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
+}
+
+.color-picker {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.color-picker:hover {
+  border-color: #f97316;
+}
+
+.color-picker:focus {
+  outline: none;
+  border-color: #f97316;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
+}
+
+/* Editor Content */
+.editor-content {
+  min-height: 200px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.tiptap-editor-inner {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1f2937;
+  outline: none;
+}
+
+.tiptap-editor-inner p.is-editor-empty:first-child::before {
+  content: attr(placeholder);
+  float: left;
+  color: #9ca3af;
+  pointer-events: none;
+  height: 0;
+}
+
+.tiptap-editor-inner h1 {
+  font-size: 2em;
+  font-weight: 700;
+  margin: 0.5em 0;
+}
+
+.tiptap-editor-inner h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 0.5em 0;
+}
+
+.tiptap-editor-inner h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin: 0.5em 0;
+}
+
+.tiptap-editor-inner a {
+  color: #f97316;
+  text-decoration: underline;
+}
+
+.tiptap-editor-inner ul,
+.tiptap-editor-inner ol {
+  padding-left: 1.5em;
+  margin: 0.5em 0;
+}
+
+.tiptap-editor-inner blockquote {
+  border-left: 4px solid #f97316;
+  padding-left: 1em;
+  margin: 0.5em 0;
+  color: #6b7280;
+}
+
+.tiptap-editor-inner code {
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .editor-toolbar {
+    padding: 6px;
+    gap: 2px;
+  }
+
+  .toolbar-group {
+    padding: 0 4px;
+  }
+
+  .editor-toolbar button {
+    min-width: 28px;
+    height: 28px;
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+
+  .toolbar-select {
+    height: 28px;
+    font-size: 12px;
+  }
 }
 </style>
