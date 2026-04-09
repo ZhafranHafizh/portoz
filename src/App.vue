@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <SiteStatusChecker />
+    <SiteStatusChecker :current-route="currentRoute" />
     <Navbar />
     <DarkModeWarning />
     <!-- <MaintenanceTicker /> -->
@@ -28,6 +28,19 @@ import SiteStatusChecker from '@/components/SiteStatusChecker.vue';
 
 export default {
   name: 'App',
+  data() {
+    return {
+      currentRoute: ''
+    };
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      handler(to) {
+        this.currentRoute = to.path;
+      }
+    }
+  },
   components: {
     Navbar,
     Footer,

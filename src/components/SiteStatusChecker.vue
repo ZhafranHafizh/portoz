@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isPublic" class="maintenance-overlay">
+  <div v-if="showMaintenanceOverlay" class="maintenance-overlay">
     <div class="maintenance-modal">
       <div class="maintenance-icon">
         <i class="fas fa-tools fa-spin"></i>
@@ -25,6 +25,12 @@ import { supabase } from '@/config/supabaseClient';
 
 export default {
   name: 'SiteStatusChecker',
+  props: {
+    currentRoute: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       isPublic: true,
@@ -32,6 +38,16 @@ export default {
       lastUpdated: 'Loading...',
       loaded: false
     };
+  },
+  computed: {
+    showMaintenanceOverlay() {
+      // Don't show overlay on admin page
+      if (this.currentRoute === '/admin') {
+        return false;
+      }
+      // Only show if site is not public
+      return !this.isPublic;
+    }
   },
   async mounted() {
     await this.checkSiteStatus();
