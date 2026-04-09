@@ -166,117 +166,190 @@
         </div>
 
         <div v-else class="site-content-editor">
-          <!-- Home Page Section -->
-          <div class="content-section">
-            <h3>
-              <button class="section-toggle" @click="toggleSection('home')">
-                <i :class="expandedSections.home ? 'fas fa-chevron-down' : 'fas fa-chevron-right'"></i>
-                Home Page
-              </button>
-            </h3>
-            <div v-if="expandedSections.home" class="section-body">
-              <div class="form-group">
-                <label>Profile Image</label>
-                <input type="file" @change="handleHomeProfileUpload" class="form-input" accept="image/*" />
-                <p v-if="uploadingProfileImage" class="status-info">Uploading image...</p>
-                <img v-if="siteContent.home.hero.profile_image" :src="siteContent.home.hero.profile_image" class="preview-img" alt="preview" />
-              </div>
-              <div class="form-group">
-                <label>Hero Title (supports **bold**)</label>
-                <textarea v-model="siteContent.home.hero.title" class="form-input" rows="2"></textarea>
-              </div>
-              <div class="form-group">
-                <label>Hero Subtitle</label>
-                <textarea v-model="siteContent.home.hero.subtitle" class="form-input" rows="2"></textarea>
-              </div>
-              <div class="form-group">
-                <label>Hero Description</label>
-                <textarea v-model="siteContent.home.hero.description" class="form-input" rows="4"></textarea>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>CTA Button Text</label>
-                  <input type="text" v-model="siteContent.home.hero.cta_text" class="form-input" />
+          <div class="editor-layout">
+            <!-- Left: Editor Form -->
+            <div class="editor-panel">
+              <!-- Home Page Section -->
+              <div class="content-section">
+                <h3>
+                  <button class="section-toggle" @click="toggleSection('home')">
+                    <i :class="expandedSections.home ? 'fas fa-chevron-down' : 'fas fa-chevron-right'"></i>
+                    Home Page
+                  </button>
+                </h3>
+                <div v-if="expandedSections.home" class="section-body">
+                  <div class="form-group">
+                    <label>Profile Image</label>
+                    <input type="file" @change="handleHomeProfileUpload" class="form-input" accept="image/*" />
+                    <p v-if="uploadingProfileImage" class="status-info">Uploading image...</p>
+                    <img v-if="siteContent.home.hero.profile_image" :src="siteContent.home.hero.profile_image" class="preview-img" alt="preview" />
+                  </div>
+                  <div class="form-group">
+                    <label>Hero Title (supports **bold**)</label>
+                    <textarea v-model="siteContent.home.hero.title" class="form-input" rows="2"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Hero Subtitle</label>
+                    <textarea v-model="siteContent.home.hero.subtitle" class="form-input" rows="2"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Hero Description</label>
+                    <textarea v-model="siteContent.home.hero.description" class="form-input" rows="4"></textarea>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>CTA Button Text</label>
+                      <input type="text" v-model="siteContent.home.hero.cta_text" class="form-input" />
+                    </div>
+                    <div class="form-group">
+                      <label>CTA Button Link</label>
+                      <input type="text" v-model="siteContent.home.hero.cta_link" class="form-input" />
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label>CTA Button Link</label>
-                  <input type="text" v-model="siteContent.home.hero.cta_link" class="form-input" />
+              </div>
+
+              <!-- About Page Section -->
+              <div class="content-section">
+                <h3>
+                  <button class="section-toggle" @click="toggleSection('about')">
+                    <i :class="expandedSections.about ? 'fas fa-chevron-down' : 'fas fa-chevron-right'"></i>
+                    About Page
+                  </button>
+                </h3>
+                <div v-if="expandedSections.about" class="section-body">
+                  <h4>Profile Section</h4>
+                  <div class="form-group">
+                    <label>Profile Image</label>
+                    <input type="file" @change="handleAboutProfileUpload" class="form-input" accept="image/*" />
+                    <p v-if="uploadingAboutImage" class="status-info">Uploading image...</p>
+                    <img v-if="siteContent.about.profile.image" :src="siteContent.about.profile.image" class="preview-img" alt="preview" />
+                  </div>
+                  <div class="form-group">
+                    <label>Heading</label>
+                    <input type="text" v-model="siteContent.about.profile.heading" class="form-input" />
+                  </div>
+                  <div class="form-group">
+                    <label>Tagline (use ** for bold)</label>
+                    <textarea v-model="siteContent.about.profile.tagline" class="form-input" rows="2"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Introduction</label>
+                    <textarea v-model="siteContent.about.profile.intro" class="form-input" rows="3"></textarea>
+                  </div>
+
+                  <h4>Philosophy Section</h4>
+                  <div class="form-group">
+                    <label>Heading</label>
+                    <input type="text" v-model="siteContent.about.philosophy.heading" class="form-input" />
+                  </div>
+                  <div class="form-group">
+                    <label>Content</label>
+                    <textarea v-model="siteContent.about.philosophy.content" class="form-input" rows="5"></textarea>
+                  </div>
+
+                  <h4>Expertise Section</h4>
+                  <div class="form-group">
+                    <label>Heading</label>
+                    <input type="text" v-model="siteContent.about.expertise.heading" class="form-input" />
+                  </div>
+                  <div class="form-group">
+                    <label>Intro Text</label>
+                    <textarea v-model="siteContent.about.expertise.intro" class="form-input" rows="2"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Skills (JSON array - advanced)</label>
+                    <textarea v-model="siteContent.about.expertise.skills_raw" class="form-input form-textarea-mono" rows="8" placeholder='[{"title":"Skill","desc":"Description"}]'></textarea>
+                    <p class="hint-text">Format: JSON array of {"title":"...","desc":"..."}</p>
+                  </div>
+
+                  <h4>Connect Section</h4>
+                  <div class="form-group">
+                    <label>Heading</label>
+                    <input type="text" v-model="siteContent.about.connect.heading" class="form-input" />
+                  </div>
+                  <div class="form-group">
+                    <label>Content</label>
+                    <textarea v-model="siteContent.about.connect.content" class="form-input" rows="3"></textarea>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>CTA Button Text</label>
+                      <input type="text" v-model="siteContent.about.connect.cta_text" class="form-input" />
+                    </div>
+                    <div class="form-group">
+                      <label>CTA Button Link</label>
+                      <input type="text" v-model="siteContent.about.connect.cta_link" class="form-input" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- About Page Section -->
-          <div class="content-section">
-            <h3>
-              <button class="section-toggle" @click="toggleSection('about')">
-                <i :class="expandedSections.about ? 'fas fa-chevron-down' : 'fas fa-chevron-right'"></i>
-                About Page
-              </button>
-            </h3>
-            <div v-if="expandedSections.about" class="section-body">
-              <h4>Profile Section</h4>
-              <div class="form-group">
-                <label>Profile Image</label>
-                <input type="file" @change="handleAboutProfileUpload" class="form-input" accept="image/*" />
-                <p v-if="uploadingAboutImage" class="status-info">Uploading image...</p>
-                <img v-if="siteContent.about.profile.image" :src="siteContent.about.profile.image" class="preview-img" alt="preview" />
-              </div>
-              <div class="form-group">
-                <label>Heading</label>
-                <input type="text" v-model="siteContent.about.profile.heading" class="form-input" />
-              </div>
-              <div class="form-group">
-                <label>Tagline (use ** for bold)</label>
-                <textarea v-model="siteContent.about.profile.tagline" class="form-input" rows="2"></textarea>
-              </div>
-              <div class="form-group">
-                <label>Introduction</label>
-                <textarea v-model="siteContent.about.profile.intro" class="form-input" rows="3"></textarea>
-              </div>
-
-              <h4>Philosophy Section</h4>
-              <div class="form-group">
-                <label>Heading</label>
-                <input type="text" v-model="siteContent.about.philosophy.heading" class="form-input" />
-              </div>
-              <div class="form-group">
-                <label>Content</label>
-                <textarea v-model="siteContent.about.philosophy.content" class="form-input" rows="5"></textarea>
-              </div>
-
-              <h4>Expertise Section</h4>
-              <div class="form-group">
-                <label>Heading</label>
-                <input type="text" v-model="siteContent.about.expertise.heading" class="form-input" />
-              </div>
-              <div class="form-group">
-                <label>Intro Text</label>
-                <textarea v-model="siteContent.about.expertise.intro" class="form-input" rows="2"></textarea>
-              </div>
-              <div class="form-group">
-                <label>Skills (JSON array - advanced)</label>
-                <textarea v-model="siteContent.about.expertise.skills_raw" class="form-input form-textarea-mono" rows="8" placeholder='[{"title":"Skill","desc":"Description"}]'></textarea>
-                <p class="hint-text">Format: JSON array of {"title":"...","desc":"..."}</p>
-              </div>
-
-              <h4>Connect Section</h4>
-              <div class="form-group">
-                <label>Heading</label>
-                <input type="text" v-model="siteContent.about.connect.heading" class="form-input" />
-              </div>
-              <div class="form-group">
-                <label>Content</label>
-                <textarea v-model="siteContent.about.connect.content" class="form-input" rows="3"></textarea>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>CTA Button Text</label>
-                  <input type="text" v-model="siteContent.about.connect.cta_text" class="form-input" />
+            <!-- Right: Live Preview -->
+            <div class="preview-panel">
+              <div class="preview-header">
+                <h3><i class="fas fa-eye"></i> Live Preview</h3>
+                <div class="preview-tabs">
+                  <button 
+                    :class="['preview-tab', { active: previewPage === 'home' }]"
+                    @click="previewPage = 'home'"
+                  >
+                    Home
+                  </button>
+                  <button 
+                    :class="['preview-tab', { active: previewPage === 'about' }]"
+                    @click="previewPage = 'about'"
+                  >
+                    About
+                  </button>
                 </div>
-                <div class="form-group">
-                  <label>CTA Button Link</label>
-                  <input type="text" v-model="siteContent.about.connect.cta_link" class="form-input" />
+              </div>
+
+              <div class="preview-content">
+                <!-- Home Preview -->
+                <div v-if="previewPage === 'home'" class="home-preview">
+                  <div class="preview-hero">
+                    <div class="preview-profile-image">
+                      <img :src="siteContent.home.hero.profile_image || 'https://via.placeholder.com/180'" alt="Profile" class="preview-pic">
+                    </div>
+                    <h1 class="preview-title" v-html="formatBold(siteContent.home.hero.title)"></h1>
+                    <h2 class="preview-subtitle" v-html="formatBold(siteContent.home.hero.subtitle)"></h2>
+                    <p class="preview-description">{{ siteContent.home.hero.description }}</p>
+                    <a class="preview-cta" :href="siteContent.home.hero.cta_link">
+                      {{ siteContent.home.hero.cta_text }} <span class="arrow">→</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- About Preview -->
+                <div v-if="previewPage === 'about'" class="about-preview">
+                  <div class="preview-profile">
+                    <img :src="siteContent.about.profile.image || 'https://via.placeholder.com/180'" alt="Profile" class="preview-about-pic">
+                    <div class="preview-profile-text">
+                      <h1>{{ siteContent.about.profile.heading }}</h1>
+                      <h2 v-html="formatBold(siteContent.about.profile.tagline)"></h2>
+                      <p class="preview-intro" v-html="formatBold(siteContent.about.profile.intro)"></p>
+                    </div>
+                  </div>
+                  <div class="preview-story">
+                    <h3>{{ siteContent.about.philosophy.heading }}</h3>
+                    <p>{{ siteContent.about.philosophy.content }}</p>
+                    
+                    <h3>{{ siteContent.about.expertise.heading }}</h3>
+                    <p>{{ siteContent.about.expertise.intro }}</p>
+                    <ul class="preview-skills">
+                      <li v-for="(skill, index) in parsedSkills" :key="index">
+                        <strong>{{ skill.title }}:</strong> {{ skill.desc }}
+                      </li>
+                    </ul>
+                    
+                    <h3>{{ siteContent.about.connect.heading }}</h3>
+                    <p>{{ siteContent.about.connect.content }}</p>
+                    <a class="preview-cta" :href="siteContent.about.connect.cta_link">
+                      {{ siteContent.about.connect.cta_text }}
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -560,6 +633,7 @@ export default {
         }
       },
       expandedSections: { home: true, about: true },
+      previewPage: 'home',
       
       // CV Manager
       loadingCV: false,
@@ -569,6 +643,16 @@ export default {
       showUploadCVModal: false,
       cvForm: { filename: '', file_url: '', version_note: '', is_active: false },
       cvFileToUpload: null
+    }
+  },
+  computed: {
+    parsedSkills() {
+      try {
+        const skills = JSON.parse(this.siteContent.about.expertise.skills_raw);
+        return Array.isArray(skills) ? skills : [];
+      } catch (e) {
+        return [];
+      }
     }
   },
   mounted() {
@@ -745,6 +829,10 @@ export default {
     },
     getCategoryString(category) {
       return Array.isArray(category) ? category.join(', ') : category;
+    },
+    formatBold(text) {
+      if (!text) return '';
+      return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     },
     async saveProject() {
       this.savingProject = true;
@@ -1497,6 +1585,250 @@ export default {
   padding: 20px;
 }
 
+.editor-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.editor-panel {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Preview Panel */
+.preview-panel {
+  position: sticky;
+  top: 20px;
+  height: fit-content;
+  max-height: 85vh;
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.preview-header {
+  padding: 16px 20px;
+  background: white;
+  border-bottom: 2px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preview-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.preview-tab {
+  padding: 6px 16px;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.preview-tab:hover {
+  background: #e5e7eb;
+}
+
+.preview-tab.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.preview-content {
+  overflow-y: auto;
+  max-height: calc(85vh - 60px);
+  padding: 20px;
+}
+
+/* Home Preview */
+.home-preview {
+  text-align: center;
+  padding: 20px;
+}
+
+.preview-profile-image {
+  margin-bottom: 20px;
+}
+
+.preview-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.preview-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 8px 0;
+}
+
+.preview-title strong {
+  color: #f97316;
+}
+
+.preview-subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: #6b7280;
+  margin: 0 0 16px 0;
+}
+
+.preview-subtitle strong {
+  color: #d97706;
+  font-weight: 600;
+}
+
+.preview-description {
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+}
+
+.preview-cta {
+  display: inline-block;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(249, 115, 22, 0.3);
+  transition: all 0.2s;
+}
+
+.preview-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(249, 115, 22, 0.4);
+}
+
+.preview-cta .arrow {
+  margin-left: 6px;
+  transition: transform 0.2s;
+}
+
+.preview-cta:hover .arrow {
+  transform: translateX(3px);
+}
+
+/* About Preview */
+.about-preview {
+  padding: 20px;
+}
+
+.preview-profile {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 20px;
+}
+
+.preview-about-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+}
+
+.preview-profile-text h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 6px 0;
+}
+
+.preview-profile-text h2 {
+  font-size: 13px;
+  font-weight: 400;
+  color: #f97316;
+  margin: 0 0 10px 0;
+}
+
+.preview-profile-text h2 strong {
+  color: #d97706;
+  font-weight: 600;
+}
+
+.preview-intro {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.preview-story h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 20px 0 10px 0;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #f97316;
+  display: inline-block;
+}
+
+.preview-story p {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0 0 12px 0;
+}
+
+.preview-skills {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+}
+
+.preview-skills li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.preview-skills li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #d97706;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.preview-skills li strong {
+  color: #374151;
+}
+
 .content-section {
   margin-bottom: 30px;
   border: 1px solid #e5e7eb;
@@ -1647,6 +1979,19 @@ export default {
   .tab-btn {
     padding: 10px 16px;
     font-size: 14px;
+  }
+  
+  .editor-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .preview-panel {
+    position: static;
+    max-height: none;
+  }
+  
+  .editor-panel {
+    max-height: none;
   }
 }
 </style>
