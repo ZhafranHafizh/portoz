@@ -61,6 +61,12 @@
         >
           <i class="fas fa-file-pdf"></i> CV Manager
         </button>
+        <button 
+          :class="['tab-btn', { active: activeTab === 'sitesettings' }]"
+          @click="activeTab = 'sitesettings'"
+        >
+          <i class="fas fa-cog"></i> Site Settings
+        </button>
       </div>
 
       <div class="cms-content">
@@ -436,6 +442,58 @@
           </ul>
         </div>
       </div>
+
+      <!-- Site Settings Tab -->
+      <div v-if="activeTab === 'sitesettings'">
+        <div class="tab-header">
+          <h2>Site Settings</h2>
+          <button @click="saveSiteSettings" class="btn btn-primary" :disabled="savingSiteSettings">
+            {{ savingSiteSettings ? 'Saving...' : 'Save Settings' }}
+          </button>
+        </div>
+
+        <div v-if="loadingSiteSettings" class="loading-state">Loading settings...</div>
+
+        <div v-else class="site-settings-editor">
+          <div class="content-section">
+            <h3>
+              <button class="section-toggle" @click="toggleSection('siteAccess')">
+                <i :class="expandedSections.siteAccess ? 'fas fa-chevron-down' : 'fas fa-chevron-right'"></i>
+                Public Access Control
+              </button>
+            </h3>
+            <div v-if="expandedSections.siteAccess" class="section-body">
+              <div class="toggle-setting-group">
+                <div class="toggle-setting">
+                  <div class="toggle-info">
+                    <h4>Public Access</h4>
+                    <p>Turn off to put the site in maintenance mode. Visitors will see a "Under Development" message.</p>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" v-model="siteSettings.is_public" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                <div class="toggle-status" :class="siteSettings.is_public ? 'status-online' : 'status-maintenance'">
+                  <i :class="siteSettings.is_public ? 'fas fa-globe' : 'fas fa-tools'"></i>
+                  <span>{{ siteSettings.is_public ? 'Website is LIVE' : 'Maintenance Mode ON' }}</span>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-top: 24px;">
+                <label>Maintenance Message</label>
+                <textarea 
+                  v-model="siteSettings.maintenance_message" 
+                  class="form-input" 
+                  rows="3"
+                  placeholder="Message to show visitors when site is under maintenance"
+                ></textarea>
+                <p class="hint-text">This message will be displayed on the maintenance screen</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div> <!-- Close cms-content and cms-container -->
 
     <!-- Add/Edit Project Modal -->
@@ -659,7 +717,7 @@ export default {
           connect: { heading: '', content: '', cta_text: '', cta_link: '' }
         }
       },
-      expandedSections: { home: true, about: true },
+      expandedSections: { home: true, about: true, siteAccess: true },
       previewPage: 'home',
       
       // CV Manager
@@ -669,7 +727,15 @@ export default {
       cvFiles: [],
       showUploadCVModal: false,
       cvForm: { filename: '', file_url: '', version_note: '', is_active: false },
-      cvFileToUpload: null
+      cvFileToUpload: null,
+      
+      // Site Settings
+      loadingSiteSettings: false,
+      savingSiteSettings: false,
+      siteSettings: {
+        is_public: true,
+        maintenance_message: 'Website is currently under development. Please check back soon!'
+      }
     }
   },
   computed: {
@@ -703,6 +769,7 @@ export default {
         this.fetchGalleryImages();
         this.fetchSiteContent();
         this.fetchCVFiles();
+        this.fetchSiteSettings();
       }
     });
 
@@ -713,6 +780,7 @@ export default {
         this.fetchGalleryImages();
         this.fetchSiteContent();
         this.fetchCVFiles();
+        this.fetchSiteSettings();
       }
     });
   },
@@ -1327,6 +1395,55 @@ export default {
       } else {
         await this.fetchCVFiles();
       }
+    },
+    
+    // Site Settings Methods
+    async fetchSiteSettings() {
+      this.loadingSiteSettings = true;
+      try {
+        const { data, error } = await supabase
+          .from('site_settings')
+          .select('*')
+          .eq('key', 'site_status')
+          .single();
+
+        if (error) {
+          console.error('Error fetching site settings:', error);
+          // Use defaults
+          return;
+        }
+
+        if (data && data.value) {
+          this.siteSettings.is_public = data.value.is_public ?? true;
+          this.siteSettings.maintenance_message = data.value.maintenance_message || 'Website is currently under development. Please check back soon!';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+      this.loadingSiteSettings = false;
+    },
+    async saveSiteSettings() {
+      this.savingSiteSettings = true;
+      try {
+        const { error } = await supabase
+          .from('site_settings')
+          .upsert({
+            key: 'site_status',
+            value: {
+              is_public: this.siteSettings.is_public,
+              maintenance_message: this.siteSettings.maintenance_message
+            }
+          }, { onConflict: 'key' });
+
+        if (error) {
+          alert('Error saving settings: ' + error.message);
+        } else {
+          alert('Settings saved successfully!');
+        }
+      } catch (error) {
+        alert('Error saving settings: ' + error.message);
+      }
+      this.savingSiteSettings = false;
     }
   }
 }
@@ -1963,6 +2080,119 @@ export default {
 
 .btn-add-skill:hover {
   background: #059669;
+}
+
+/* Site Settings */
+.site-settings-editor {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.toggle-setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.toggle-setting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+}
+
+.toggle-info h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.toggle-info p {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 32px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 24px;
+  width: 24px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider {
+  background-color: #22c55e;
+}
+
+input:checked + .slider:before {
+  transform: translateX(28px);
+}
+
+.toggle-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.status-online {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-online i {
+  color: #22c55e;
+}
+
+.status-maintenance {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-maintenance i {
+  color: #f59e0b;
 }
 
 .content-section {

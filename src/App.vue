@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <SiteStatusChecker />
     <Navbar />
     <DarkModeWarning />
     <!-- <MaintenanceTicker /> -->
@@ -22,6 +23,7 @@ import Footer from '@/components/Footer.vue';
 import MobileNotice from '@/components/MobileNotice.vue';
 import FloatingActionButton from '@/components/FloatingActionButton.vue';
 import DarkModeWarning from '@/components/DarkModeWarning.vue';
+import SiteStatusChecker from '@/components/SiteStatusChecker.vue';
 // import MaintenanceTicker from '@/components/MaintenanceTicker.vue'; // <-- Impor komponen
 
 export default {
@@ -32,7 +34,7 @@ export default {
     MobileNotice,
     FloatingActionButton,
     DarkModeWarning,
-    // MaintenanceTicker
+    SiteStatusChecker
   }
 }
 </script>
