@@ -43,6 +43,7 @@ export default {
         menubar: this.menubar,
         branding: false,
         statusbar: true,
+        license_key: 'gpl', // Use GPL license (self-hosted, no API key needed)
         plugins: [
           'advlist',
           'autolink',
