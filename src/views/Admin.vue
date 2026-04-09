@@ -878,7 +878,8 @@ export default {
             }
             
             if (this.siteContent[page] && this.siteContent[page][section]) {
-              this.$set(this.siteContent[page][section], key, value);
+              // Vue 3: Direct assignment (no this.$set needed)
+              this.siteContent[page][section][key] = value;
             }
           });
           
@@ -897,7 +898,8 @@ export default {
       this.loadingSiteContent = false;
     },
     toggleSection(section) {
-      this.$set(this.expandedSections, section, !this.expandedSections[section]);
+      // Vue 3: Direct assignment
+      this.expandedSections[section] = !this.expandedSections[section];
     },
     async saveAllSiteContent() {
       this.savingSiteContent = true;
