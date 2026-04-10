@@ -131,7 +131,7 @@ export default {
           link: 'https://www.linkedin.com/in/zhafran-hafizh-izdihar-riyadi-01b940223/',
           linkText: 'View LinkedIn Profile',
           linkIcon: 'fab fa-linkedin',
-          stats: '300+ Professional connections'
+          stats: '500+ Professional connections'
         },
         {
           id: 3,
