@@ -384,7 +384,7 @@ export default {
 
 .page-subtitle {
   font-size: 1.25rem;
-  color: #e0e0e0;
+  color: #374151;
   margin-bottom: 48px;
   line-height: 1.7;
   max-width: 680px;
