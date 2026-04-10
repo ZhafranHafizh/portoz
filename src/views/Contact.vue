@@ -143,17 +143,6 @@ export default {
           linkText: 'Explore GitHub Profile',
           linkIcon: 'fab fa-github',
           stats: '30+ Public repositories'
-        },
-        {
-          // id: 4,
-          // title: 'WhatsApp',
-          // description: 'For quick questions, casual conversations, and immediate collaboration discussions.',
-          // icon: 'fab fa-whatsapp',
-          // iconClass: 'whatsapp',
-          // link: 'https://wa.me/',
-          // linkText: 'Start WhatsApp Chat',
-          // linkIcon: 'fab fa-whatsapp',
-          // stats: 'Available during business hours'
         }
       ]
     };
