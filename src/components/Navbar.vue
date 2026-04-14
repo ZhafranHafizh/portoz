@@ -15,10 +15,16 @@
       <li><router-link to="/gallery" @click="closeMenu">Gallery</router-link></li>
       <!-- <li><router-link to="/analytics" @click="closeMenu">Analytics</router-link></li> -->
       <li><router-link to="/contact" @click="closeMenu">Contact</router-link></li>
+      <!-- View mode toggle inside mobile menu -->
+      <li class="mobile-view-toggle">
+        <ViewModeToggle />
+      </li>
     </ul>
     <div class="nav-actions">
       <!-- <ViewCounter :compact="true" /> -->
-      <ViewModeToggle />
+      <div class="desktop-view-toggle">
+        <ViewModeToggle />
+      </div>
       <DarkModeToggle />
     </div>
   </nav>
@@ -149,6 +155,15 @@ export default {
   margin-left: 20px;
 }
 
+/* Hide mobile toggle on desktop, show desktop toggle */
+.mobile-view-toggle {
+  display: none;
+}
+
+.desktop-view-toggle {
+  display: flex;
+}
+
 .nav-links li {
   margin-left: 30px; /* Jarak antar link lebih besar */
 }
@@ -251,6 +266,20 @@ export default {
   }
   .nav-actions {
     margin-left: 0;
+  }
+  /* Hide desktop toggle, show mobile toggle in menu */
+  .desktop-view-toggle {
+    display: none;
+  }
+  .mobile-view-toggle {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .dark-theme .mobile-view-toggle {
+    border-top-color: rgba(255, 255, 255, 0.08);
   }
   .hamburger {
     display: flex;
