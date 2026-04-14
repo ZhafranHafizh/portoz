@@ -23,16 +23,26 @@
       <button class="back-to-top" @click="scrollToTop" title="Back to top">
         <i class="fas fa-arrow-up"></i>
       </button>
+      
+      <!-- Back to Tab Mode button -->
+      <button class="back-to-tab" @click="switchToTabMode" title="Back to Tab View">
+        <i class="fas fa-th-large"></i>
+      </button>
     </div>
   </nav>
 </template>
 
 <script>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useViewMode } from '@/composables/useViewMode'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'AnchorNavigation',
   setup() {
+    const { switchToTab } = useViewMode()
+    const router = useRouter()
+    
     const activeSection = ref('section-home')
     const isVisible = ref(false)
     const hasScrolled = ref(false)
@@ -65,6 +75,11 @@ export default {
 
     const scrollToTop = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
+    const switchToTabMode = () => {
+      switchToTab()
+      router.push('/')
     }
 
     const setupIntersectionObserver = () => {
@@ -151,7 +166,8 @@ export default {
       hasScrolled,
       sections,
       scrollToSection,
-      scrollToTop
+      scrollToTop,
+      switchToTabMode
     }
   }
 }
@@ -299,6 +315,38 @@ export default {
 
 :global(body.dark-theme) .back-to-top:hover {
   background: rgba(251, 146, 60, 0.2);
+}
+
+/* Back to Tab Mode button */
+.back-to-tab {
+  margin-top: 8px;
+  width: 100%;
+  padding: 8px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 20px;
+  color: #10b981;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+:global(body.dark-theme) .back-to-tab {
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  color: #34d399;
+}
+
+.back-to-tab:hover {
+  background: rgba(16, 185, 129, 0.25);
+  transform: translateY(-2px);
+}
+
+:global(body.dark-theme) .back-to-tab:hover {
+  background: rgba(52, 211, 153, 0.2);
 }
 
 /* Responsive: hide on smaller screens */
