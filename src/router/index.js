@@ -43,6 +43,15 @@ const routes = [
     path: '/one-page',
     name: 'OnePage',
     component: () => import('../views/OnePageView.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import('../views/ErrorPage.vue'),
+    props: (route) => ({
+      errorCode: '404',
+      customMessage: ''
+    })
   }
   // Analytics route disabled (sudah benar)
 ]
