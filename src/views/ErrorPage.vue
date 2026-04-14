@@ -106,7 +106,7 @@ export default {
       }
     }
 
-    const handleImageError = (e) => {
+    const handleImageError = () => {
       console.error('Failed to load error animation SVG')
     }
 

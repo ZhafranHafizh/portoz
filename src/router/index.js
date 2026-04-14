@@ -48,7 +48,7 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/ErrorPage.vue'),
-    props: (route) => ({
+    props: () => ({
       errorCode: '404',
       customMessage: ''
     })
