@@ -38,6 +38,11 @@ const routes = [
     path: '/admin',
     name: 'Admin',
     component: () => import('../views/Admin.vue')
+  },
+  {
+    path: '/one-page',
+    name: 'OnePage',
+    component: () => import('../views/OnePageView.vue')
   }
   // Analytics route disabled (sudah benar)
 ]

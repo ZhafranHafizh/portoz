@@ -1,19 +1,41 @@
 <template>
   <div id="app">
-    <SiteStatusChecker :current-route="currentRoute" />
-    <Navbar />
-    <DarkModeWarning />
-    <!-- <MaintenanceTicker /> -->
-    <main class="content">
-      <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
-          <component :is="Component" />
-        </transition>
-      </router-view>
-    </main>
-    <Footer />
-    <MobileNotice />
-    <FloatingActionButton />
+    <!-- One Page View Mode -->
+    <template v-if="isOnePageRoute">
+      <SiteStatusChecker :current-route="currentRoute" />
+      <NavbarOnePage />
+      <DarkModeWarning />
+      <main class="content one-page-content">
+        <router-view v-slot="{ Component }">
+          <transition name="fade" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </main>
+      <AnchorNavigation />
+      <FloatingBackToTab />
+      <Footer />
+      <MobileNotice />
+      <FloatingActionButton />
+    </template>
+    
+    <!-- Tab View Mode (Default) -->
+    <template v-else>
+      <SiteStatusChecker :current-route="currentRoute" />
+      <Navbar />
+      <DarkModeWarning />
+      <!-- <MaintenanceTicker /> -->
+      <main class="content">
+        <router-view v-slot="{ Component }">
+          <transition name="fade" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </main>
+      <Footer />
+      <MobileNotice />
+      <FloatingActionButton />
+    </template>
   </div>
 </template>
 
@@ -24,6 +46,8 @@ import MobileNotice from '@/components/MobileNotice.vue';
 import FloatingActionButton from '@/components/FloatingActionButton.vue';
 import DarkModeWarning from '@/components/DarkModeWarning.vue';
 import SiteStatusChecker from '@/components/SiteStatusChecker.vue';
+import AnchorNavigation from '@/components/AnchorNavigation.vue';
+import FloatingBackToTab from '@/components/FloatingBackToTab.vue';
 // import MaintenanceTicker from '@/components/MaintenanceTicker.vue'; // <-- Impor komponen
 
 export default {
@@ -32,6 +56,11 @@ export default {
     return {
       currentRoute: ''
     };
+  },
+  computed: {
+    isOnePageRoute() {
+      return this.$route.name === 'OnePage';
+    }
   },
   watch: {
     $route: {
@@ -47,7 +76,9 @@ export default {
     MobileNotice,
     FloatingActionButton,
     DarkModeWarning,
-    SiteStatusChecker
+    SiteStatusChecker,
+    AnchorNavigation,
+    FloatingBackToTab
   }
 }
 </script>
@@ -64,6 +95,13 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0; /* State awal (masuk) dan akhir (keluar) */
+}
+
+/* One Page Content Styling */
+.one-page-content {
+  padding: 0;
+  margin: 0;
+  min-height: calc(100vh - 80px);
 }
 
 /* ------------------------------------------- */

@@ -18,6 +18,7 @@
     </ul>
     <div class="nav-actions">
       <!-- <ViewCounter :compact="true" /> -->
+      <ViewModeToggle />
       <DarkModeToggle />
     </div>
   </nav>
@@ -25,12 +26,14 @@
 
 <script>
 import DarkModeToggle from '@/components/DarkModeToggle.vue'
+import ViewModeToggle from '@/components/ViewModeToggle.vue'
 // import ViewCounter from '@/components/ViewCounter.vue'  // Disabled view counter
 
 export default {
   name: 'TheNavbar',
   components: {
-    DarkModeToggle
+    DarkModeToggle,
+    ViewModeToggle
     // ViewCounter  // Disabled view counter
   },
   data() {
