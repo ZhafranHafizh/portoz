@@ -40,6 +40,7 @@
             <strong> New! One Page View</strong>
             <p v-if="!isMobile">Use this toggle to switch between <b>Tab</b> and <b>One Page</b> view mode.</p>
             <p v-else>Open the <b>menu ☰</b> to find the view mode toggle and try <b>One Page</b> view!</p>
+            <button class="tooltip-action" @click="onTryNowClicked">Try now! &rarr;</button>
           </div>
           <button class="tooltip-close" @click="dismissTooltip" aria-label="Close">
             <i class="fas fa-times"></i>
@@ -56,6 +57,7 @@
 <script>
 import DarkModeToggle from '@/components/DarkModeToggle.vue'
 import ViewModeToggle from '@/components/ViewModeToggle.vue'
+import { useViewMode } from '@/composables/useViewMode'
 // import ViewCounter from '@/components/ViewCounter.vue'  // Disabled view counter
 
 export default {
@@ -64,6 +66,10 @@ export default {
     DarkModeToggle,
     ViewModeToggle
     // ViewCounter  // Disabled view counter
+  },
+  setup() {
+    const { switchToOnePage } = useViewMode()
+    return { switchToOnePage }
   },
   data() {
     return {
@@ -138,6 +144,11 @@ export default {
         clearTimeout(this.tooltipTimer);
         this.tooltipTimer = null;
       }
+    },
+    onTryNowClicked() {
+      this.dismissTooltip();
+      this.switchToOnePage();
+      this.$router.push('/one-page');
     }
   }
 }
@@ -539,6 +550,29 @@ export default {
 
 .dark-theme .tooltip-text b {
   color: #fb923c;
+}
+
+.tooltip-action {
+  margin-top: 8px;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.tooltip-action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+.dark-theme .tooltip-action {
+  background: linear-gradient(135deg, #fb923c, #ea580c);
 }
 
 .tooltip-close {
