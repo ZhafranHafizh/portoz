@@ -13,7 +13,6 @@
         </router-view>
       </main>
       <AnchorNavigation />
-      <FloatingBackToTab />
       <Footer />
       <MobileNotice />
       <FloatingActionButton />
@@ -47,7 +46,6 @@ import FloatingActionButton from '@/components/FloatingActionButton.vue';
 import DarkModeWarning from '@/components/DarkModeWarning.vue';
 import SiteStatusChecker from '@/components/SiteStatusChecker.vue';
 import AnchorNavigation from '@/components/AnchorNavigation.vue';
-import FloatingBackToTab from '@/components/FloatingBackToTab.vue';
 // import MaintenanceTicker from '@/components/MaintenanceTicker.vue'; // <-- Impor komponen
 
 export default {
@@ -77,8 +75,7 @@ export default {
     FloatingActionButton,
     DarkModeWarning,
     SiteStatusChecker,
-    AnchorNavigation,
-    FloatingBackToTab
+    AnchorNavigation
   }
 }
 </script>

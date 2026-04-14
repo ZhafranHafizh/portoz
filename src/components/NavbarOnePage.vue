@@ -13,6 +13,10 @@
     </div>
     
     <div class="nav-actions">
+      <button class="back-to-tab-btn" @click="switchToTabMode" title="Back to Tab View">
+        <i class="fas fa-exchange-alt"></i>
+        <span>Tab Mode</span>
+      </button>
       <ViewModeToggle />
       <DarkModeToggle />
     </div>
@@ -22,6 +26,8 @@
 <script>
 import DarkModeToggle from '@/components/DarkModeToggle.vue'
 import ViewModeToggle from '@/components/ViewModeToggle.vue'
+import { useViewMode } from '@/composables/useViewMode'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'NavbarOnePage',
@@ -32,6 +38,19 @@ export default {
   data() {
     return {
       activeSection: 'section-home'
+    }
+  },
+  setup() {
+    const { switchToTab } = useViewMode()
+    const router = useRouter()
+    
+    const switchToTabMode = () => {
+      switchToTab()
+      router.push('/')
+    }
+    
+    return {
+      switchToTabMode
     }
   },
   mounted() {
@@ -159,6 +178,46 @@ export default {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+/* Back to Tab Button - Desktop Only */
+.back-to-tab-btn {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+  white-space: nowrap;
+}
+
+.back-to-tab-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+}
+
+.back-to-tab-btn i {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+}
+
+.back-to-tab-btn:hover i {
+  transform: rotate(180deg);
+}
+
+/* Show back to tab button only on desktop */
+@media (min-width: 1025px) {
+  .back-to-tab-btn {
+    display: flex;
+  }
 }
 
 @media (max-width: 1024px) {
