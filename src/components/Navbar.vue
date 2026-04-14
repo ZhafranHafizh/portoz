@@ -22,11 +22,34 @@
     </ul>
     <div class="nav-actions">
       <!-- <ViewCounter :compact="true" /> -->
-      <div class="desktop-view-toggle">
+      <div class="desktop-view-toggle" ref="desktopToggle">
         <ViewModeToggle />
       </div>
       <DarkModeToggle />
     </div>
+    
+    <!-- One-time tooltip for new feature -->
+    <Transition name="tooltip-fade">
+      <div v-if="showTooltip" class="feature-tooltip" :class="{ 'mobile': isMobile }">
+        <div class="tooltip-arrow"></div>
+        <div class="tooltip-content">
+          <div class="tooltip-icon">
+            <i class="fas fa-sparkles"></i>
+          </div>
+          <div class="tooltip-text">
+            <strong> New! One Page View</strong>
+            <p v-if="!isMobile">Use this toggle to switch between <b>Tab</b> and <b>One Page</b> view mode.</p>
+            <p v-else>Open the <b>menu ☰</b> to find the view mode toggle and try <b>One Page</b> view!</p>
+          </div>
+          <button class="tooltip-close" @click="dismissTooltip" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="tooltip-progress">
+          <div class="tooltip-progress-bar" :style="{ animationDuration: tooltipDuration + 'ms' }"></div>
+        </div>
+      </div>
+    </Transition>
   </nav>
 </template>
 
@@ -44,7 +67,11 @@ export default {
   },
   data() {
     return {
-      menuOpen: false
+      menuOpen: false,
+      showTooltip: false,
+      isMobile: false,
+      tooltipDuration: 8000,
+      tooltipTimer: null
     }
   },
   mounted() {
@@ -54,9 +81,16 @@ export default {
     this.$router.afterEach(() => {
       this.closeMenu();
     });
+    
+    // Check and show tooltip for new feature
+    this.checkMobile();
+    window.addEventListener('resize', this.checkMobile);
+    this.maybeShowTooltip();
   },
   beforeUnmount() {
     document.removeEventListener('click', this.handleClickOutside);
+    window.removeEventListener('resize', this.checkMobile);
+    if (this.tooltipTimer) clearTimeout(this.tooltipTimer);
   },
   methods: {
     toggleMenu() {
@@ -79,6 +113,30 @@ export default {
         if (navbar && !navbar.contains(event.target)) {
           this.closeMenu();
         }
+      }
+    },
+    checkMobile() {
+      this.isMobile = window.innerWidth <= 768;
+    },
+    maybeShowTooltip() {
+      const shown = localStorage.getItem('portoz_onepage_tooltip_shown');
+      if (!shown) {
+        // Show tooltip after a brief delay for a natural feel
+        setTimeout(() => {
+          this.showTooltip = true;
+          // Auto-dismiss after duration
+          this.tooltipTimer = setTimeout(() => {
+            this.dismissTooltip();
+          }, this.tooltipDuration);
+        }, 1500);
+      }
+    },
+    dismissTooltip() {
+      this.showTooltip = false;
+      localStorage.setItem('portoz_onepage_tooltip_shown', 'true');
+      if (this.tooltipTimer) {
+        clearTimeout(this.tooltipTimer);
+        this.tooltipTimer = null;
       }
     }
   }
@@ -380,5 +438,208 @@ export default {
 
 .brand a:hover {
   transform: translateY(-1px);
+}
+
+/* ============ Feature Tooltip ============ */
+.feature-tooltip {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 60px;
+  z-index: 2000;
+  width: 320px;
+  background: linear-gradient(135deg, #fff9f0, #ffffff);
+  border-radius: 14px;
+  box-shadow: 
+    0 8px 32px rgba(249, 115, 22, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  overflow: hidden;
+  animation: tooltipBounce 0.5s ease;
+}
+
+.dark-theme .feature-tooltip {
+  background: linear-gradient(135deg, #292524, #1c1917);
+  border-color: rgba(251, 146, 60, 0.3);
+  box-shadow:
+    0 8px 32px rgba(251, 146, 60, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Arrow pointing up toward the toggle */
+.tooltip-arrow {
+  position: absolute;
+  top: -8px;
+  right: 40px;
+  width: 16px;
+  height: 16px;
+  background: #fff9f0;
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  border-bottom: none;
+  border-right: none;
+  transform: rotate(45deg);
+}
+
+.dark-theme .tooltip-arrow {
+  background: #292524;
+  border-color: rgba(251, 146, 60, 0.3);
+}
+
+.tooltip-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 16px 12px;
+  position: relative;
+}
+
+.tooltip-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+.tooltip-text {
+  flex: 1;
+}
+
+.tooltip-text strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #1c1917;
+  margin-bottom: 4px;
+}
+
+.dark-theme .tooltip-text strong {
+  color: #fef3c7;
+}
+
+.tooltip-text p {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.dark-theme .tooltip-text p {
+  color: #9ca3af;
+}
+
+.tooltip-text b {
+  color: #f97316;
+  font-weight: 700;
+}
+
+.dark-theme .tooltip-text b {
+  color: #fb923c;
+}
+
+.tooltip-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.06);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 0.7rem;
+  transition: all 0.2s ease;
+}
+
+.dark-theme .tooltip-close {
+  background: rgba(255, 255, 255, 0.08);
+  color: #6b7280;
+}
+
+.tooltip-close:hover {
+  background: rgba(249, 115, 22, 0.15);
+  color: #f97316;
+  transform: scale(1.1);
+}
+
+/* Progress bar */
+.tooltip-progress {
+  height: 3px;
+  background: rgba(249, 115, 22, 0.1);
+}
+
+.dark-theme .tooltip-progress {
+  background: rgba(251, 146, 60, 0.1);
+}
+
+.tooltip-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #f97316, #f59e0b);
+  border-radius: 0 3px 3px 0;
+  animation: progressShrink linear forwards;
+  width: 100%;
+}
+
+.dark-theme .tooltip-progress-bar {
+  background: linear-gradient(90deg, #fb923c, #fbbf24);
+}
+
+/* Mobile positioning */
+.feature-tooltip.mobile {
+  right: 10px;
+  left: 10px;
+  width: auto;
+}
+
+.feature-tooltip.mobile .tooltip-arrow {
+  right: auto;
+  left: 50px;
+}
+
+/* Transition */
+.tooltip-fade-enter-active {
+  animation: tooltipBounce 0.4s ease;
+}
+
+.tooltip-fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.tooltip-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* Keyframes */
+@keyframes tooltipBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  60% {
+    transform: translateY(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes progressShrink {
+  from { width: 100%; }
+  to { width: 0%; }
 }
 </style>
