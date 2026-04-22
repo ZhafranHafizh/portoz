@@ -181,6 +181,11 @@ export default {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
+.brand {
+  flex: 1;
+  min-width: 0;
+}
+
 .brand a {
   color: #333;
   text-decoration: none;
@@ -218,10 +223,12 @@ export default {
 }
 
 .nav-actions {
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 12px;
-  margin-left: 20px;
 }
 
 /* Hide mobile toggle on desktop, show desktop toggle */
