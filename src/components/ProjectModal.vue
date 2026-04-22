@@ -134,6 +134,7 @@
               target="_blank" 
               rel="noopener noreferrer"
               class="action-btn primary"
+              @click="trackClick('project_live', project.title)"
             >
               <i class="fas fa-external-link-alt"></i>
               View Live Project
@@ -144,6 +145,7 @@
               target="_blank" 
               rel="noopener noreferrer"
               class="action-btn secondary"
+              @click="trackClick('project_github', project.title)"
             >
               <i class="fab fa-github"></i>
               View Repository
@@ -154,6 +156,7 @@
               target="_blank" 
               rel="noopener noreferrer"
               class="action-btn figma"
+              @click="trackClick('project_figma', project.title)"
             >
               <i class="fab fa-figma"></i>
               View Design
@@ -259,6 +262,11 @@ export default {
     }
   },
   methods: {
+    trackClick(type, projectTitle) {
+      import('@/services/analytics').then(({ analytics }) => {
+        analytics.trackClick(`${type}_${projectTitle.replace(/\s+/g, '-').toLowerCase()}`);
+      });
+    },
     closeModal() {
       this.$emit('close');
     },

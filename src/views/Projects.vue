@@ -253,7 +253,9 @@ export default {
     },
     trackDownload() {
       console.log('CV downloaded at:', new Date().toISOString());
-      // You can add Google Analytics or other tracking here
+      import('@/services/analytics').then(({ analytics }) => {
+        analytics.trackClick('download_cv');
+      });
     },
     getPrimaryCategory(project) {
       // Returns the first category if it's an array, or the category if it's a string

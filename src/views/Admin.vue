@@ -62,6 +62,12 @@
           <i class="fas fa-file-pdf"></i> CV Manager
         </button>
         <button 
+          :class="['tab-btn', { active: activeTab === 'analytics' }]"
+          @click="activeTab = 'analytics'"
+        >
+          <i class="fas fa-chart-line"></i> Analytics
+        </button>
+        <button 
           :class="['tab-btn', { active: activeTab === 'sitesettings' }]"
           @click="activeTab = 'sitesettings'"
         >
@@ -70,6 +76,80 @@
       </div>
 
       <div class="cms-content">
+        <!-- Analytics Tab -->
+        <div v-if="activeTab === 'analytics'">
+          <div class="tab-header">
+            <h2>Visitor Analytics</h2>
+            <button @click="fetchAnalytics" class="btn btn-secondary"><i class="fas fa-sync"></i> Refresh Data</button>
+          </div>
+
+          <div v-if="loadingAnalytics" class="loading-state">Loading analytics data...</div>
+
+          <div v-else class="analytics-dashboard">
+            <div class="analytics-summary">
+              <div class="stat-card">
+                <h3>Total Page Views</h3>
+                <p class="stat-value">{{ analyticsStats.totalViews }}</p>
+              </div>
+              <div class="stat-card">
+                <h3>Total Button Clicks</h3>
+                <p class="stat-value">{{ analyticsStats.totalClicks }}</p>
+              </div>
+              <div class="stat-card">
+                <h3>Unique Visitors (IPs)</h3>
+                <p class="stat-value">{{ analyticsStats.uniqueVisitors }}</p>
+              </div>
+            </div>
+
+            <div class="analytics-grid">
+              <div class="analytics-box">
+                <h3>Top Visited Pages</h3>
+                <ul class="analytics-list">
+                  <li v-for="(count, page) in analyticsStats.topPages" :key="page">
+                    <span class="label">{{ page }}</span>
+                    <span class="count">{{ count }} views</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="analytics-box">
+                <h3>Top Button Clicks</h3>
+                <ul class="analytics-list">
+                  <li v-for="(count, element) in analyticsStats.topClicks" :key="element">
+                    <span class="label">{{ element }}</span>
+                    <span class="count">{{ count }} clicks</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="analytics-box full-width">
+                <h3>Visitor Locations</h3>
+                <table class="projects-table">
+                  <thead>
+                    <tr>
+                      <th>City</th>
+                      <th>Region</th>
+                      <th>Country</th>
+                      <th>Visits</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="loc in analyticsStats.locations" :key="loc.id">
+                      <td>{{ loc.city || 'Unknown' }}</td>
+                      <td>{{ loc.region || '-' }}</td>
+                      <td>{{ loc.country || '-' }}</td>
+                      <td>{{ loc.count }}</td>
+                    </tr>
+                    <tr v-if="!analyticsStats.locations || analyticsStats.locations.length === 0">
+                      <td colspan="4" class="empty-state">No location data available yet.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Projects Tab -->
         <div v-if="activeTab === 'projects'">
           <div class="tab-header">
@@ -745,6 +825,11 @@ export default {
       uploadingProfileImage: false,
       uploadingAboutImage: false,
       siteContentError: '',
+      
+      // Analytics
+      loadingAnalytics: false,
+      analyticsEvents: [],
+      
       siteContent: {
         home: {
           hero: {
@@ -805,6 +890,55 @@ export default {
       } catch (e) {
         return [];
       }
+    },
+    analyticsStats() {
+      if (!this.analyticsEvents || this.analyticsEvents.length === 0) {
+        return { totalViews: 0, totalClicks: 0, uniqueVisitors: 0, topPages: {}, topClicks: {}, locations: [] };
+      }
+
+      const views = this.analyticsEvents.filter(e => e.event_type === 'page_view');
+      const clicks = this.analyticsEvents.filter(e => e.event_type === 'click');
+      const uniqueIps = new Set(this.analyticsEvents.map(e => e.ip_address).filter(Boolean));
+
+      // Top Pages
+      const topPages = {};
+      views.forEach(v => {
+        const p = v.page_url || 'Unknown';
+        topPages[p] = (topPages[p] || 0) + 1;
+      });
+
+      // Top Clicks
+      const topClicks = {};
+      clicks.forEach(c => {
+        const el = c.element_id || 'Unknown';
+        topClicks[el] = (topClicks[el] || 0) + 1;
+      });
+
+      // Locations
+      const locMap = {};
+      this.analyticsEvents.forEach(e => {
+        if (!e.city && !e.country) return;
+        const key = `${e.city || 'Unknown'}|${e.region || '-'}|${e.country || '-'}`;
+        if (!locMap[key]) {
+          locMap[key] = { city: e.city, region: e.region, country: e.country, count: 0, id: key };
+        }
+        locMap[key].count++;
+      });
+      const locations = Object.values(locMap).sort((a, b) => b.count - a.count).slice(0, 10); // Top 10
+
+      // Sort Top Pages and Clicks for display
+      const sortObject = obj => Object.fromEntries(
+        Object.entries(obj).sort(([,a],[,b]) => b - a).slice(0, 5)
+      );
+
+      return {
+        totalViews: views.length,
+        totalClicks: clicks.length,
+        uniqueVisitors: uniqueIps.size,
+        topPages: sortObject(topPages),
+        topClicks: sortObject(topClicks),
+        locations
+      };
     }
   },
   mounted() {
@@ -816,6 +950,7 @@ export default {
         this.fetchSiteContent();
         this.fetchCVFiles();
         this.fetchSiteSettings();
+        this.fetchAnalytics();
       }
     });
 
@@ -827,6 +962,7 @@ export default {
         this.fetchSiteContent();
         this.fetchCVFiles();
         this.fetchSiteSettings();
+        this.fetchAnalytics();
       }
     });
   },
@@ -876,6 +1012,25 @@ export default {
       await supabase.auth.signOut();
       this.projects = [];
       this.galleryImages = [];
+      this.analyticsEvents = [];
+    },
+    async fetchAnalytics() {
+      this.loadingAnalytics = true;
+      try {
+        const { data, error } = await supabase
+          .from('analytics_events')
+          .select('*')
+          .order('created_at', { ascending: false })
+          // Limit to last 1000 events for performance in simple dash
+          .limit(1000);
+
+        if (error) throw error;
+        this.analyticsEvents = data || [];
+      } catch (error) {
+        console.error('Error fetching analytics:', error);
+      } finally {
+        this.loadingAnalytics = false;
+      }
     },
     async fetchProjects() {
       this.loading = true;
@@ -2483,5 +2638,95 @@ input:checked + .slider:before {
 
 .gallery-remove-btn:hover {
   background: rgba(220, 38, 38, 1);
+}
+
+/* Analytics Dashboard Styles */
+.analytics-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.analytics-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.stat-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.analytics-box {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.analytics-box.full-width {
+  grid-column: 1 / -1;
+}
+
+.analytics-box h3 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  color: #111827;
+}
+
+.analytics-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.analytics-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.analytics-list li:last-child {
+  border-bottom: none;
+}
+
+.analytics-list .label {
+  font-weight: 500;
+  color: #374151;
+}
+
+.analytics-list .count {
+  color: #6b7280;
+  font-size: 14px;
+  background: #f3f4f6;
+  padding: 2px 8px;
+  border-radius: 12px;
 }
 </style>

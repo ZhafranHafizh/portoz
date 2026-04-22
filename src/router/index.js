@@ -56,16 +56,25 @@ const routes = [
   // Analytics route disabled (sudah benar)
 ]
 
+import { analytics } from '@/services/analytics'
+
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    // (Kode scroll behavior Anda sudah bagus, tidak perlu diubah)
     if (savedPosition) {
       return savedPosition
     } else {
       return { top: 0, behavior: 'smooth' }
     }
+  }
+})
+
+// Analytics tracking
+router.afterEach((to) => {
+  // Ignore admin paths for public analytics
+  if (!to.path.startsWith('/admin')) {
+    analytics.trackPageView(to.path);
   }
 })
 
