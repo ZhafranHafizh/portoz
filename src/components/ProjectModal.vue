@@ -36,12 +36,17 @@
             <div class="gallery-container" @mouseenter="onGalleryMouseEnter" @mouseleave="onGalleryMouseLeave">
               <!-- Main Image -->
               <div class="gallery-main">
-                <img 
-                  :src="allImages[activeImageIndex]" 
-                  :alt="project.title + ' - Image ' + (activeImageIndex + 1)" 
-                  class="gallery-main-img"
-                  @click="openLightbox"
-                />
+                <div class="gallery-main-wrapper">
+                  <transition :name="slideDirection" mode="out-in">
+                    <img 
+                      :key="activeImageIndex"
+                      :src="allImages[activeImageIndex]" 
+                      :alt="project.title + ' - Image ' + (activeImageIndex + 1)" 
+                      class="gallery-main-img"
+                      @click="openLightbox"
+                    />
+                  </transition>
+                </div>
                 <!-- Navigation Arrows -->
                 <button v-if="allImages.length > 1" class="gallery-nav gallery-nav-prev" @click="prevImage">
                   <i class="fas fa-chevron-left"></i>
@@ -200,7 +205,8 @@ export default {
       activeImageIndex: 0,
       lightboxOpen: false,
       autoSlideTimer: null,
-      isGalleryHovered: false
+      isGalleryHovered: false,
+      slideDirection: 'slide-right'
     };
   },
   computed: {
@@ -270,11 +276,13 @@ export default {
     },
     prevImage() {
       if (this.allImages.length <= 1) return;
+      this.slideDirection = 'slide-left';
       this.activeImageIndex = (this.activeImageIndex - 1 + this.allImages.length) % this.allImages.length;
       this.resetAutoSlide();
     },
     nextImage() {
       if (this.allImages.length <= 1) return;
+      this.slideDirection = 'slide-right';
       this.activeImageIndex = (this.activeImageIndex + 1) % this.allImages.length;
       this.resetAutoSlide();
     },
@@ -444,6 +452,11 @@ export default {
   cursor: zoom-in;
 }
 
+.gallery-main-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
 .gallery-main-img {
   width: 100%;
   height: auto;
@@ -451,7 +464,32 @@ export default {
   display: block;
   object-fit: contain;
   background: #f5f5f4;
-  transition: opacity 0.25s ease;
+}
+
+/* Slide Transitions */
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-right-enter-from {
+  opacity: 0;
+  transform: translateX(60px);
+}
+.slide-right-leave-to {
+  opacity: 0;
+  transform: translateX(-60px);
+}
+
+.slide-left-enter-from {
+  opacity: 0;
+  transform: translateX(-60px);
+}
+.slide-left-leave-to {
+  opacity: 0;
+  transform: translateX(60px);
 }
 
 /* Navigation Arrows */
