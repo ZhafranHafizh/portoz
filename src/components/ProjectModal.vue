@@ -33,7 +33,7 @@
 
           <!-- Image Gallery Section (Tokopedia-style) -->
           <div class="detail-section modal-image-section" v-if="allImages.length > 0">
-            <div class="gallery-container">
+            <div class="gallery-container" @mouseenter="onGalleryMouseEnter" @mouseleave="onGalleryMouseLeave">
               <!-- Main Image -->
               <div class="gallery-main">
                 <img 
@@ -198,7 +198,9 @@ export default {
   data() {
     return {
       activeImageIndex: 0,
-      lightboxOpen: false
+      lightboxOpen: false,
+      autoSlideTimer: null,
+      isGalleryHovered: false
     };
   },
   computed: {
@@ -228,6 +230,7 @@ export default {
   unmounted() {
     document.removeEventListener('keydown', this.handleKeydown);
     document.body.style.overflow = '';
+    this.stopAutoSlide();
   },
   watch: {
     isOpen(newVal) {
@@ -235,8 +238,17 @@ export default {
         document.body.style.overflow = 'hidden';
         this.activeImageIndex = 0;
         this.lightboxOpen = false;
+        this.startAutoSlide();
       } else {
         document.body.style.overflow = '';
+        this.stopAutoSlide();
+      }
+    },
+    lightboxOpen(val) {
+      if (val) {
+        this.stopAutoSlide();
+      } else {
+        this.startAutoSlide();
       }
     }
   },
@@ -259,10 +271,38 @@ export default {
     prevImage() {
       if (this.allImages.length <= 1) return;
       this.activeImageIndex = (this.activeImageIndex - 1 + this.allImages.length) % this.allImages.length;
+      this.resetAutoSlide();
     },
     nextImage() {
       if (this.allImages.length <= 1) return;
       this.activeImageIndex = (this.activeImageIndex + 1) % this.allImages.length;
+      this.resetAutoSlide();
+    },
+    startAutoSlide() {
+      this.stopAutoSlide();
+      if (this.allImages.length <= 1) return;
+      this.autoSlideTimer = setInterval(() => {
+        if (!this.isGalleryHovered && !this.lightboxOpen) {
+          this.activeImageIndex = (this.activeImageIndex + 1) % this.allImages.length;
+        }
+      }, 4000);
+    },
+    stopAutoSlide() {
+      if (this.autoSlideTimer) {
+        clearInterval(this.autoSlideTimer);
+        this.autoSlideTimer = null;
+      }
+    },
+    resetAutoSlide() {
+      if (this.isOpen && !this.lightboxOpen) {
+        this.startAutoSlide();
+      }
+    },
+    onGalleryMouseEnter() {
+      this.isGalleryHovered = true;
+    },
+    onGalleryMouseLeave() {
+      this.isGalleryHovered = false;
     },
     openLightbox() {
       this.lightboxOpen = true;
