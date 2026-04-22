@@ -547,10 +547,23 @@
                 <textarea v-model="projectForm.description" class="form-input" rows="3"></textarea>
               </div>
               <div class="form-group">
-                <label>Image Upload (Bucket: images) *</label>
+                <label>Cover Image (Bucket: images) *</label>
                 <input type="file" @change="handleProjectFileUpload" class="form-input" accept="image/*" />
                 <p v-if="uploadingProject" class="status-info">Uploading image...</p>
                 <img v-if="projectForm.image_url" :src="projectForm.image_url" class="preview-img" alt="preview" />
+              </div>
+              <div class="form-group full-width">
+                <label>Additional Images (Gallery)</label>
+                <input type="file" @change="handleProjectGalleryUpload" class="form-input" accept="image/*" multiple />
+                <p v-if="uploadingProjectGallery" class="status-info">Uploading images...</p>
+                <div v-if="projectForm.images && projectForm.images.length > 0" class="gallery-preview-grid">
+                  <div v-for="(img, idx) in projectForm.images" :key="idx" class="gallery-preview-item">
+                    <img :src="img" alt="gallery preview" />
+                    <button type="button" class="gallery-remove-btn" @click="removeProjectGalleryImage(idx)" title="Remove image">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label>Live Link</label>
@@ -711,6 +724,7 @@ export default {
       loading: false,
       savingProject: false,
       uploadingProject: false,
+      uploadingProjectGallery: false,
       projects: [],
       showProjectModal: false,
       isEditingProject: false,
@@ -823,6 +837,7 @@ export default {
         title: '',
         description: '',
         image_url: '',
+        images: [],
         link: '',
         github: '',
         figma: '',
@@ -916,6 +931,40 @@ export default {
       this.projectForm.image_url = publicUrl;
       this.uploadingProject = false;
     },
+    async handleProjectGalleryUpload(event) {
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
+
+      this.uploadingProjectGallery = true;
+      if (!Array.isArray(this.projectForm.images)) {
+        this.projectForm.images = [];
+      }
+
+      for (const file of files) {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Math.random()}.${fileExt}`;
+        const filePath = `project-images/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('images')
+          .upload(filePath, file);
+
+        if (uploadError) {
+          alert('Error uploading image: ' + uploadError.message);
+          continue;
+        }
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('images')
+          .getPublicUrl(filePath);
+
+        this.projectForm.images.push(publicUrl);
+      }
+      this.uploadingProjectGallery = false;
+    },
+    removeProjectGalleryImage(index) {
+      this.projectForm.images.splice(index, 1);
+    },
     async handleGalleryFileUpload(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -953,7 +1002,8 @@ export default {
         ...project,
         tags: Array.isArray(project.tags) ? project.tags.join(', ') : project.tags || '',
         category: Array.isArray(project.category) ? project.category.join(', ') : project.category || '',
-        features: Array.isArray(project.features) ? project.features.join('\n') : project.features || ''
+        features: Array.isArray(project.features) ? project.features.join('\n') : project.features || '',
+        images: Array.isArray(project.images) ? [...project.images] : []
       };
       this.showProjectModal = true;
     },
@@ -991,6 +1041,7 @@ export default {
         title: this.projectForm.title,
         description: this.projectForm.description,
         image_url: this.projectForm.image_url,
+        images: Array.isArray(this.projectForm.images) ? this.projectForm.images : [],
         link: this.projectForm.link,
         github: this.projectForm.github,
         figma: this.projectForm.figma,
@@ -2387,5 +2438,50 @@ input:checked + .slider:before {
   .editor-panel {
     max-height: none;
   }
+}
+
+/* Gallery Preview Grid for Admin */
+.gallery-preview-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.gallery-preview-item {
+  position: relative;
+  width: 100px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #e5e7eb;
+}
+
+.gallery-preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(220, 38, 38, 0.85);
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  font-size: 10px;
+  transition: background 0.2s;
+}
+
+.gallery-remove-btn:hover {
+  background: rgba(220, 38, 38, 1);
 }
 </style>

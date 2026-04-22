@@ -203,7 +203,8 @@ export default {
         // Map snake_case from DB to camelCase for existing template
         this.projectsData = data.map(item => ({
           ...item,
-          imageUrl: item.image_url // map image_url to imageUrl
+          imageUrl: item.image_url, // map image_url to imageUrl
+          images: Array.isArray(item.images) ? item.images : [] // map images array
         }));
 
         this.initAnimations();

@@ -31,8 +31,48 @@
             <p class="modal-description">{{ project.description }}</p>
           </div>
 
-          <!-- Project Image in Middle -->
-          <div class="detail-section modal-image-section">
+          <!-- Image Gallery Section (Tokopedia-style) -->
+          <div class="detail-section modal-image-section" v-if="allImages.length > 0">
+            <div class="gallery-container">
+              <!-- Main Image -->
+              <div class="gallery-main">
+                <img 
+                  :src="allImages[activeImageIndex]" 
+                  :alt="project.title + ' - Image ' + (activeImageIndex + 1)" 
+                  class="gallery-main-img"
+                  @click="openLightbox"
+                />
+                <!-- Navigation Arrows -->
+                <button v-if="allImages.length > 1" class="gallery-nav gallery-nav-prev" @click="prevImage">
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button v-if="allImages.length > 1" class="gallery-nav gallery-nav-next" @click="nextImage">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <!-- Counter -->
+                <div v-if="allImages.length > 1" class="gallery-counter">
+                  {{ activeImageIndex + 1 }} / {{ allImages.length }}
+                </div>
+              </div>
+
+              <!-- Thumbnail Strip -->
+              <div v-if="allImages.length > 1" class="gallery-thumbs">
+                <div class="gallery-thumbs-track">
+                  <button
+                    v-for="(img, idx) in allImages"
+                    :key="idx"
+                    :class="['gallery-thumb', { active: idx === activeImageIndex }]"
+                    @click="activeImageIndex = idx"
+                  >
+                    <img :src="img" :alt="'Thumbnail ' + (idx + 1)" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Single image fallback -->
+          <div v-else-if="project.imageUrl" class="detail-section modal-image-section">
             <img :src="project.imageUrl" :alt="project.title" class="modal-image" />
           </div>
 
@@ -121,6 +161,23 @@
         </div>
       </div>
     </div>
+
+    <!-- Lightbox -->
+    <div v-if="lightboxOpen" class="lightbox-overlay" @click="closeLightbox">
+      <button class="lightbox-close" @click="closeLightbox">
+        <i class="fas fa-times"></i>
+      </button>
+      <img :src="allImages[activeImageIndex]" class="lightbox-img" @click.stop />
+      <button v-if="allImages.length > 1" class="lightbox-nav lightbox-prev" @click.stop="prevImage">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button v-if="allImages.length > 1" class="lightbox-nav lightbox-next" @click.stop="nextImage">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+      <div v-if="allImages.length > 1" class="lightbox-counter">
+        {{ activeImageIndex + 1 }} / {{ allImages.length }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -138,22 +195,46 @@ export default {
     }
   },
   emits: ['close'],
+  data() {
+    return {
+      activeImageIndex: 0,
+      lightboxOpen: false
+    };
+  },
+  computed: {
+    allImages() {
+      const imgs = [];
+      // Main image first
+      if (this.project.imageUrl) {
+        imgs.push(this.project.imageUrl);
+      }
+      // Then additional images from the images array
+      if (Array.isArray(this.project.images)) {
+        this.project.images.forEach(url => {
+          if (url && !imgs.includes(url)) {
+            imgs.push(url);
+          }
+        });
+      }
+      return imgs;
+    }
+  },
   mounted() {
-    // Handle escape key
-    document.addEventListener('keydown', this.handleEscape);
-    // Prevent body scroll when modal is open
+    document.addEventListener('keydown', this.handleKeydown);
     if (this.isOpen) {
       document.body.style.overflow = 'hidden';
     }
   },
   unmounted() {
-    document.removeEventListener('keydown', this.handleEscape);
+    document.removeEventListener('keydown', this.handleKeydown);
     document.body.style.overflow = '';
   },
   watch: {
     isOpen(newVal) {
       if (newVal) {
         document.body.style.overflow = 'hidden';
+        this.activeImageIndex = 0;
+        this.lightboxOpen = false;
       } else {
         document.body.style.overflow = '';
       }
@@ -163,17 +244,36 @@ export default {
     closeModal() {
       this.$emit('close');
     },
-    handleEscape(e) {
-      if (e.key === 'Escape' && this.isOpen) {
-        this.closeModal();
+    handleKeydown(e) {
+      if (!this.isOpen) return;
+      if (e.key === 'Escape') {
+        if (this.lightboxOpen) {
+          this.closeLightbox();
+        } else {
+          this.closeModal();
+        }
       }
+      if (e.key === 'ArrowLeft') this.prevImage();
+      if (e.key === 'ArrowRight') this.nextImage();
+    },
+    prevImage() {
+      if (this.allImages.length <= 1) return;
+      this.activeImageIndex = (this.activeImageIndex - 1 + this.allImages.length) % this.allImages.length;
+    },
+    nextImage() {
+      if (this.allImages.length <= 1) return;
+      this.activeImageIndex = (this.activeImageIndex + 1) % this.allImages.length;
+    },
+    openLightbox() {
+      this.lightboxOpen = true;
+    },
+    closeLightbox() {
+      this.lightboxOpen = false;
     },
     openCaseStudy() {
-      // This could open another modal or navigate to a detailed page
       console.log('Opening case study for:', this.project.title);
     },
     getProjectCategories(project) {
-      // Returns all categories as an array for proper display
       return Array.isArray(project.category) ? project.category : [project.category];
     }
   }
@@ -279,24 +379,249 @@ export default {
   line-height: 1.2;
 }
 
-/* Modal Image Section - Now in Middle */
+/* ===================== */
+/* Image Gallery Section */
+/* ===================== */
 .modal-image-section {
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   margin: 32px 0;
 }
 
+.gallery-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Main Image */
+.gallery-main {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f5f5f4;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  cursor: zoom-in;
+}
+
+.gallery-main-img {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  display: block;
+  object-fit: contain;
+  background: #f5f5f4;
+  transition: opacity 0.25s ease;
+}
+
+/* Navigation Arrows */
+.gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.85);
+  border: none;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  z-index: 2;
+}
+
+.gallery-main:hover .gallery-nav {
+  opacity: 1;
+}
+
+.gallery-nav:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.gallery-nav i {
+  font-size: 16px;
+  color: #374151;
+}
+
+.gallery-nav-prev {
+  left: 12px;
+}
+
+.gallery-nav-next {
+  right: 12px;
+}
+
+/* Counter Badge */
+.gallery-counter {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+}
+
+/* Thumbnail Strip */
+.gallery-thumbs {
+  overflow-x: auto;
+  padding: 4px 0;
+  scrollbar-width: thin;
+  scrollbar-color: #f97316 #fef3e2;
+}
+
+.gallery-thumbs::-webkit-scrollbar {
+  height: 4px;
+}
+
+.gallery-thumbs::-webkit-scrollbar-track {
+  background: #fef3e2;
+  border-radius: 2px;
+}
+
+.gallery-thumbs::-webkit-scrollbar-thumb {
+  background: #f97316;
+  border-radius: 2px;
+}
+
+.gallery-thumbs-track {
+  display: flex;
+  gap: 8px;
+}
+
+.gallery-thumb {
+  flex-shrink: 0;
+  width: 72px;
+  height: 56px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  background: #f5f5f4;
+  opacity: 0.6;
+}
+
+.gallery-thumb:hover {
+  opacity: 0.9;
+  border-color: #fed7aa;
+}
+
+.gallery-thumb.active {
+  border-color: #f97316;
+  opacity: 1;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.35);
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Single image fallback */
 .modal-image {
   width: 100%;
   height: auto;
   display: block;
   object-fit: cover;
   max-height: 500px;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
-.image-gradient-overlay {
-  display: none;
+/* ============ */
+/* Lightbox     */
+/* ============ */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  font-size: 20px;
+  transition: background 0.2s;
+}
+
+.lightbox-close:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.15);
+  border: none;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  font-size: 20px;
+  transition: background 0.2s;
+}
+
+.lightbox-nav:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.lightbox-prev { left: 24px; }
+.lightbox-next { right: 24px; }
+
+.lightbox-counter {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
 /* Modal Details */
@@ -487,142 +812,58 @@ export default {
 
 /* Animations */
 @keyframes modalFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9) translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .modal-overlay {
-    padding: 10px;
-  }
-  
-  .modal-header-section {
-    padding: 30px 24px 16px 24px;
-  }
-  
-  .modal-title {
-    font-size: 2rem;
-  }
-  
-  .modal-details {
-    padding: 30px 24px;
-  }
-  
-  .modal-actions {
-    flex-direction: column;
-  }
-  
-  .action-btn {
-    justify-content: center;
-  }
-  
-  .project-info-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .modal-image-section {
-    margin: 24px 0;
-  }
+  .modal-overlay { padding: 10px; }
+  .modal-header-section { padding: 30px 24px 16px 24px; }
+  .modal-title { font-size: 2rem; }
+  .modal-details { padding: 30px 24px; }
+  .modal-actions { flex-direction: column; }
+  .action-btn { justify-content: center; }
+  .project-info-grid { grid-template-columns: 1fr; }
+  .modal-image-section { margin: 24px 0; }
+  .gallery-nav { opacity: 1; width: 36px; height: 36px; }
+  .gallery-nav i { font-size: 14px; }
+  .gallery-thumb { width: 60px; height: 48px; }
+  .lightbox-nav { width: 44px; height: 44px; }
+  .lightbox-prev { left: 12px; }
+  .lightbox-next { right: 12px; }
 }
 
 @media (max-width: 480px) {
-  .modal-container {
-    max-width: 98vw;
-    width: 98vw;
-    min-width: 0;
-    border-radius: 12px;
-  }
-  .modal-header {
-    top: 8px;
-    right: 8px;
-  }
-  .close-btn {
-    width: 36px;
-    height: 36px;
-    font-size: 1rem;
-  }
-  .modal-header-section {
-    padding: 20px 16px 12px 16px;
-  }
-  .modal-title {
-    font-size: 1.1rem;
-  }
-  .modal-details {
-    padding: 12px 6px;
-  }
-  .detail-section {
-    margin-bottom: 18px;
-  }
-  .section-title {
-    font-size: 1rem;
-    margin-bottom: 8px;
-  }
-  .modal-description,
-  .challenges-text {
-    font-size: 0.92rem;
-  }
-  .tech-stack {
-    gap: 5px;
-  }
-  .tech-tag {
-    padding: 4px 8px;
-    font-size: 0.75rem;
-  }
-  .features-list li {
-    font-size: 0.92rem;
-    margin-bottom: 7px;
-  }
-  .project-info-grid {
-    gap: 8px;
-  }
-  .info-item {
-    padding: 10px;
-    font-size: 0.9rem;
-  }
-  .modal-actions {
-    gap: 8px;
-    margin-top: 18px;
-    padding-top: 18px;
-  }
-  .action-btn {
-    font-size: 0.95rem;
-    padding: 8px 12px;
-    border-radius: 8px;
-  }
-  .modal-image-section {
-    margin: 18px 0;
-    border-radius: 12px;
-  }
-  .modal-image {
-    max-height: 300px;
-  }
+  .modal-container { max-width: 98vw; width: 98vw; min-width: 0; border-radius: 12px; }
+  .modal-header { top: 8px; right: 8px; }
+  .close-btn { width: 36px; height: 36px; font-size: 1rem; }
+  .modal-header-section { padding: 20px 16px 12px 16px; }
+  .modal-title { font-size: 1.1rem; }
+  .modal-details { padding: 12px 6px; }
+  .detail-section { margin-bottom: 18px; }
+  .section-title { font-size: 1rem; margin-bottom: 8px; }
+  .modal-description, .challenges-text { font-size: 0.92rem; }
+  .tech-stack { gap: 5px; }
+  .tech-tag { padding: 4px 8px; font-size: 0.75rem; }
+  .features-list li { font-size: 0.92rem; margin-bottom: 7px; }
+  .project-info-grid { gap: 8px; }
+  .info-item { padding: 10px; font-size: 0.9rem; }
+  .modal-actions { gap: 8px; margin-top: 18px; padding-top: 18px; }
+  .action-btn { font-size: 0.95rem; padding: 8px 12px; border-radius: 8px; }
+  .modal-image-section { margin: 18px 0; border-radius: 12px; }
+  .gallery-main-img { max-height: 300px; }
+  .gallery-thumb { width: 52px; height: 42px; border-width: 2px; border-radius: 8px; }
 }
 
 /* Custom Scrollbar for Modal */
-.modal-content::-webkit-scrollbar {
-  width: 6px;
-}
-
-.modal-content::-webkit-scrollbar-track {
-  background: #fef3e2;
-}
-
+.modal-content::-webkit-scrollbar { width: 6px; }
+.modal-content::-webkit-scrollbar-track { background: #fef3e2; }
 .modal-content::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #f97316, #ea580c);
   border-radius: 3px;
