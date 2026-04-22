@@ -2,6 +2,7 @@
   <div class="gallery-container">
     <!-- Header section -->
     <div class="gallery-header">
+      <SpaceParticles :starCount="120" />
       <div class="header-content">
         <h1 class="page-title" :class="{ 'visible': titleVisible }">
           <span class="title-gradient">Gallery</span>
@@ -162,9 +163,11 @@
 
 <script>
 import { supabase } from '@/config/supabaseClient';
+import SpaceParticles from '@/components/SpaceParticles.vue';
 
 export default {
   name: 'GalleryView',
+  components: { SpaceParticles },
   data() {
     return {
       titleVisible: false,
