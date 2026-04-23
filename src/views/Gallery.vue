@@ -163,11 +163,11 @@
 
 <script>
 import { supabase } from '@/config/supabaseClient';
-import SpaceParticles from '@/components/SpaceParticles.vue';
+// import SpaceParticles from '@/components/SpaceParticles.vue';
 
 export default {
   name: 'GalleryView',
-  components: { SpaceParticles },
+  // components: { SpaceParticles },
   data() {
     return {
       titleVisible: false,

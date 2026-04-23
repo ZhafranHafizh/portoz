@@ -119,7 +119,7 @@
 <script>
 import { supabase } from '@/config/supabaseClient';
 import ProjectModal from '@/components/ProjectModal.vue';
-import SpaceParticles from '@/components/SpaceParticles.vue';
+// import SpaceParticles from '@/components/SpaceParticles.vue';
 import { useHead } from '@vueuse/head';
 
 export default {
@@ -136,8 +136,8 @@ export default {
   },
   name: 'ProjectsView',
   components: {
-    ProjectModal,
-    SpaceParticles
+    ProjectModal
+    // SpaceParticles
   },
   data() {
     return {
