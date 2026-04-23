@@ -5,7 +5,7 @@ const MODE_TAB = 'tab'
 const MODE_ONE_PAGE = 'one-page'
 
 // Global reactive state
-const currentMode = ref(MODE_TAB)
+const currentMode = ref(MODE_ONE_PAGE)
 
 // Initialize from localStorage
 function initMode() {
@@ -16,8 +16,8 @@ function initMode() {
 }
 
 export function useViewMode() {
-  // Initialize on first use
-  if (currentMode.value === MODE_TAB && localStorage.getItem(VIEW_MODE_KEY)) {
+  // Initialize on first use (redundant but kept for safety)
+  if (currentMode.value === MODE_ONE_PAGE && localStorage.getItem(VIEW_MODE_KEY)) {
     initMode()
   }
 

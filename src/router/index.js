@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useViewMode } from '@/composables/useViewMode'
 
 // --- KITA HAPUS SEMUA IMPORT STATIS DI SINI ---
 // Tidak ada lagi import Home, About, dll. di sini
@@ -67,6 +68,29 @@ const router = createRouter({
     } else {
       return { top: 0, behavior: 'smooth' }
     }
+  }
+})
+
+// View mode router sync
+router.beforeEach((to, from, next) => {
+  const { isOnePage, setMode, MODE_ONE_PAGE, MODE_TAB } = useViewMode()
+  
+  if (to.path === '/one-page') {
+    if (!isOnePage.value) {
+      setMode(MODE_ONE_PAGE)
+    }
+    next()
+  } else if (!to.path.startsWith('/admin') && isOnePage.value) {
+    if (to.path === '/') {
+      next('/one-page')
+    } else {
+      if (to.name && to.name !== 'NotFound') {
+        setMode(MODE_TAB)
+      }
+      next()
+    }
+  } else {
+    next()
   }
 })
 
