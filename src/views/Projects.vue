@@ -2,7 +2,7 @@
   <div class="projects-view">
     <!-- Header section -->
     <div class="projects-header">
-      <SpaceParticles :starCount="140" />
+      <!-- <SpaceParticles :starCount="140" /> -->
       <div class="header-content">
         <h1 class="page-title" :class="{ 'visible': titleVisible }">
           <span class="title-gradient">My Projects</span>
