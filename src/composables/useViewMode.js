@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 
-const VIEW_MODE_KEY = 'portoz-view-mode'
+const VIEW_MODE_KEY = 'portoz-view-mode-v2'
 const MODE_TAB = 'tab'
 const MODE_ONE_PAGE = 'one-page'
 
