@@ -184,7 +184,6 @@ export default {
   mounted() {
     this.checkMobile();
     
-    // KITA PANGGIL FUNGSI BARU DI SINI
     this.fetchProjects(); 
     
     // Add resize listener for responsive updates

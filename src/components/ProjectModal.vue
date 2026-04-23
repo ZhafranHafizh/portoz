@@ -33,7 +33,7 @@
 
           <!-- Image Gallery Section (Tokopedia-style) -->
           <div class="detail-section modal-image-section" v-if="allImages.length > 0">
-            <div class="gallery-container" @mouseenter="onGalleryMouseEnter" @mouseleave="onGalleryMouseLeave">
+            <div class="modal-gallery-container" @mouseenter="onGalleryMouseEnter" @mouseleave="onGalleryMouseLeave">
               <!-- Main Image -->
               <div class="gallery-main">
                 <div class="gallery-main-wrapper">
@@ -444,7 +444,7 @@ export default {
   margin: 32px 0;
 }
 
-.gallery-container {
+.modal-gallery-container {
   display: flex;
   flex-direction: column;
   gap: 12px;
