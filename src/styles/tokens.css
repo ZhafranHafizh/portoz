@@ -8,22 +8,22 @@
   /* =========================
      Core: Color primitives
      ========================= */
-  --color-bg-950: #0b0f14;
-  --color-bg-900: #111827;
-  --color-surface-850: #151f2d;
-  --color-surface-800: #1b2635;
+  --color-bg-950: #d9d1c7;
+  --color-bg-900: #f7f4ef;
+  --color-surface-850: #f1ece5;
+  --color-surface-800: #e8e0d5;
 
-  --color-text-50: #f8fafc;
-  --color-text-200: #d7dee9;
-  --color-text-400: #9aa8ba;
+  --color-text-50: #3a3028;
+  --color-text-200: #5a4d41;
+  --color-text-400: #8a7a6b;
 
-  /* Soft neon accent (mint-cyan) */
-  --color-accent-400: #5eead4;
-  --color-accent-500: #2dd4bf;
-  --color-accent-600: #14b8a6;
+  /* Warm neutral accent (soft brown) */
+  --color-accent-400: #a89278;
+  --color-accent-500: #8f775d;
+  --color-accent-600: #7a654f;
 
-  --color-border-700: rgba(148, 163, 184, 0.18);
-  --color-border-600: rgba(148, 163, 184, 0.28);
+  --color-border-700: rgba(143, 119, 93, 0.2);
+  --color-border-600: rgba(143, 119, 93, 0.32);
 
   /* =========================
      Semantic tokens
@@ -39,6 +39,9 @@
   --accent: var(--color-accent-500);
   --accent-hover: var(--color-accent-400);
   --accent-strong: var(--color-accent-600);
+  --accent-soft: color-mix(in srgb, var(--accent) 18%, white);
+  --accent-softer: color-mix(in srgb, var(--accent) 10%, white);
+  --accent-contrast: #fffaf4;
 
   --border-subtle: var(--color-border-700);
   --border-strong: var(--color-border-600);
@@ -85,8 +88,8 @@
   --border-thin: 1px;
   --border-medium: 2px;
 
-  --shadow-sm: 0 2px 8px rgba(2, 6, 23, 0.25);
-  --shadow-md: 0 8px 18px rgba(2, 6, 23, 0.28);
+  --shadow-sm: 0 2px 10px rgba(79, 58, 42, 0.1);
+  --shadow-md: 0 10px 24px rgba(79, 58, 42, 0.14);
 
   --blur-sm: 4px;
   --blur-md: 8px;

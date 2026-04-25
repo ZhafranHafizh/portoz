@@ -22,14 +22,14 @@ export default {
 
 <style scoped>
 .app-footer {
-  border-top: 1px solid #e7e5e4;
-  background: #ffffff;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--surface);
   padding: 1.25rem;
 }
 
 :global(body.dark-theme) .app-footer {
-  background: #1c1917;
-  border-top-color: #44403c;
+  background: var(--surface-elevated);
+  border-top-color: var(--border-strong);
 }
 
 .footer-shell {
@@ -44,21 +44,21 @@ export default {
 .footer-shell p {
   margin: 0;
   font-size: 0.92rem;
-  color: #57534e;
+  color: var(--text-secondary);
 }
 
 .footer-shell a {
-  color: #f97316;
+  color: var(--accent);
   text-decoration: none;
   font-weight: 600;
 }
 
 :global(body.dark-theme) .footer-shell p {
-  color: #d6d3d1;
+  color: var(--text-secondary);
 }
 
 :global(body.dark-theme) .footer-shell a {
-  color: #fb923c;
+  color: var(--accent-hover);
 }
 
 @media (max-width: 640px) {
