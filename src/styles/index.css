@@ -1,6 +1,7 @@
 /* Global Styles Index */
 
-/* Import base variables and animations */
+/* Import global tokens, compatibility variables, and animations */
+@import './tokens.css';
 @import './variables.css';
 @import './animations.css';
 
