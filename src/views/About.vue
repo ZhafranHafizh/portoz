@@ -194,7 +194,7 @@ onMounted(() => {
 
 /* Animasi Fade-in */
 .about-content {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: color-mix(in srgb, var(--surface) 90%, white);
   border-radius: 15px;
   padding: 2rem 2.5rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -226,7 +226,7 @@ onMounted(() => {
   gap: 30px;
   margin-bottom: 40px;
   padding-bottom: 40px;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 :global(body.dark-theme) .about-content .profile-header {
@@ -250,21 +250,21 @@ onMounted(() => {
 .profile-text h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #333;
+  color: var(--text-primary);
   margin: 0;
 }
 
 .profile-text h2 {
   font-size: 1.5rem;
   font-weight: 400;
-  color: #f97316; /* Warna aksen */
+  color: var(--accent);
   margin: 10px 0;
 }
 
 .profile-text .intro {
   font-size: 1.1rem;
   line-height: 1.7;
-  color: #555;
+  color: var(--text-secondary);
   margin: 0;
 }
 
@@ -282,14 +282,14 @@ onMounted(() => {
   align-items: center;
   gap: 12px;
   padding: 12px 28px;
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-  color: white;
+  background: var(--gradient-primary);
+  color: var(--accent-contrast);
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
   font-size: 0.95rem;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
+  box-shadow: var(--shadow-md);
   position: relative;
   overflow: hidden;
 }
@@ -301,7 +301,7 @@ onMounted(() => {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  background: linear-gradient(135deg, var(--accent-strong) 0%, var(--accent) 100%);
   transition: left 0.3s ease;
   z-index: -1;
 }
@@ -338,16 +338,16 @@ onMounted(() => {
 .story-content h3 {
   font-size: 1.75rem;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   margin-top: 40px;
   margin-bottom: 20px;
-  border-bottom: 2px solid #f97316;
+  border-bottom: 2px solid var(--accent);
   padding-bottom: 8px;
   display: inline-block;
 }
 
 .story-content p {
-  color: #555;
+  color: var(--text-secondary);
   margin-bottom: 20px;
 }
 
@@ -364,7 +364,7 @@ onMounted(() => {
   padding-left: 30px;
   margin-bottom: 15px;
   font-size: 1rem;
-  color: #555;
+  color: var(--text-secondary);
 }
 
 /* Membuat ikon centang (checklist) */
@@ -373,7 +373,7 @@ onMounted(() => {
   position: absolute;
   left: 0;
   top: 0;
-  color: #d97706; /* Warna hijau sukses -> Amber/Brown */
+  color: var(--accent-strong);
   font-weight: 700;
   font-size: 1.2rem;
 }
@@ -385,14 +385,14 @@ onMounted(() => {
 .cta-button {
   display: inline-block;
   padding: 14px 32px;
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-  color: white;
+  background: var(--gradient-primary);
+  color: var(--accent-contrast);
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
   font-size: 1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
+  box-shadow: var(--shadow-md);
   margin-top: 20px;
 }
 
