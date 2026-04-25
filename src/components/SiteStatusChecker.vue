@@ -92,7 +92,11 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent-hover) 72%, white) 0%,
+    color-mix(in srgb, var(--accent-strong) 78%, #d8cec1) 100%
+  );
   z-index: 999999;
   display: flex;
   align-items: center;
@@ -109,13 +113,13 @@ export default {
 }
 
 .maintenance-modal {
-  background: white;
+  background: var(--background);
   border-radius: 20px;
   padding: 60px 40px;
   max-width: 600px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-md);
   animation: slideIn 0.5s ease-out;
 }
 
@@ -136,7 +140,7 @@ export default {
 
 .maintenance-icon i {
   font-size: 80px;
-  color: #667eea;
+  color: var(--accent);
   animation: spin 4s linear infinite;
 }
 
@@ -148,20 +152,20 @@ export default {
 .maintenance-modal h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--text-primary);
   margin: 0 0 20px 0;
   line-height: 1.2;
 }
 
 .maintenance-message {
   font-size: 1.2rem;
-  color: #6b7280;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin: 0 0 30px 0;
 }
 
 .maintenance-details {
-  background: #f9fafb;
+  background: var(--surface);
   border-radius: 12px;
   padding: 24px;
   margin: 0 0 30px 0;
@@ -169,7 +173,7 @@ export default {
 
 .maintenance-details p {
   font-size: 1rem;
-  color: #4b5563;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin: 0 0 12px 0;
 }
@@ -180,17 +184,17 @@ export default {
 
 .check-back {
   font-weight: 600;
-  color: #667eea !important;
+  color: var(--accent) !important;
 }
 
 .maintenance-footer {
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--border-subtle);
   padding-top: 20px;
 }
 
 .estimated-time {
   font-size: 0.9rem;
-  color: #9ca3af;
+  color: var(--text-muted);
   margin: 0;
   display: flex;
   align-items: center;

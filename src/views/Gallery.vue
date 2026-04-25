@@ -403,13 +403,13 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 60px 20px;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .loading-state i {
   font-size: 48px;
   margin-bottom: 16px;
-  color: #3b82f6;
+  color: var(--accent);
 }
 
 .loading-state p {
@@ -447,7 +447,7 @@ export default {
   left: -5px;
   right: -5px;
   bottom: -5px;
-  background: linear-gradient(45deg, #f97316, #ea580c, #f97316);
+  background: linear-gradient(45deg, var(--accent-hover), var(--accent-strong), var(--accent-hover));
   border-radius: var(--radius-md);
   z-index: -1;
   opacity: 0;
