@@ -2,6 +2,11 @@
   <div class="home-view">
     <main class="content-shell">
       <section class="hero" aria-labelledby="home-hero-title">
+        <div class="hero-geometry" aria-hidden="true">
+          <span class="geo-circle"></span>
+          <span class="geo-line"></span>
+          <span class="geo-diamond"></span>
+        </div>
         <p class="hero-kicker">Portfolio</p>
         <h1 id="home-hero-title" class="hero-title" v-html="homeContent.hero.title"></h1>
         <p class="hero-subtitle" v-html="homeContent.hero.subtitle"></p>
@@ -11,8 +16,15 @@
       </section>
 
       <section class="grid-section" aria-label="Highlights">
-        <article class="info-card" v-for="item in highlights" :key="item.title">
-          <h2>{{ item.title }}</h2>
+        <article class="info-card" v-for="(item, index) in highlights" :key="item.title">
+          <div class="card-heading">
+            <span class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path :d="iconPaths[index % iconPaths.length]" />
+              </svg>
+            </span>
+            <h2>{{ item.title }}</h2>
+          </div>
           <p>{{ item.description }}</p>
         </article>
       </section>
@@ -58,6 +70,12 @@ export default {
           title: 'Collaboration-ready',
           description: 'I communicate clearly with design, product, and engineering teams to keep momentum high.'
         }
+      ],
+      iconPaths: [
+        'M4 12h16M12 4v16M6 6l12 12',
+        'M4 18L10 6l4 8 2-4 4 8',
+        'M6 8h12M6 12h8M6 16h12',
+        'M5 12h4l2-6 2 12 2-6h4'
       ]
     };
   },
@@ -102,6 +120,19 @@ export default {
   background: linear-gradient(180deg, #1c1917 0%, #0c0a09 100%);
 }
 
+:global(body.dark-theme) .hero {
+  border-color: rgba(251, 146, 60, 0.22);
+  background:
+    linear-gradient(135deg, rgba(249, 115, 22, 0.18), rgba(28, 25, 23, 0.15) 55%),
+    linear-gradient(180deg, rgba(41, 37, 36, 0.94), rgba(28, 25, 23, 0.92));
+}
+
+:global(body.dark-theme) .hero::after {
+  background-image:
+    linear-gradient(to right, rgba(251, 146, 60, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(251, 146, 60, 0.08) 1px, transparent 1px);
+}
+
 .content-shell {
   --section-gap: 3.5rem;
   max-width: 1120px;
@@ -115,6 +146,71 @@ export default {
   max-width: 760px;
   margin: 0 auto;
   text-align: center;
+  position: relative;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: 18px;
+  border: 1px solid rgba(249, 115, 22, 0.14);
+  background:
+    linear-gradient(135deg, rgba(249, 115, 22, 0.12), rgba(255, 255, 255, 0) 52%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.9));
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(249, 115, 22, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(249, 115, 22, 0.05) 1px, transparent 1px);
+  background-size: 34px 34px;
+  opacity: 0.35;
+  pointer-events: none;
+  mask-image: radial-gradient(circle at 50% 35%, #000 40%, transparent 85%);
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-geometry {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.geo-circle,
+.geo-line,
+.geo-diamond {
+  position: absolute;
+  opacity: 0.55;
+}
+
+.geo-circle {
+  width: 68px;
+  height: 68px;
+  border: 1px solid rgba(249, 115, 22, 0.45);
+  border-radius: 50%;
+  right: 4%;
+  top: 14%;
+}
+
+.geo-line {
+  width: 88px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(249, 115, 22, 0), rgba(249, 115, 22, 0.42), rgba(249, 115, 22, 0));
+  left: 8%;
+  bottom: 22%;
+}
+
+.geo-diamond {
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(249, 115, 22, 0.55);
+  transform: rotate(45deg);
+  right: 16%;
+  bottom: 16%;
 }
 
 .hero-kicker {
@@ -153,7 +249,7 @@ export default {
   text-decoration: none;
   font-weight: 700;
   color: #ffffff;
-  background: #f97316;
+  background: linear-gradient(135deg, #fb923c, #f97316);
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
@@ -166,6 +262,18 @@ export default {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 1.25rem;
+  position: relative;
+}
+
+.grid-section::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  background-image: radial-gradient(rgba(120, 113, 108, 0.1) 0.6px, transparent 0.6px);
+  background-size: 12px 12px;
+  opacity: 0.25;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
 }
 
 .info-card {
@@ -174,10 +282,39 @@ export default {
   border: 1px solid #e7e5e4;
   border-radius: 12px;
   padding: 1.25rem;
+  position: relative;
+}
+
+.card-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.55rem;
+}
+
+.card-icon {
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 8px;
+  border: 1px solid rgba(249, 115, 22, 0.32);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(249, 115, 22, 0.06);
+}
+
+.card-icon svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: #ea580c;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .info-card h2 {
-  margin: 0 0 0.55rem;
+  margin: 0;
   font-size: 1.1rem;
   color: #1c1917;
   text-align: left;
@@ -224,6 +361,15 @@ export default {
 :global(body.dark-theme) .summary-section {
   background: #292524;
   border-color: #44403c;
+}
+
+:global(body.dark-theme) .card-icon {
+  border-color: rgba(251, 146, 60, 0.4);
+  background: rgba(251, 146, 60, 0.08);
+}
+
+:global(body.dark-theme) .card-icon svg {
+  stroke: #fdba74;
 }
 
 @media (max-width: 900px) {
