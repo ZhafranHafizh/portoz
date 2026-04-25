@@ -101,6 +101,17 @@ export default {
             }
             this.homeContent.hero[item.key] = value;
           }
+
+          if (item.section === 'highlights' && item.key === 'items') {
+            try {
+              const parsed = typeof item.value === 'string' ? JSON.parse(item.value) : item.value;
+              if (Array.isArray(parsed) && parsed.length > 0) {
+                this.highlights = parsed;
+              }
+            } catch (e) {
+              console.error('Error parsing highlights:', e);
+            }
+          }
         });
       } catch (error) {
         console.error('Error fetching home content:', error);

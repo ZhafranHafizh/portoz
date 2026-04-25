@@ -265,34 +265,30 @@
                 </h3>
                 <div v-if="expandedSections.home" class="section-body">
                   <div class="form-group">
-                    <label>Profile Image</label>
-                    <input type="file" @change="handleHomeProfileUpload" class="form-input" accept="image/*" />
-                    <p v-if="uploadingProfileImage" class="status-info">Uploading image...</p>
-                    <img v-if="siteContent.home.hero.profile_image" :src="siteContent.home.hero.profile_image" class="preview-img" alt="preview" />
-                  </div>
-                  <div class="form-group">
                     <label>Hero Title</label>
                     <RichTextEditor 
                       v-model="siteContent.home.hero.title" 
-                      placeholder="Enter hero title (e.g., Hello, I'm **Zhafran Hafizh**!)"
+                      placeholder="e.g. Hello, I'm &lt;strong&gt;Zhafran Hafizh&lt;/strong&gt;"
                       :height="100"
                     />
+                    <p class="hint-text">Wrap your name in &lt;strong&gt; tags for accent color.</p>
                   </div>
                   <div class="form-group">
                     <label>Hero Subtitle</label>
                     <RichTextEditor 
                       v-model="siteContent.home.hero.subtitle" 
-                      placeholder="Enter subtitle"
+                      placeholder="One-liner about what you do"
                       :height="100"
                     />
                   </div>
                   <div class="form-group">
-                    <label>Hero Description</label>
+                    <label>Summary Description</label>
                     <RichTextEditor 
                       v-model="siteContent.home.hero.description" 
-                      placeholder="Enter description"
+                      placeholder="A short paragraph shown in the 'How I work' section"
                       :height="200"
                     />
+                    <p class="hint-text">This text appears in the summary card below the highlight cards.</p>
                   </div>
                   <div class="form-row">
                     <div class="form-group">
@@ -303,6 +299,35 @@
                       <label>CTA Button Link</label>
                       <input type="text" v-model="siteContent.home.hero.cta_link" class="form-input" />
                     </div>
+                  </div>
+
+                  <h4>Highlights (Core Strengths)</h4>
+                  <div class="skills-editor">
+                    <div v-for="(item, index) in highlightsList" :key="index" class="skill-item">
+                      <div class="skill-header">
+                        <span class="skill-number">{{ index + 1 }}</span>
+                        <button v-if="highlightsList.length > 1" @click="removeHighlight(index)" class="btn-remove-skill" type="button">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                      <div class="skill-fields">
+                        <input 
+                          type="text" 
+                          v-model="item.title" 
+                          class="form-input" 
+                          placeholder="Highlight Title"
+                        />
+                        <textarea 
+                          v-model="item.description" 
+                          class="form-input" 
+                          rows="2" 
+                          placeholder="Short description"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <button @click="addHighlight" class="btn-add-skill" type="button">
+                      <i class="fas fa-plus"></i> Add Highlight
+                    </button>
                   </div>
                 </div>
               </div>
@@ -451,15 +476,27 @@
                 <!-- Home Preview -->
                 <div v-if="previewPage === 'home'" class="home-preview">
                   <div class="preview-hero">
-                    <div class="preview-profile-image">
-                      <img :src="siteContent.home.hero.profile_image || 'https://via.placeholder.com/180'" alt="Profile" class="preview-pic">
-                    </div>
+                    <p class="preview-kicker">Portfolio</p>
                     <h1 class="preview-title" v-html="siteContent.home.hero.title"></h1>
-                    <h2 class="preview-subtitle" v-html="siteContent.home.hero.subtitle"></h2>
-                    <p class="preview-description">{{ siteContent.home.hero.description }}</p>
+                    <p class="preview-subtitle" v-html="siteContent.home.hero.subtitle"></p>
                     <a class="preview-cta" :href="siteContent.home.hero.cta_link">
-                      {{ siteContent.home.hero.cta_text }} <span class="arrow">→</span>
+                      {{ siteContent.home.hero.cta_text }}
                     </a>
+                  </div>
+
+                  <div class="preview-highlights-grid">
+                    <div v-for="(item, index) in highlightsList" :key="index" class="preview-highlight-card">
+                      <div class="highlight-icon-placeholder">
+                        <i class="fas fa-bolt"></i>
+                      </div>
+                      <h4>{{ item.title }}</h4>
+                      <p>{{ item.description }}</p>
+                    </div>
+                  </div>
+
+                  <div class="preview-summary">
+                    <h3>How I work</h3>
+                    <p v-html="siteContent.home.hero.description"></p>
                   </div>
                 </div>
 
@@ -822,7 +859,6 @@ export default {
       // Site Content
       loadingSiteContent: false,
       savingSiteContent: false,
-      uploadingProfileImage: false,
       uploadingAboutImage: false,
       siteContentError: '',
       
@@ -833,12 +869,14 @@ export default {
       siteContent: {
         home: {
           hero: {
-            profile_image: '',
             title: '',
             subtitle: '',
             description: '',
             cta_text: '',
             cta_link: ''
+          },
+          highlights: {
+            items_raw: '[]'
           }
         },
         about: {
@@ -881,6 +919,19 @@ export default {
       },
       set(value) {
         this.siteContent.about.expertise.skills_raw = JSON.stringify(value, null, 2);
+      }
+    },
+    highlightsList: {
+      get() {
+        try {
+          const items = JSON.parse(this.siteContent.home.highlights.items_raw || '[]');
+          return Array.isArray(items) ? items : [{ title: '', description: '' }];
+        } catch (e) {
+          return [{ title: '', description: '' }];
+        }
+      },
+      set(value) {
+        this.siteContent.home.highlights.items_raw = JSON.stringify(value, null, 2);
       }
     },
     parsedSkills() {
@@ -1185,6 +1236,16 @@ export default {
       currentSkills.splice(index, 1);
       this.skillsList = currentSkills;
     },
+    addHighlight() {
+      const current = this.highlightsList;
+      current.push({ title: '', description: '' });
+      this.highlightsList = current;
+    },
+    removeHighlight(index) {
+      const current = this.highlightsList;
+      current.splice(index, 1);
+      this.highlightsList = current;
+    },
     updateSkillsJson() {
       // Skills JSON akan otomatis terupdate karena v-model di skillsList
     },
@@ -1335,14 +1396,21 @@ export default {
           // Handle skills separately
           const skillsItem = data.find(item => item.page === 'about' && item.section === 'expertise' && item.key === 'skills');
           if (skillsItem && skillsItem.value) {
-            // Set skills_raw to the JSON string from database
-            const skillsJson = typeof skillsItem.value === 'string' 
+            this.siteContent.about.expertise.skills_raw = typeof skillsItem.value === 'string' 
               ? skillsItem.value 
               : JSON.stringify(skillsItem.value, null, 2);
-            this.siteContent.about.expertise.skills_raw = skillsJson;
           } else {
-            // Initialize with default empty array if no skills in DB
             this.siteContent.about.expertise.skills_raw = '[]';
+          }
+
+          // Handle highlights separately
+          const highlightsItem = data.find(item => item.page === 'home' && item.section === 'highlights' && item.key === 'items');
+          if (highlightsItem && highlightsItem.value) {
+            this.siteContent.home.highlights.items_raw = typeof highlightsItem.value === 'string' 
+              ? highlightsItem.value 
+              : JSON.stringify(highlightsItem.value, null, 2);
+          } else {
+            this.siteContent.home.highlights.items_raw = '[]';
           }
         }
       } catch (error) {
@@ -1354,32 +1422,6 @@ export default {
     toggleSection(section) {
       // Vue 3: Direct assignment
       this.expandedSections[section] = !this.expandedSections[section];
-    },
-    async handleHomeProfileUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      this.uploadingProfileImage = true;
-      const fileExt = file.name.split('.').pop();
-      const fileName = `home-profile-${Date.now()}.${fileExt}`;
-      const filePath = `profile-images/${fileName}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('images')
-        .upload(filePath, file);
-
-      if (uploadError) {
-        alert('Error uploading image: ' + uploadError.message);
-        this.uploadingProfileImage = false;
-        return;
-      }
-
-      const { data: { publicUrl } } = supabase.storage
-        .from('images')
-        .getPublicUrl(filePath);
-
-      this.siteContent.home.hero.profile_image = publicUrl;
-      this.uploadingProfileImage = false;
     },
     async handleAboutProfileUpload(event) {
       const file = event.target.files[0];
@@ -1421,8 +1463,16 @@ export default {
             page: 'home',
             section: 'hero',
             key,
-            value: key === 'profile_image' ? value : `"${value}"`
+            value: `"${value}"`
           });
+        });
+
+        // Home Highlights
+        contentToSave.push({
+          page: 'home',
+          section: 'highlights',
+          key: 'items',
+          value: this.siteContent.home.highlights.items_raw
         });
 
         // About content
@@ -2140,19 +2190,25 @@ export default {
 .home-preview {
   text-align: center;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.preview-profile-image {
-  margin-bottom: 20px;
+.preview-hero {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 24px 20px;
+  background: linear-gradient(135deg, rgba(249,115,22,0.06), transparent 52%), #fafaf9;
 }
 
-.preview-pic {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid white;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.preview-kicker {
+  margin: 0 0 8px;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8b5a2b;
 }
 
 .preview-title {
@@ -2167,49 +2223,89 @@ export default {
 }
 
 .preview-subtitle {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   color: #6b7280;
   margin: 0 0 16px 0;
-}
-
-.preview-subtitle strong {
-  color: #6b4423;
-  font-weight: 600;
-}
-
-.preview-description {
-  font-size: 13px;
-  color: #6b7280;
-  line-height: 1.6;
-  margin: 0 0 20px 0;
+  line-height: 1.5;
 }
 
 .preview-cta {
   display: inline-block;
-  padding: 10px 24px;
+  padding: 10px 20px;
   background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
   color: white;
   text-decoration: none;
-  border-radius: 50px;
-  font-size: 14px;
-  font-weight: 600;
-  box-shadow: 0 4px 10px rgba(249, 115, 22, 0.3);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
   transition: all 0.2s;
 }
 
 .preview-cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(249, 115, 22, 0.4);
+  transform: translateY(-1px);
 }
 
-.preview-cta .arrow {
-  margin-left: 6px;
-  transition: transform 0.2s;
+.preview-summary {
+  text-align: left;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  background: white;
 }
 
-.preview-cta:hover .arrow {
-  transform: translateX(3px);
+.preview-summary h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: #1f2937;
+}
+
+.preview-summary p {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.preview-highlights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  text-align: left;
+}
+
+.preview-highlight-card {
+  padding: 12px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+.highlight-icon-placeholder {
+  width: 24px;
+  height: 24px;
+  background: rgba(139, 90, 43, 0.1);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8b5a2b;
+  font-size: 10px;
+  margin-bottom: 8px;
+}
+
+.preview-highlight-card h4 {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.preview-highlight-card p {
+  margin: 0;
+  font-size: 10px;
+  color: #6b7280;
+  line-height: 1.4;
 }
 
 /* About Preview */
