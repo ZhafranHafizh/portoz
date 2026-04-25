@@ -29,15 +29,11 @@
 
 <script>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { useViewMode } from '@/composables/useViewMode'
-import { useRouter } from 'vue-router'
+
 
 export default {
   name: 'AnchorNavigation',
   setup() {
-    const { switchToTab } = useViewMode()
-    const router = useRouter()
-    
     const activeSection = ref('section-home')
     const isVisible = ref(false)
     const hasScrolled = ref(false)
