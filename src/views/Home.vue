@@ -1,23 +1,27 @@
 <template>
   <div class="home-view">
-    <Particles
-      v-if="showParticles"
-      id="tsparticles"
-      :options="particlesConfig"
-      :style="parallaxStyle"
-    />
+    <main class="content-shell">
+      <section class="hero" aria-labelledby="home-hero-title">
+        <p class="hero-kicker">Portfolio</p>
+        <h1 id="home-hero-title" class="hero-title" v-html="homeContent.hero.title"></h1>
+        <p class="hero-subtitle" v-html="homeContent.hero.subtitle"></p>
+        <router-link :to="homeContent.hero.cta_link" class="cta-button">
+          {{ homeContent.hero.cta_text }}
+        </router-link>
+      </section>
 
-    <section class="hero" :style="heroParallaxStyle">
-      <div class="profile-image-container" :style="profileParallaxStyle">
-        <img :src="homeContent.hero.profile_image" alt="Profile Photo" class="profile-pic" loading="lazy" decoding="async">
-      </div>
-      <h1 class="hero-title" v-html="homeContent.hero.title"></h1>
-      <h2 class="hero-subtitle" v-html="homeContent.hero.subtitle"></h2>
-      <p class="hero-description" v-html="homeContent.hero.description"></p>
-      <router-link :to="homeContent.hero.cta_link" class="cta-button">
-        {{ homeContent.hero.cta_text }} <span class="arrow">&rarr;</span>
-      </router-link>
-    </section>
+      <section class="grid-section" aria-label="Highlights">
+        <article class="info-card" v-for="item in highlights" :key="item.title">
+          <h2>{{ item.title }}</h2>
+          <p>{{ item.description }}</p>
+        </article>
+      </section>
+
+      <section class="summary-section" aria-label="About this site">
+        <h2>Built for clarity and impact</h2>
+        <p class="summary-text" v-html="homeContent.hero.description"></p>
+      </section>
+    </main>
   </div>
 </template>
 
@@ -28,72 +32,39 @@ export default {
   name: 'HomeView',
   data() {
     return {
-      scrollY: 0,
-      isMobile: false,
-      prefersReducedMotion: false,
-      scrollRafId: null,
       homeContent: {
         hero: {
-          profile_image: '../../public/galeri/Profil.png',
-          title: "Hello, I'm **Zhafran Hafizh**!",
-          subtitle: 'A Software Engineer Bridging Design, Development, and Quality',
-          description: 'Hello! This is where design meets code. As a product development enthusiast, I excel at creating intuitive UI/UX, implementing robust front-end interfaces, and ensuring software quality. Take a look at my end-to-end projects.',
+          title: "Hello, I'm <strong>Zhafran Hafizh</strong>",
+          subtitle: 'Software Engineer who turns product ideas into polished digital experiences.',
+          description: 'I focus on UI/UX, front-end engineering, and software quality to deliver products that feel intuitive, fast, and reliable.',
           cta_text: 'See my works',
           cta_link: '/projects'
         }
       },
-      particlesOptions: {
-        background: { color: { value: 'transparent' } },
-        fpsLimit: 60,
-        interactivity: {
-          events: {
-            onClick: { enable: true, mode: 'push' },
-            onHover: { enable: true, mode: 'repulse' },
-            resize: true,
-          },
-          modes: {
-            push: { quantity: 4 },
-            repulse: { distance: 150, duration: 0.4 },
-          },
+      highlights: [
+        {
+          title: 'Product-focused engineering',
+          description: 'From user flow to final release, I align technical decisions with product outcomes.'
         },
-        particles: {
-          color: { value: '#f97316' },
-          links: {
-            color: '#555555', distance: 150, enable: true,
-            opacity: 0.4, width: 1,
-          },
-          move: {
-            direction: 'none', enable: true, outModes: { default: 'out' },
-            random: false, speed: 2, straight: false,
-          },
-          number: { density: { enable: true, area: 800 }, value: 80 },
-          opacity: { value: 0.5 },
-          shape: { type: 'circle' },
-          size: { value: { min: 1, max: 4 }, random: true },
+        {
+          title: 'Frontend craftsmanship',
+          description: 'I build responsive, accessible interfaces with consistent interaction and visual rhythm.'
         },
-        detectRetina: true,
-      }
+        {
+          title: 'Quality-first workflow',
+          description: 'Testing, review, and refinement are integrated early to keep delivery stable and predictable.'
+        },
+        {
+          title: 'Collaboration-ready',
+          description: 'I communicate clearly with design, product, and engineering teams to keep momentum high.'
+        }
+      ]
     };
   },
   mounted() {
-    this.updateViewportFlags();
-    window.addEventListener('resize', this.updateViewportFlags, { passive: true });
     this.fetchHomeContent();
-    window.addEventListener('scroll', this.handleScroll, { passive: true });
-  },
-  beforeUnmount() {
-    if (this.scrollRafId) {
-      cancelAnimationFrame(this.scrollRafId);
-      this.scrollRafId = null;
-    }
-    window.removeEventListener('resize', this.updateViewportFlags);
-    window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
-    updateViewportFlags() {
-      this.isMobile = window.matchMedia('(max-width: 768px)').matches;
-      this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    },
     async fetchHomeContent() {
       try {
         const { data, error } = await supabase
@@ -101,82 +72,20 @@ export default {
           .select('*')
           .eq('page', 'home');
 
-        if (error) {
-          console.error('Error fetching home content:', error);
-        } else if (data && data.length > 0) {
-          // Map database content to the data structure
-          data.forEach(item => {
-            if (item.section === 'hero' && Object.prototype.hasOwnProperty.call(this.homeContent.hero, item.key)) {
-              let value = item.value;
-              // Remove surrounding quotes if present
-              if (typeof value === 'string' && value.startsWith('"') && value.endsWith('"')) {
-                value = value.slice(1, -1);
-              }
-              this.homeContent.hero[item.key] = value;
+        if (error || !data || data.length === 0) return;
+
+        data.forEach(item => {
+          if (item.section === 'hero' && Object.prototype.hasOwnProperty.call(this.homeContent.hero, item.key)) {
+            let value = item.value;
+            if (typeof value === 'string' && value.startsWith('"') && value.endsWith('"')) {
+              value = value.slice(1, -1);
             }
-          });
-        }
+            this.homeContent.hero[item.key] = value;
+          }
+        });
       } catch (error) {
         console.error('Error fetching home content:', error);
-        // Keep fallback content - don't error out
       }
-    },
-    handleScroll() {
-      if (this.disableMotionEffects) return;
-      if (this.scrollRafId) return;
-      this.scrollRafId = requestAnimationFrame(() => {
-        this.scrollY = window.scrollY;
-        this.scrollRafId = null;
-      });
-    }
-  },
-  computed: {
-    disableMotionEffects() {
-      return this.isMobile || this.prefersReducedMotion;
-    },
-    showParticles() {
-      return !this.disableMotionEffects;
-    },
-    particlesConfig() {
-      const particleCount = this.isMobile ? 24 : 80;
-      const linkDistance = this.isMobile ? 100 : 150;
-      const speed = this.isMobile ? 1.2 : 2;
-      return {
-        ...this.particlesOptions,
-        particles: {
-          ...this.particlesOptions.particles,
-          number: {
-            ...this.particlesOptions.particles.number,
-            value: particleCount
-          },
-          links: {
-            ...this.particlesOptions.particles.links,
-            distance: linkDistance
-          },
-          move: {
-            ...this.particlesOptions.particles.move,
-            speed
-          }
-        }
-      };
-    },
-    parallaxStyle() {
-      if (this.disableMotionEffects) return {};
-      return {
-        transform: `translateY(${this.scrollY * 0.5}px)`
-      };
-    },
-    heroParallaxStyle() {
-      if (this.disableMotionEffects) return {};
-      return {
-        transform: `translateY(${this.scrollY * -0.3}px)`
-      };
-    },
-    profileParallaxStyle() {
-      if (this.disableMotionEffects) return {};
-      return {
-        transform: `translateY(${this.scrollY * -0.2}px)`
-      };
     }
   }
 }
@@ -184,248 +93,156 @@ export default {
 
 <style scoped>
 .home-view {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 40px 20px;
-  background: linear-gradient(135deg, #fafaf9 0%, #e7e5e4 100%);
-  font-family: 'Poppins', sans-serif;
-  overflow-x: hidden;
-  overflow-y: auto;
+  background: linear-gradient(180deg, #fafaf9 0%, #f5f5f4 100%);
+  min-height: calc(100vh - 80px);
+  padding: 3rem 1.25rem 4rem;
 }
 
 :global(body.dark-theme) .home-view {
-  background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%);
+  background: linear-gradient(180deg, #1c1917 0%, #0c0a09 100%);
 }
 
-/* Styling untuk #tsparticles */
-#tsparticles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0; /* Pastikan di paling belakang */
-  transition: transform 0.1s ease-out;
-  will-change: transform;
+.content-shell {
+  --section-gap: 3.5rem;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
 }
 
 .hero {
-  position: relative;
-  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
   text-align: center;
-  max-width: 700px;
-  padding: 3rem;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transform: translateY(-20px);
-  animation: fadeInSlideUp 0.8s ease-out forwards;
-  transition: all 0.3s ease;
-  will-change: transform;
 }
 
-:global(body.dark-theme) .hero {
-  background-color: rgba(41, 37, 36, 0.9);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+.hero-kicker {
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f97316;
 }
 
-/* ... Pastikan semua style .hero lainnya ada di sini ... */
-@keyframes fadeInSlideUp {
-  from { opacity: 0; transform: translateY(0px); }
-  to { opacity: 1; transform: translateY(-20px); }
-}
-.profile-image-container { 
-  margin-bottom: 25px; 
-  transition: transform 0.1s ease-out;
-  will-change: transform;
-}
-.profile-pic {
-  width: 180px; height: 180px; border-radius: 50%; object-fit: cover;
-  border: 5px solid #fff; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease;
-}
-.profile-pic:hover { transform: scale(1.05); }
 .hero-title {
-  font-size: 2.8rem; font-weight: 700;
-  margin-bottom: 10px; line-height: 1.2;
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.2;
+  color: #1c1917;
 }
 
-:global(body.dark-theme) .hero-title {
-  color: #e4e4e7;
+.hero-title :deep(strong) {
+  color: #f97316;
 }
-
-.hero-title strong { color: #f97316; }
-
-:global(body.dark-theme) .hero-title strong { color: #fb923c; }
 
 .hero-subtitle {
-  font-size: 1.6rem; font-weight: 400; margin-bottom: 25px;
+  margin: 1rem auto 1.75rem;
+  max-width: 640px;
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  color: #44403c;
 }
 
-:global(body.dark-theme) .hero-subtitle {
-  color: #a1a1aa;
-}
-
-.hero-subtitle span { font-weight: 600; color: #d97706; }
-
-:global(body.dark-theme) .hero-subtitle span { color: #fbbf24; }
-
-.hero-description {
-  font-size: 1.1rem; line-height: 1.7; margin-bottom: 30px;
-  max-width: 550px; margin-left: auto; margin-right: auto;
-}
-
-:global(body.dark-theme) .hero-description {
-  color: #a1a1aa;
-}
 .cta-button {
-  display: inline-flex; align-items: center; padding: 14px 30px;
-  background-image: linear-gradient(to right, #f97316 0%, #ea580c 100%);
-  color: white; text-decoration: none; border-radius: 50px;
-  font-size: 1.15rem; font-weight: 600; transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3); margin-top: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.35rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  color: #ffffff;
+  background: #f97316;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
+
 .cta-button:hover {
-  background-image: linear-gradient(to right, #ea580c 0%, #f97316 100%);
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+  background: #ea580c;
+  transform: translateY(-1px);
 }
-.cta-button .arrow { margin-left: 8px; transition: transform 0.3s ease; }
-.cta-button:hover .arrow { transform: translateX(5px); }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+.grid-section {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.info-card {
+  grid-column: span 6;
+  background: #ffffff;
+  border: 1px solid #e7e5e4;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.info-card h2 {
+  margin: 0 0 0.55rem;
+  font-size: 1.1rem;
+  color: #1c1917;
+  text-align: left;
+}
+
+.info-card p {
+  margin: 0;
+  color: #57534e;
+  text-align: left;
+}
+
+.summary-section {
+  background: #ffffff;
+  border: 1px solid #e7e5e4;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.summary-section h2 {
+  margin: 0 0 0.75rem;
+  text-align: left;
+  color: #1c1917;
+}
+
+.summary-text {
+  margin: 0;
+  text-align: left;
+  color: #57534e;
+}
+
+:global(body.dark-theme) .hero-title,
+:global(body.dark-theme) .summary-section h2,
+:global(body.dark-theme) .info-card h2 {
+  color: #f5f5f4;
+}
+
+:global(body.dark-theme) .hero-subtitle,
+:global(body.dark-theme) .summary-text,
+:global(body.dark-theme) .info-card p {
+  color: #d6d3d1;
+}
+
+:global(body.dark-theme) .info-card,
+:global(body.dark-theme) .summary-section {
+  background: #292524;
+  border-color: #44403c;
+}
+
+@media (max-width: 900px) {
+  .content-shell {
+    --section-gap: 3rem;
+  }
+
+  .info-card {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 640px) {
   .home-view {
-    padding: 30px 15px;
-  }
-  
-  .hero {
-    padding: 2rem 1.5rem;
-    max-width: 90vw;
-  }
-  
-  .hero-title { 
-    font-size: 2.2rem; 
-  }
-  
-  .hero-subtitle { 
-    font-size: 1.3rem; 
-  }
-  
-  .profile-pic { 
-    width: 150px; 
-    height: 150px; 
-  }
-  
-  .cta-button { 
-    padding: 12px 25px; 
-    font-size: 1rem; 
+    padding-top: 2.25rem;
   }
 
-  .profile-pic:hover,
-  .cta-button:hover,
-  .cta-button:hover .arrow {
-    transform: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .home-view {
-    padding: 20px 12px;
-    min-height: 100vh;
-  }
-  
-  .hero {
-    padding: 1.5rem 1.2rem;
-    border-radius: 12px;
-    max-width: 95vw;
-    margin: 0 auto;
-  }
-  
-  .profile-image-container {
-    margin-bottom: 20px;
-  }
-  
-  .profile-pic {
-    width: 120px;
-    height: 120px;
-    border-width: 4px;
-  }
-  
-  .hero-title {
-    font-size: 1.6rem;
-    margin-bottom: 8px;
-    line-height: 1.3;
-  }
-  
-  .hero-subtitle {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-  }
-  
-  .hero-description {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    padding: 0 5px;
-  }
-  
-  .cta-button {
-    padding: 12px 20px;
-    font-size: 0.95rem;
-  }
-}
-
-/* Extra small screens */
-@media (max-width: 400px) {
-  .home-view {
-    padding: 15px 8px;
-  }
-  
-  .hero {
-    padding: 1.2rem 1rem;
-    max-width: 96vw;
-    border-radius: 10px;
-  }
-  
-  .profile-pic {
-    width: 100px;
-    height: 100px;
-    border-width: 3px;
-  }
-  
-  .hero-title {
-    font-size: 1.4rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-  
-  .hero-description {
-    font-size: 0.9rem;
-    margin-bottom: 18px;
-  }
-  
-  .cta-button {
-    padding: 10px 18px;
-    font-size: 0.9rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #tsparticles,
-  .hero,
-  .profile-image-container,
-  .profile-pic,
-  .cta-button,
-  .cta-button .arrow {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
+  .content-shell {
+    --section-gap: 2.5rem;
   }
 }
 </style>
