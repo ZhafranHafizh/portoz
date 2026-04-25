@@ -31,7 +31,7 @@
       <div class="cms-header">
         <h1>Portfolio CMS</h1>
         <div class="header-actions">
-          <button @click="handleLogout" class="btn btn-secondary">Logout</button>
+          <button @click="handleLogout" class="btn btn-ghost">Logout</button>
         </div>
       </div>
 
@@ -80,7 +80,7 @@
         <div v-if="activeTab === 'analytics'">
           <div class="tab-header">
             <h2>Visitor Analytics</h2>
-            <button @click="fetchAnalytics" class="btn btn-secondary"><i class="fas fa-sync"></i> Refresh Data</button>
+            <button @click="fetchAnalytics" class="btn btn-ghost"><i class="fas fa-sync"></i> Refresh Data</button>
           </div>
 
           <div v-if="loadingAnalytics" class="loading-state">Loading analytics data...</div>
@@ -235,7 +235,7 @@
         <div class="tab-header">
           <h2>Site Content Management</h2>
           <div style="display: flex; gap: 10px;">
-            <button @click="fetchSiteContent" class="btn btn-secondary" :disabled="loadingSiteContent">
+            <button @click="fetchSiteContent" class="btn btn-ghost" :disabled="loadingSiteContent">
               <i class="fas fa-sync-alt"></i> Refresh
             </button>
             <button @click="saveAllSiteContent" class="btn btn-primary" :disabled="savingSiteContent">
@@ -684,7 +684,7 @@
             </div>
 
             <div class="form-actions">
-              <button type="button" class="btn btn-secondary" @click="showProjectModal = false">Cancel</button>
+              <button type="button" class="btn btn-ghost" @click="showProjectModal = false">Cancel</button>
               <button type="submit" class="btn btn-primary" :disabled="savingProject || uploadingProject">
                 {{ savingProject ? 'Saving...' : 'Save Project' }}
               </button>
@@ -733,7 +733,7 @@
             </div>
 
             <div class="form-actions">
-              <button type="button" class="btn btn-secondary" @click="showGalleryModal = false">Cancel</button>
+              <button type="button" class="btn btn-ghost" @click="showGalleryModal = false">Cancel</button>
               <button type="submit" class="btn btn-primary" :disabled="savingGallery || uploadingGallery">
                 {{ savingGallery ? 'Saving...' : 'Save Gallery Image' }}
               </button>
@@ -772,7 +772,7 @@
           </div>
 
           <div class="form-actions">
-            <button type="button" class="btn btn-secondary" @click="showUploadCVModal = false">Cancel</button>
+            <button type="button" class="btn btn-ghost" @click="showUploadCVModal = false">Cancel</button>
             <button type="submit" class="btn btn-primary" :disabled="uploadingCV || savingCV">
               {{ uploadingCV ? 'Uploading...' : savingCV ? 'Saving...' : 'Upload CV' }}
             </button>
@@ -1685,9 +1685,23 @@ export default {
 
 <style scoped>
 .admin-view {
+  --admin-radius: 12px;
+  --admin-radius-sm: 10px;
+  --admin-pad-x: 14px;
+  --admin-pad-y: 10px;
+  --admin-border: 1px solid rgba(15, 23, 42, 0.12);
+  --admin-border-strong: 1px solid rgba(15, 23, 42, 0.2);
+  --admin-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.82));
+  --admin-surface: #ffffff;
+  --admin-surface-soft: #f8fafc;
+  --admin-text: #1f2937;
+  --admin-muted: #6b7280;
+  --admin-accent: #2563eb;
+  --admin-accent-soft: #eff6ff;
+  --admin-fast: 140ms ease;
   min-height: 100vh;
   background-color: #f3f4f6;
-  color: #1f2937;
+  color: var(--admin-text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
@@ -1699,10 +1713,12 @@ export default {
 }
 
 .login-box {
-  background: white;
+  background: var(--admin-glass);
   padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: var(--admin-radius);
+  border: var(--admin-border);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(4px);
   width: 100%;
   max-width: 400px;
   text-align: center;
@@ -1719,46 +1735,85 @@ export default {
 
 .form-input {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
+  padding: var(--admin-pad-y) var(--admin-pad-x);
+  border: var(--admin-border);
+  background: rgba(255, 255, 255, 0.86);
+  border-radius: var(--admin-radius-sm);
   margin-bottom: 16px;
   font-size: 14px;
   box-sizing: border-box;
+  transition: border-color var(--admin-fast), box-shadow var(--admin-fast), background-color var(--admin-fast);
+}
+
+.form-input:hover {
+  border-color: rgba(37, 99, 235, 0.35);
+}
+
+.form-input:focus-visible {
+  outline: none;
+  border-color: rgba(37, 99, 235, 0.6);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+  background: #fff;
 }
 
 .btn {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 4px;
+  padding: var(--admin-pad-y) var(--admin-pad-x);
+  border: var(--admin-border);
+  border-radius: var(--admin-radius-sm);
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: transform var(--admin-fast), border-color var(--admin-fast), background-color var(--admin-fast), box-shadow var(--admin-fast), color var(--admin-fast);
   width: auto;
 }
 
 .btn-primary {
-  background-color: #3b82f6;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: white;
+  border-color: transparent;
   width: 100%;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.24);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.24);
 }
 
 .btn-primary:disabled {
   background-color: #93c5fd;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .btn-secondary {
-  background-color: #e5e7eb;
-  color: #4b5563;
+  background: var(--admin-surface-soft);
+  color: var(--admin-text);
+  border-color: rgba(15, 23, 42, 0.18);
 }
 
 .btn-secondary:hover {
-  background-color: #d1d5db;
+  background-color: #eef2f7;
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--admin-muted);
+  border-color: rgba(15, 23, 42, 0.14);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(15, 23, 42, 0.26);
+  color: var(--admin-text);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.16);
 }
 
 .btn-sm {
@@ -1811,26 +1866,29 @@ export default {
 }
 
 .tab-btn {
-  padding: 12px 24px;
-  background: none;
-  border: none;
-  border-bottom: 3px solid transparent;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.55);
+  border: var(--admin-border);
+  border-radius: var(--admin-radius-sm);
   font-weight: 500;
-  color: #6b7280;
+  color: var(--admin-muted);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background-color var(--admin-fast), border-color var(--admin-fast), color var(--admin-fast), transform var(--admin-fast);
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
 .tab-btn:hover {
-  color: #3b82f6;
+  color: var(--admin-accent);
+  border-color: rgba(37, 99, 235, 0.32);
+  background: rgba(239, 246, 255, 0.85);
 }
 
 .tab-btn.active {
-  color: #3b82f6;
-  border-bottom-color: #3b82f6;
+  color: var(--admin-accent);
+  border-color: rgba(37, 99, 235, 0.45);
+  background: var(--admin-accent-soft);
 }
 
 .tab-header {
@@ -1843,13 +1901,16 @@ export default {
 .tab-header h2 {
   margin: 0;
   font-size: 20px;
-  color: #1f2937;
+  color: var(--admin-text);
+  letter-spacing: -0.01em;
 }
 
 .cms-content {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  background: var(--admin-glass);
+  border-radius: var(--admin-radius);
+  border: var(--admin-border);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+  backdrop-filter: blur(4px);
   overflow-x: auto;
 }
 
@@ -1915,8 +1976,10 @@ export default {
 }
 
 .modal-content {
-  background: white;
-  border-radius: 8px;
+  background: var(--admin-glass);
+  border-radius: var(--admin-radius);
+  border: var(--admin-border);
+  backdrop-filter: blur(4px);
   width: 100%;
   max-width: 800px;
   max-height: 90vh;
@@ -1993,8 +2056,10 @@ export default {
 
 /* Site Content Editor Styles */
 .site-content-editor {
-  background: white;
-  border-radius: 8px;
+  background: var(--admin-glass);
+  border-radius: var(--admin-radius);
+  border: var(--admin-border);
+  backdrop-filter: blur(4px);
   padding: 20px;
 }
 
@@ -2443,10 +2508,10 @@ input:checked + .slider:before {
 
 .section-toggle {
   width: 100%;
-  padding: 16px 20px;
-  background: #f9fafb;
+  padding: 14px 16px;
+  background: rgba(248, 250, 252, 0.9);
   border: none;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: var(--admin-border);
   text-align: left;
   font-size: 16px;
   font-weight: 600;
@@ -2457,7 +2522,7 @@ input:checked + .slider:before {
 }
 
 .section-toggle:hover {
-  background: #f3f4f6;
+  background: #eef2f7;
 }
 
 .section-body {
@@ -2468,9 +2533,23 @@ input:checked + .slider:before {
   margin: 20px 0 10px 0;
   font-size: 14px;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--admin-muted);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
+  position: relative;
+  padding-left: 10px;
+}
+
+.section-body h4::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.42);
 }
 
 .form-row {
@@ -2543,20 +2622,22 @@ input:checked + .slider:before {
 
 .status-active {
   display: inline-block;
-  padding: 4px 12px;
-  background: #dcfce7;
+  padding: 5px 12px;
+  background: rgba(220, 252, 231, 0.9);
+  border: 1px solid rgba(34, 197, 94, 0.24);
   color: #166534;
-  border-radius: 12px;
+  border-radius: var(--admin-radius-sm);
   font-size: 12px;
   font-weight: 600;
 }
 
 .status-inactive {
   display: inline-block;
-  padding: 4px 12px;
-  background: #f3f4f6;
-  color: #6b7280;
-  border-radius: 12px;
+  padding: 5px 12px;
+  background: rgba(243, 244, 246, 0.85);
+  border: var(--admin-border);
+  color: var(--admin-muted);
+  border-radius: var(--admin-radius-sm);
   font-size: 12px;
   font-weight: 600;
 }
@@ -2654,12 +2735,19 @@ input:checked + .slider:before {
 }
 
 .stat-card {
-  background: white;
+  background: rgba(255, 255, 255, 0.72);
   padding: 24px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  border-radius: var(--admin-radius);
+  border: var(--admin-border);
   text-align: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.05);
+  transition: transform var(--admin-fast), border-color var(--admin-fast), box-shadow var(--admin-fast);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(15, 23, 42, 0.2);
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
 }
 
 .stat-card h3 {

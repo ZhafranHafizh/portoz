@@ -1,0 +1,99 @@
+/*
+  Global Design Tokens (Single Source of Truth)
+  ------------------------------------------------
+  Core tokens define primitive values.
+  Semantic tokens map intent so components can stay implementation-agnostic.
+*/
+:root {
+  /* =========================
+     Core: Color primitives
+     ========================= */
+  --color-bg-950: #d9d1c7;
+  --color-bg-900: #f7f4ef;
+  --color-surface-850: #f1ece5;
+  --color-surface-800: #e8e0d5;
+
+  --color-text-50: #3a3028;
+  --color-text-200: #5a4d41;
+  --color-text-400: #8a7a6b;
+
+  /* Warm neutral accent (soft brown) */
+  --color-accent-400: #a89278;
+  --color-accent-500: #8f775d;
+  --color-accent-600: #7a654f;
+
+  --color-border-700: rgba(143, 119, 93, 0.2);
+  --color-border-600: rgba(143, 119, 93, 0.32);
+
+  /* =========================
+     Semantic tokens
+     ========================= */
+  --background: var(--color-bg-900);
+  --surface: var(--color-surface-850);
+  --surface-elevated: var(--color-surface-800);
+
+  --text-primary: var(--color-text-50);
+  --text-secondary: var(--color-text-200);
+  --text-muted: var(--color-text-400);
+
+  --accent: var(--color-accent-500);
+  --accent-hover: var(--color-accent-400);
+  --accent-strong: var(--color-accent-600);
+  --accent-soft: color-mix(in srgb, var(--accent) 18%, white);
+  --accent-softer: color-mix(in srgb, var(--accent) 10%, white);
+  --accent-contrast: #fffaf4;
+
+  --border-subtle: var(--color-border-700);
+  --border-strong: var(--color-border-600);
+
+  /* =========================
+     Typography
+     ========================= */
+  --font-sans: 'Inter', 'Plus Jakarta Sans', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --text-xs: 0.75rem;   /* 12px */
+  --text-sm: 0.875rem;  /* 14px */
+  --text-md: 1rem;      /* 16px */
+  --text-lg: 1.125rem;  /* 18px */
+  --text-xl: 1.25rem;   /* 20px */
+  --text-2xl: 1.5rem;   /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.7;
+
+  /* =========================
+     Spacing (4/8 system)
+     ========================= */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* =========================
+     Radius / Border / Shadow / Blur
+     ========================= */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  --border-thin: 1px;
+  --border-medium: 2px;
+
+  --shadow-sm: 0 2px 10px rgba(79, 58, 42, 0.1);
+  --shadow-md: 0 10px 24px rgba(79, 58, 42, 0.14);
+
+  --blur-sm: 4px;
+  --blur-md: 8px;
+
+  --transition-fast: 160ms ease;
+  --transition-base: 240ms ease;
+}

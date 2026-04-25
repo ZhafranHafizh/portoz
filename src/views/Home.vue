@@ -1,22 +1,39 @@
 <template>
   <div class="home-view">
-    <Particles
-      id="tsparticles"
-      :options="particlesOptions"
-      :style="parallaxStyle"
-    />
+    <main class="content-shell">
+      <section class="hero" aria-labelledby="home-hero-title">
+        <div class="hero-geometry" aria-hidden="true">
+          <span class="geo-circle"></span>
+          <span class="geo-line"></span>
+          <span class="geo-diamond"></span>
+        </div>
+        <p class="hero-kicker">Portfolio</p>
+        <h1 id="home-hero-title" class="hero-title" v-html="homeContent.hero.title"></h1>
+        <p class="hero-subtitle" v-html="homeContent.hero.subtitle"></p>
+        <router-link :to="homeContent.hero.cta_link" class="cta-button">
+          {{ homeContent.hero.cta_text }}
+        </router-link>
+      </section>
 
-    <section class="hero" :style="heroParallaxStyle">
-      <div class="profile-image-container" :style="profileParallaxStyle">
-        <img :src="homeContent.hero.profile_image" alt="Profile Photo" class="profile-pic">
-      </div>
-      <h1 class="hero-title" v-html="homeContent.hero.title"></h1>
-      <h2 class="hero-subtitle" v-html="homeContent.hero.subtitle"></h2>
-      <p class="hero-description" v-html="homeContent.hero.description"></p>
-      <router-link :to="homeContent.hero.cta_link" class="cta-button">
-        {{ homeContent.hero.cta_text }} <span class="arrow">&rarr;</span>
-      </router-link>
-    </section>
+      <section class="grid-section" aria-label="Highlights">
+        <article class="info-card" v-for="(item, index) in highlights" :key="item.title">
+          <div class="card-heading">
+            <span class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                <path :d="iconPaths[index % iconPaths.length]" />
+              </svg>
+            </span>
+            <h2>{{ item.title }}</h2>
+          </div>
+          <p>{{ item.description }}</p>
+        </article>
+      </section>
+
+      <section class="summary-section" aria-label="About this site">
+        <h2>Built for clarity and impact</h2>
+        <p class="summary-text" v-html="homeContent.hero.description"></p>
+      </section>
+    </main>
   </div>
 </template>
 
@@ -27,56 +44,43 @@ export default {
   name: 'HomeView',
   data() {
     return {
-      scrollY: 0,
       homeContent: {
         hero: {
-          profile_image: '../../public/galeri/Profil.png',
-          title: "Hello, I'm **Zhafran Hafizh**!",
-          subtitle: 'A Software Engineer Bridging Design, Development, and Quality',
-          description: 'Hello! This is where design meets code. As a product development enthusiast, I excel at creating intuitive UI/UX, implementing robust front-end interfaces, and ensuring software quality. Take a look at my end-to-end projects.',
+          title: "Hello, I'm <strong>Zhafran Hafizh</strong>",
+          subtitle: 'Software Engineer who turns product ideas into polished digital experiences.',
+          description: 'I focus on UI/UX, front-end engineering, and software quality to deliver products that feel intuitive, fast, and reliable.',
           cta_text: 'See my works',
           cta_link: '/projects'
         }
       },
-      particlesOptions: {
-        background: { color: { value: 'transparent' } },
-        fpsLimit: 60,
-        interactivity: {
-          events: {
-            onClick: { enable: true, mode: 'push' },
-            onHover: { enable: true, mode: 'repulse' },
-            resize: true,
-          },
-          modes: {
-            push: { quantity: 4 },
-            repulse: { distance: 150, duration: 0.4 },
-          },
+      highlights: [
+        {
+          title: 'Product-focused engineering',
+          description: 'From user flow to final release, I align technical decisions with product outcomes.'
         },
-        particles: {
-          color: { value: '#8b5a2b' },
-          links: {
-            color: '#555555', distance: 150, enable: true,
-            opacity: 0.4, width: 1,
-          },
-          move: {
-            direction: 'none', enable: true, outModes: { default: 'out' },
-            random: false, speed: 2, straight: false,
-          },
-          number: { density: { enable: true, area: 800 }, value: 80 },
-          opacity: { value: 0.5 },
-          shape: { type: 'circle' },
-          size: { value: { min: 1, max: 4 }, random: true },
+        {
+          title: 'Frontend craftsmanship',
+          description: 'I build responsive, accessible interfaces with consistent interaction and visual rhythm.'
         },
-        detectRetina: true,
-      }
+        {
+          title: 'Quality-first workflow',
+          description: 'Testing, review, and refinement are integrated early to keep delivery stable and predictable.'
+        },
+        {
+          title: 'Collaboration-ready',
+          description: 'I communicate clearly with design, product, and engineering teams to keep momentum high.'
+        }
+      ],
+      iconPaths: [
+        'M4 12h16M12 4v16M6 6l12 12',
+        'M4 18L10 6l4 8 2-4 4 8',
+        'M6 8h12M6 12h8M6 16h12',
+        'M5 12h4l2-6 2 12 2-6h4'
+      ]
     };
   },
   mounted() {
     this.fetchHomeContent();
-    window.addEventListener('scroll', this.handleScroll);
-  },
-  beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
     async fetchHomeContent() {
@@ -86,45 +90,20 @@ export default {
           .select('*')
           .eq('page', 'home');
 
-        if (error) {
-          console.error('Error fetching home content:', error);
-        } else if (data && data.length > 0) {
-          // Map database content to the data structure
-          data.forEach(item => {
-            if (item.section === 'hero' && Object.prototype.hasOwnProperty.call(this.homeContent.hero, item.key)) {
-              let value = item.value;
-              // Remove surrounding quotes if present
-              if (typeof value === 'string' && value.startsWith('"') && value.endsWith('"')) {
-                value = value.slice(1, -1);
-              }
-              this.homeContent.hero[item.key] = value;
+        if (error || !data || data.length === 0) return;
+
+        data.forEach(item => {
+          if (item.section === 'hero' && Object.prototype.hasOwnProperty.call(this.homeContent.hero, item.key)) {
+            let value = item.value;
+            if (typeof value === 'string' && value.startsWith('"') && value.endsWith('"')) {
+              value = value.slice(1, -1);
             }
-          });
-        }
+            this.homeContent.hero[item.key] = value;
+          }
+        });
       } catch (error) {
         console.error('Error fetching home content:', error);
-        // Keep fallback content - don't error out
       }
-    },
-    handleScroll() {
-      this.scrollY = window.scrollY;
-    }
-  },
-  computed: {
-    parallaxStyle() {
-      return {
-        transform: `translateY(${this.scrollY * 0.5}px)`
-      };
-    },
-    heroParallaxStyle() {
-      return {
-        transform: `translateY(${this.scrollY * -0.3}px)`
-      };
-    },
-    profileParallaxStyle() {
-      return {
-        transform: `translateY(${this.scrollY * -0.2}px)`
-      };
     }
   }
 }
@@ -132,226 +111,284 @@ export default {
 
 <style scoped>
 .home-view {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 40px 20px;
-  background: linear-gradient(135deg, #fafaf9 0%, #e7e5e4 100%);
-  font-family: 'Poppins', sans-serif;
-  overflow-x: hidden;
-  overflow-y: auto;
+  background: linear-gradient(180deg, var(--background) 0%, var(--surface) 100%);
+  min-height: calc(100vh - 80px);
+  padding: 3rem 1.25rem 4rem;
 }
 
 :global(body.dark-theme) .home-view {
-  background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%);
-}
-
-/* Styling untuk #tsparticles */
-#tsparticles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0; /* Pastikan di paling belakang */
-  transition: transform 0.1s ease-out;
-}
-
-.hero {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  max-width: 700px;
-  padding: 3rem;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transform: translateY(-20px);
-  animation: fadeInSlideUp 0.8s ease-out forwards;
-  transition: all 0.3s ease;
+  background: linear-gradient(180deg, var(--surface-elevated) 0%, var(--color-bg-950) 100%);
 }
 
 :global(body.dark-theme) .hero {
-  background-color: rgba(41, 37, 36, 0.9);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-color: rgba(251, 146, 60, 0.22);
+  background:
+    linear-gradient(135deg, rgba(249, 115, 22, 0.18), rgba(28, 25, 23, 0.15) 55%),
+    linear-gradient(180deg, rgba(41, 37, 36, 0.94), rgba(28, 25, 23, 0.92));
 }
 
-/* ... Pastikan semua style .hero lainnya ada di sini ... */
-@keyframes fadeInSlideUp {
-  from { opacity: 0; transform: translateY(0px); }
-  to { opacity: 1; transform: translateY(-20px); }
+:global(body.dark-theme) .hero::after {
+  background-image:
+    linear-gradient(to right, rgba(251, 146, 60, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(251, 146, 60, 0.08) 1px, transparent 1px);
 }
-.profile-image-container { 
-  margin-bottom: 25px; 
-  transition: transform 0.1s ease-out;
+
+.content-shell {
+  --section-gap: 3.5rem;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
 }
-.profile-pic {
-  width: 180px; height: 180px; border-radius: 50%; object-fit: cover;
-  border: 5px solid #fff; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease;
+
+.hero {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: 18px;
+  border: 1px solid var(--border-subtle);
+  background:
+    linear-gradient(135deg, var(--accent-softer), rgba(255, 255, 255, 0) 52%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.9));
+  overflow: hidden;
 }
-.profile-pic:hover { transform: scale(1.05); }
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(249, 115, 22, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(249, 115, 22, 0.05) 1px, transparent 1px);
+  background-size: 34px 34px;
+  opacity: 0.35;
+  pointer-events: none;
+  mask-image: radial-gradient(circle at 50% 35%, #000 40%, transparent 85%);
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-geometry {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.geo-circle,
+.geo-line,
+.geo-diamond {
+  position: absolute;
+  opacity: 0.55;
+}
+
+.geo-circle {
+  width: 68px;
+  height: 68px;
+  border: 1px solid rgba(249, 115, 22, 0.45);
+  border-radius: 50%;
+  right: 4%;
+  top: 14%;
+}
+
+.geo-line {
+  width: 88px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(249, 115, 22, 0), rgba(249, 115, 22, 0.42), rgba(249, 115, 22, 0));
+  left: 8%;
+  bottom: 22%;
+}
+
+.geo-diamond {
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(249, 115, 22, 0.55);
+  transform: rotate(45deg);
+  right: 16%;
+  bottom: 16%;
+}
+
+.hero-kicker {
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
 .hero-title {
-  font-size: 2.8rem; font-weight: 700;
-  margin-bottom: 10px; line-height: 1.2;
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.2;
+  color: var(--text-primary);
 }
 
-:global(body.dark-theme) .hero-title {
-  color: #e4e4e7;
+.hero-title :deep(strong) {
+  color: var(--accent);
 }
-
-.hero-title strong { color: #8b5a2b; }
-
-:global(body.dark-theme) .hero-title strong { color: #d4a373; }
 
 .hero-subtitle {
-  font-size: 1.6rem; font-weight: 400; margin-bottom: 25px;
+  margin: 1rem auto 1.75rem;
+  max-width: 640px;
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  color: var(--text-secondary);
 }
 
-:global(body.dark-theme) .hero-subtitle {
-  color: #a1a1aa;
-}
-
-.hero-subtitle span { font-weight: 600; color: #6b4423; }
-
-:global(body.dark-theme) .hero-subtitle span { color: #c48b5d; }
-
-.hero-description {
-  font-size: 1.1rem; line-height: 1.7; margin-bottom: 30px;
-  max-width: 550px; margin-left: auto; margin-right: auto;
-}
-
-:global(body.dark-theme) .hero-description {
-  color: #a1a1aa;
-}
 .cta-button {
-  display: inline-flex; align-items: center; padding: 14px 30px;
-  background-image: linear-gradient(to right, #8b5a2b 0%, #6b4423 100%);
-  color: white; text-decoration: none; border-radius: 50px;
-  font-size: 1.15rem; font-weight: 600; transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(139, 90, 43, 0.3); margin-top: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.35rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  color: var(--accent-contrast);
+  background: var(--gradient-primary);
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
+
 .cta-button:hover {
-  background-image: linear-gradient(to right, #6b4423 0%, #8b5a2b 100%);
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(139, 90, 43, 0.4);
-}
-.cta-button .arrow { margin-left: 8px; transition: transform 0.3s ease; }
-.cta-button:hover .arrow { transform: translateX(5px); }
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .home-view {
-    padding: 30px 15px;
-  }
-  
-  .hero {
-    padding: 2rem 1.5rem;
-    max-width: 90vw;
-  }
-  
-  .hero-title { 
-    font-size: 2.2rem; 
-  }
-  
-  .hero-subtitle { 
-    font-size: 1.3rem; 
-  }
-  
-  .profile-pic { 
-    width: 150px; 
-    height: 150px; 
-  }
-  
-  .cta-button { 
-    padding: 12px 25px; 
-    font-size: 1rem; 
-  }
+  background: var(--accent-strong);
+  transform: translateY(-1px);
 }
 
-@media (max-width: 480px) {
-  .home-view {
-    padding: 20px 12px;
-    min-height: 100vh;
+.grid-section {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.25rem;
+  position: relative;
+}
+
+.grid-section::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  background-image: radial-gradient(rgba(120, 113, 108, 0.1) 0.6px, transparent 0.6px);
+  background-size: 12px 12px;
+  opacity: 0.25;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+}
+
+.info-card {
+  grid-column: span 6;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.25rem;
+  position: relative;
+}
+
+.card-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.55rem;
+}
+
+.card-icon {
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-softer);
+}
+
+.card-icon svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: var(--accent-strong);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.info-card h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  text-align: left;
+}
+
+.info-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  text-align: left;
+}
+
+.summary-section {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.summary-section h2 {
+  margin: 0 0 0.75rem;
+  text-align: left;
+  color: var(--text-primary);
+}
+
+.summary-text {
+  margin: 0;
+  text-align: left;
+  color: var(--text-secondary);
+}
+
+:global(body.dark-theme) .hero-title,
+:global(body.dark-theme) .summary-section h2,
+:global(body.dark-theme) .info-card h2 {
+  color: #f5f5f4;
+}
+
+:global(body.dark-theme) .hero-subtitle,
+:global(body.dark-theme) .summary-text,
+:global(body.dark-theme) .info-card p {
+  color: #d6d3d1;
+}
+
+:global(body.dark-theme) .info-card,
+:global(body.dark-theme) .summary-section {
+  background: #292524;
+  border-color: #44403c;
+}
+
+:global(body.dark-theme) .card-icon {
+  border-color: rgba(251, 146, 60, 0.4);
+  background: rgba(251, 146, 60, 0.08);
+}
+
+:global(body.dark-theme) .card-icon svg {
+  stroke: #fdba74;
+}
+
+@media (max-width: 900px) {
+  .content-shell {
+    --section-gap: 3rem;
   }
-  
-  .hero {
-    padding: 1.5rem 1.2rem;
-    border-radius: 12px;
-    max-width: 95vw;
-    margin: 0 auto;
-  }
-  
-  .profile-image-container {
-    margin-bottom: 20px;
-  }
-  
-  .profile-pic {
-    width: 120px;
-    height: 120px;
-    border-width: 4px;
-  }
-  
-  .hero-title {
-    font-size: 1.6rem;
-    margin-bottom: 8px;
-    line-height: 1.3;
-  }
-  
-  .hero-subtitle {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-  }
-  
-  .hero-description {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    padding: 0 5px;
-  }
-  
-  .cta-button {
-    padding: 12px 20px;
-    font-size: 0.95rem;
+
+  .info-card {
+    grid-column: span 12;
   }
 }
 
-/* Extra small screens */
-@media (max-width: 400px) {
+@media (max-width: 640px) {
   .home-view {
-    padding: 15px 8px;
+    padding-top: 2.25rem;
   }
-  
-  .hero {
-    padding: 1.2rem 1rem;
-    max-width: 96vw;
-    border-radius: 10px;
-  }
-  
-  .profile-pic {
-    width: 100px;
-    height: 100px;
-    border-width: 3px;
-  }
-  
-  .hero-title {
-    font-size: 1.4rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-  
-  .hero-description {
-    font-size: 0.9rem;
-    margin-bottom: 18px;
-  }
-  
-  .cta-button {
-    padding: 10px 18px;
-    font-size: 0.9rem;
+
+  .content-shell {
+    --section-gap: 2.5rem;
   }
 }
 </style>

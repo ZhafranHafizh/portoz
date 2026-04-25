@@ -176,7 +176,7 @@ export default {
 <style scoped>
 .anchor-navigation {
   position: fixed;
-  right: 30px;
+  right: clamp(8px, 1.5vw, 20px);
   top: 50%;
   transform: translateY(-50%);
   z-index: 999;
@@ -193,10 +193,11 @@ export default {
 .nav-container {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border-radius: 30px;
-  padding: 16px 12px;
+  border-radius: 26px;
+  padding: 14px 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.3);
+  max-width: min(86vw, 96px);
 }
 
 :global(body.dark-theme) .nav-container {
@@ -211,7 +212,7 @@ export default {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .nav-item {
@@ -223,7 +224,7 @@ export default {
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  padding: 6px;
+  padding: 5px;
   border-radius: 20px;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -234,8 +235,8 @@ export default {
 }
 
 .dot {
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
   background: #d1d5db;
   transition: all 0.3s ease;
@@ -266,6 +267,8 @@ export default {
   transform: translateX(-10px);
   transition: all 0.3s ease;
   pointer-events: none;
+  max-width: 0;
+  overflow: hidden;
 }
 
 :global(body.dark-theme) .label {
@@ -276,6 +279,7 @@ export default {
 .nav-item a.active .label {
   opacity: 1;
   transform: translateX(0);
+  max-width: 80px;
 }
 
 .nav-item a.active .label {
@@ -287,11 +291,11 @@ export default {
 }
 
 .back-to-top {
-  margin-top: 12px;
+  margin-top: 10px;
   width: 100%;
-  padding: 8px;
-  background: rgba(139, 90, 43, 0.1);
-  border: 1px solid rgba(139, 90, 43, 0.3);
+  padding: 7px;
+  background: rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.3);
   border-radius: 20px;
   color: #8b5a2b;
   cursor: pointer;
@@ -321,7 +325,7 @@ export default {
 .back-to-tab {
   margin-top: 8px;
   width: 100%;
-  padding: 8px;
+  padding: 7px;
   background: rgba(16, 185, 129, 0.15);
   border: 1px solid rgba(16, 185, 129, 0.3);
   border-radius: 20px;
@@ -352,23 +356,32 @@ export default {
 /* Responsive: hide on smaller screens */
 @media (max-width: 1024px) {
   .anchor-navigation {
-    right: 20px;
+    right: 10px;
   }
 }
 
 @media (max-width: 768px) {
   .anchor-navigation {
+    right: 8px;
+    top: auto;
+    bottom: 24px;
+    transform: none;
+  }
+
+  .nav-container {
+    border-radius: 24px;
+    padding: 12px 9px;
+  }
+
+  .label {
     display: none;
   }
 }
 
 @media (max-width: 480px) {
-  .label {
-    display: none;
-  }
-  
   .nav-container {
-    padding: 12px 8px;
+    max-width: 72px;
+    padding: 10px 8px;
   }
   
   .nav-dots {

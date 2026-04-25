@@ -296,9 +296,10 @@ export default {
 <style scoped>
 .projects-view {
   min-height: 100vh;
-  background: linear-gradient(135deg, #fafaf9 0%, #e7e5e4 100%);
+  background: linear-gradient(135deg, var(--background) 0%, var(--surface) 100%);
   padding: 0;
   font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  overflow-x: clip;
 }
 
 :global(body.dark-theme) .projects-view {
@@ -309,10 +310,10 @@ export default {
 .projects-header {
   padding: 80px 2rem 60px;
   text-align: center;
-  background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
-  color: white;
+  background: var(--gradient-primary);
+  color: var(--accent-contrast);
   position: relative;
-  overflow: hidden;
+  overflow: clip;
 }
 
 :global(body.dark-theme) .projects-header {
@@ -364,6 +365,11 @@ export default {
   opacity: 0.9;
   font-weight: 400;
   line-height: 1.6;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  text-wrap: balance;
+  word-break: break-word;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
@@ -392,8 +398,8 @@ export default {
   align-items: center;
   gap: 12px;
   padding: 16px 32px;
-  background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+  color: var(--accent-contrast);
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
@@ -411,7 +417,7 @@ export default {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #6b4423 0%, #8b5a2b 100%);
+  background: linear-gradient(135deg, var(--accent-strong) 0%, var(--accent) 100%);
   transition: left 0.3s ease;
   z-index: -1;
 }
@@ -470,7 +476,7 @@ export default {
 .filter-pill:hover,
 .filter-pill.active {
   background: white;
-  color: #8b5a2b;
+  color: var(--accent);
   border-color: white;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -478,11 +484,11 @@ export default {
 
 /* Bento Grid */
 .bento-grid {
-  padding: 60px 2rem;
+  padding: 60px clamp(1.25rem, 2vw, 2rem);
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
   grid-auto-rows: 400px;
   gap: 24px;
   opacity: 0;
@@ -543,7 +549,7 @@ export default {
 
 /* Bento Card */
 .bento-card {
-  background: white;
+  background: var(--surface);
   border-radius: 24px;
   overflow: hidden;
   height: 100%;
@@ -553,6 +559,7 @@ export default {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   border: 1px solid rgba(255, 255, 255, 0.8);
   position: relative;
+  isolation: isolate;
 }
 
 :global(body.dark-theme) .bento-card {
@@ -589,6 +596,7 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -602,7 +610,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(139, 90, 43, 0.8), rgba(107, 68, 35, 0.8));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 80%, transparent), color-mix(in srgb, var(--accent-strong) 80%, transparent));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -659,7 +667,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(139, 90, 43, 0.95), rgba(107, 68, 35, 0.95));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 95%, transparent), color-mix(in srgb, var(--accent-strong) 95%, transparent));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -845,6 +853,8 @@ export default {
   /* background removed to fix dark mode issue */
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 60px;
   opacity: 0;
   transform: translateY(30px);
@@ -952,6 +962,8 @@ export default {
   .page-subtitle {
     font-size: 1.1rem;
     margin-bottom: 30px;
+    max-width: 100%;
+    text-wrap: pretty;
   }
   
   .cv-download-section {
@@ -1057,6 +1069,7 @@ export default {
     font-size: 1rem;
     margin-bottom: 25px;
     line-height: 1.5;
+    max-width: 38ch;
   }
   
   .cv-download-section {
