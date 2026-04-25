@@ -7,7 +7,7 @@
           <span class="geo-line"></span>
           <span class="geo-diamond"></span>
         </div>
-        <p class="hero-kicker">Portfolio</p>
+        <p class="hero-kicker">Software Engineer Portfolio</p>
         <h1 id="home-hero-title" class="hero-title" v-html="homeContent.hero.title"></h1>
         <p class="hero-subtitle" v-html="homeContent.hero.subtitle"></p>
         <router-link :to="homeContent.hero.cta_link" class="cta-button">
@@ -15,7 +15,8 @@
         </router-link>
       </section>
 
-      <section class="grid-section" aria-label="Highlights">
+      <section class="grid-section" aria-labelledby="home-highlights-title">
+        <h2 id="home-highlights-title" class="section-title">Core strengths</h2>
         <article class="info-card" v-for="(item, index) in highlights" :key="item.title">
           <div class="card-heading">
             <span class="card-icon" aria-hidden="true">
@@ -23,14 +24,14 @@
                 <path :d="iconPaths[index % iconPaths.length]" />
               </svg>
             </span>
-            <h2>{{ item.title }}</h2>
+            <h3>{{ item.title }}</h3>
           </div>
           <p>{{ item.description }}</p>
         </article>
       </section>
 
       <section class="summary-section" aria-label="About this site">
-        <h2>Built for clarity and impact</h2>
+        <h2>How I work</h2>
         <p class="summary-text" v-html="homeContent.hero.description"></p>
       </section>
     </main>
@@ -47,28 +48,28 @@ export default {
       homeContent: {
         hero: {
           title: "Hello, I'm <strong>Zhafran Hafizh</strong>",
-          subtitle: 'Software Engineer who turns product ideas into polished digital experiences.',
-          description: 'I focus on UI/UX, front-end engineering, and software quality to deliver products that feel intuitive, fast, and reliable.',
-          cta_text: 'See my works',
+          subtitle: 'I design and build production-ready web interfaces with measurable performance and accessibility standards.',
+          description: 'My workflow combines clear requirements, reusable UI architecture, and practical QA so each release is stable, maintainable, and ready for scale.',
+          cta_text: 'Review selected projects',
           cta_link: '/projects'
         }
       },
       highlights: [
         {
-          title: 'Product-focused engineering',
-          description: 'From user flow to final release, I align technical decisions with product outcomes.'
+          title: 'Product-aligned execution',
+          description: 'I translate business goals into clear technical scope, delivery milestones, and release criteria.'
         },
         {
-          title: 'Frontend craftsmanship',
-          description: 'I build responsive, accessible interfaces with consistent interaction and visual rhythm.'
+          title: 'Frontend architecture',
+          description: 'I build modular Vue components with predictable state, maintainable styling, and responsive behavior.'
         },
         {
-          title: 'Quality-first workflow',
-          description: 'Testing, review, and refinement are integrated early to keep delivery stable and predictable.'
+          title: 'Quality and reliability',
+          description: 'I use review checklists, regression testing, and performance checks before every production deployment.'
         },
         {
-          title: 'Collaboration-ready',
-          description: 'I communicate clearly with design, product, and engineering teams to keep momentum high.'
+          title: 'Cross-functional collaboration',
+          description: 'I document decisions and communicate trade-offs clearly with design, product, and engineering stakeholders.'
         }
       ],
       iconPaths: [
@@ -235,9 +236,10 @@ export default {
 
 .hero-subtitle {
   margin: 1rem auto 1.75rem;
-  max-width: 640px;
+  max-width: 72ch;
   font-size: clamp(1rem, 2.2vw, 1.2rem);
-  color: #44403c;
+  line-height: 1.65;
+  color: #292524;
 }
 
 .cta-button {
@@ -263,6 +265,14 @@ export default {
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 1.25rem;
   position: relative;
+}
+
+.section-title {
+  grid-column: span 12;
+  margin: 0;
+  font-size: clamp(1.3rem, 2vw, 1.55rem);
+  letter-spacing: -0.01em;
+  color: #1c1917;
 }
 
 .grid-section::before {
@@ -313,16 +323,18 @@ export default {
   stroke-linejoin: round;
 }
 
-.info-card h2 {
+.info-card h3 {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: #1c1917;
   text-align: left;
 }
 
 .info-card p {
   margin: 0;
-  color: #57534e;
+  max-width: 68ch;
+  line-height: 1.65;
+  color: #292524;
   text-align: left;
 }
 
@@ -341,20 +353,23 @@ export default {
 
 .summary-text {
   margin: 0;
+  max-width: 72ch;
+  line-height: 1.7;
   text-align: left;
-  color: #57534e;
+  color: #292524;
 }
 
 :global(body.dark-theme) .hero-title,
 :global(body.dark-theme) .summary-section h2,
-:global(body.dark-theme) .info-card h2 {
+:global(body.dark-theme) .section-title,
+:global(body.dark-theme) .info-card h3 {
   color: #f5f5f4;
 }
 
 :global(body.dark-theme) .hero-subtitle,
 :global(body.dark-theme) .summary-text,
 :global(body.dark-theme) .info-card p {
-  color: #d6d3d1;
+  color: #e7e5e4;
 }
 
 :global(body.dark-theme) .info-card,
