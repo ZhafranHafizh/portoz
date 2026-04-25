@@ -74,13 +74,13 @@ export default {
 }
 
 .copyright a {
-  color: #f97316;
+  color: #8b5a2b;
   text-decoration: none;
   font-weight: 600;
 }
 
 :global(body.dark-theme) .copyright a {
-  color: #fb923c;
+  color: #d4a373;
 }
 
 .copyright a:hover {

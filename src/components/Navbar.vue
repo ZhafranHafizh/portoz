@@ -200,19 +200,19 @@ export default {
 
 .brand a strong {
   font-weight: 400;
-  color: #f97316;
+  color: #8b5a2b;
 }
 
 .dark-theme .brand a strong {
-  color: #fb923c;
+  color: #d4a373;
 }
 
 .brand a:hover {
-  color: #f97316;
+  color: #8b5a2b;
 }
 
 .dark-theme .brand a:hover {
-  color: #fb923c;
+  color: #d4a373;
 }
 
 .nav-links {
@@ -266,23 +266,23 @@ export default {
   height: 2px;
   bottom: -2px;
   left: 50%;
-  background-color: #f97316;
+  background-color: #8b5a2b;
   transition: all 0.3s ease-in-out;
   transform: translateX(-50%);
 }
 
 .dark-theme .nav-links a::after {
-  background-color: #fb923c;
+  background-color: #d4a373;
 }
 
 .nav-links a:hover,
 .nav-links a.router-link-exact-active {
-  color: #f97316;
+  color: #8b5a2b;
 }
 
 .dark-theme .nav-links a:hover,
 .dark-theme .nav-links a.router-link-exact-active {
-  color: #fb923c;
+  color: #d4a373;
 }
 
 .nav-links a:hover::after,
@@ -514,7 +514,7 @@ export default {
   flex-shrink: 0;
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, #f97316, #ea580c);
+  background: linear-gradient(135deg, #8b5a2b, #6b4423);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -551,17 +551,17 @@ export default {
 }
 
 .tooltip-text b {
-  color: #f97316;
+  color: #8b5a2b;
   font-weight: 700;
 }
 
 .dark-theme .tooltip-text b {
-  color: #fb923c;
+  color: #d4a373;
 }
 
 .tooltip-action {
   margin-top: 8px;
-  background: linear-gradient(135deg, #f97316, #ea580c);
+  background: linear-gradient(135deg, #8b5a2b, #6b4423);
   color: white;
   border: none;
   padding: 6px 12px;
@@ -579,7 +579,7 @@ export default {
 }
 
 .dark-theme .tooltip-action {
-  background: linear-gradient(135deg, #fb923c, #ea580c);
+  background: linear-gradient(135deg, #d4a373, #6b4423);
 }
 
 .tooltip-close {
@@ -607,7 +607,7 @@ export default {
 
 .tooltip-close:hover {
   background: rgba(249, 115, 22, 0.15);
-  color: #f97316;
+  color: #8b5a2b;
   transform: scale(1.1);
 }
 
@@ -623,14 +623,14 @@ export default {
 
 .tooltip-progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #f97316, #f59e0b);
+  background: linear-gradient(90deg, #8b5a2b, #c48b5d);
   border-radius: 0 3px 3px 0;
   animation: progressShrink linear forwards;
   width: 100%;
 }
 
 .dark-theme .tooltip-progress-bar {
-  background: linear-gradient(90deg, #fb923c, #fbbf24);
+  background: linear-gradient(90deg, #d4a373, #e5b280);
 }
 
 /* Mobile positioning */

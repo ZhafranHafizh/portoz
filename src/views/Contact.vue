@@ -237,7 +237,7 @@ export default {
 .circle-1 {
   width: 200px;
   height: 200px;
-  background: linear-gradient(45deg, #f97316, #d97706);
+  background: linear-gradient(45deg, #8b5a2b, #6b4423);
   top: 10%;
   right: 10%;
   animation-delay: 0s;
@@ -246,7 +246,7 @@ export default {
 .circle-2 {
   width: 150px;
   height: 150px;
-  background: linear-gradient(45deg, #d97706, #fbbf24);
+  background: linear-gradient(45deg, #6b4423, #d4a373);
   top: 60%;
   left: 5%;
   animation-delay: 3s;
@@ -255,7 +255,7 @@ export default {
 .circle-3 {
   width: 100px;
   height: 100px;
-  background: linear-gradient(45deg, #fbbf24, #ea580c);
+  background: linear-gradient(45deg, #d4a373, #8b5a2b);
   top: 30%;
   left: 20%;
   animation-delay: 6s;
@@ -308,7 +308,7 @@ export default {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(45deg, #f97316, #d97706);
+  background: linear-gradient(45deg, #8b5a2b, #6b4423);
   color: white;
   padding: 10px 24px;
   border-radius: 50px;
@@ -360,7 +360,7 @@ export default {
   transform: translateX(-50%);
   width: 120px;
   height: 4px;
-  background: linear-gradient(45deg, #f97316, #d97706);
+  background: linear-gradient(45deg, #8b5a2b, #6b4423);
   border-radius: 2px;
   animation: lineExpand 1.2s ease 1s forwards;
   transform-origin: center;
@@ -392,7 +392,7 @@ export default {
 .header-divider {
   width: 120px;
   height: 4px;
-  background: linear-gradient(45deg, #f97316, #d97706);
+  background: linear-gradient(45deg, #8b5a2b, #6b4423);
   border-radius: 2px;
   margin: 18px 0 28px 0;
   opacity: 0.85;
@@ -429,7 +429,7 @@ export default {
 }
 
 .primary-cta {
-  background: linear-gradient(45deg, #f97316, #ea580c);
+  background: linear-gradient(45deg, #8b5a2b, #6b4423);
   color: white;
 }
 
@@ -447,8 +447,8 @@ export default {
 .secondary-cta:hover {
   background: rgba(248, 249, 250, 1);
   transform: translateY(-2px);
-  border-color: #f97316;
-  color: #f97316;
+  border-color: #8b5a2b;
+  color: #8b5a2b;
 }
 
 /* Contact Cards */
@@ -516,7 +516,7 @@ export default {
 }
 
 .contact-item.featured {
-  border: 2px solid #f97316;
+  border: 2px solid #8b5a2b;
   box-shadow: 0 12px 40px rgba(249, 115, 22, 0.15);
 }
 
@@ -537,7 +537,7 @@ export default {
 }
 
 .featured-badge {
-  background: linear-gradient(45deg, #f97316, #d97706);
+  background: linear-gradient(45deg, #8b5a2b, #6b4423);
   color: white;
   padding: 4px 12px;
   border-radius: 20px;
@@ -605,7 +605,7 @@ export default {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #f97316;
+  color: #8b5a2b;
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
@@ -620,7 +620,7 @@ export default {
 .contact-link:hover {
   background: rgba(249, 115, 22, 0.15);
   transform: translateX(5px);
-  border-color: #f97316;
+  border-color: #8b5a2b;
 }
 
 .contact-stats {
@@ -629,7 +629,7 @@ export default {
   align-items: center;
   gap: 8px;
   font-size: 0.85rem;
-  color: #d97706;
+  color: #6b4423;
   font-weight: 600;
   padding: 6px 12px;
   background: rgba(217, 119, 6, 0.1);
@@ -670,7 +670,7 @@ export default {
   opacity: 0;
   transform: translateX(10px);
   transition: all 0.3s ease;
-  color: #f97316;
+  color: #8b5a2b;
   font-size: 1.2rem;
 }
 
@@ -704,7 +704,7 @@ export default {
 
 .social-header i {
   font-size: 2rem;
-  color: #f97316;
+  color: #8b5a2b;
   margin-bottom: 15px;
 }
 

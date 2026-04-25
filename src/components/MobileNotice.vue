@@ -96,7 +96,7 @@ export default {
 }
 
 .notice-icon {
-  color: #f97316;
+  color: #8b5a2b;
   margin-bottom: 16px;
 }
 
@@ -129,7 +129,7 @@ export default {
 }
 
 .btn-primary {
-  background: #f97316;
+  background: #8b5a2b;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -141,7 +141,7 @@ export default {
 }
 
 .btn-primary:hover {
-  background: #ea580c;
+  background: #6b4423;
   transform: translateY(-1px);
 }
 

@@ -118,11 +118,11 @@ export default {
 
 .brand a strong {
   font-weight: 400;
-  color: #f97316;
+  color: #8b5a2b;
 }
 
 :global(body.dark-theme) .brand a strong {
-  color: #fb923c;
+  color: #d4a373;
 }
 
 .nav-center {
@@ -148,13 +148,13 @@ export default {
 
 .nav-center a:hover,
 .nav-center a.active {
-  color: #f97316;
+  color: #8b5a2b;
   background: rgba(249, 115, 22, 0.1);
 }
 
 :global(body.dark-theme) .nav-center a:hover,
 :global(body.dark-theme) .nav-center a.active {
-  color: #fb923c;
+  color: #d4a373;
   background: rgba(251, 146, 60, 0.1);
 }
 

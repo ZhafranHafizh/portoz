@@ -2098,7 +2098,7 @@ export default {
 }
 
 .preview-title strong {
-  color: #f97316;
+  color: #8b5a2b;
 }
 
 .preview-subtitle {
@@ -2109,7 +2109,7 @@ export default {
 }
 
 .preview-subtitle strong {
-  color: #d97706;
+  color: #6b4423;
   font-weight: 600;
 }
 
@@ -2123,7 +2123,7 @@ export default {
 .preview-cta {
   display: inline-block;
   padding: 10px 24px;
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
   color: white;
   text-decoration: none;
   border-radius: 50px;
@@ -2181,12 +2181,12 @@ export default {
 .preview-profile-text h2 {
   font-size: 13px;
   font-weight: 400;
-  color: #f97316;
+  color: #8b5a2b;
   margin: 0 0 10px 0;
 }
 
 .preview-profile-text h2 strong {
-  color: #d97706;
+  color: #6b4423;
   font-weight: 600;
 }
 
@@ -2203,7 +2203,7 @@ export default {
   color: #1f2937;
   margin: 20px 0 10px 0;
   padding-bottom: 6px;
-  border-bottom: 2px solid #f97316;
+  border-bottom: 2px solid #8b5a2b;
   display: inline-block;
 }
 
@@ -2233,7 +2233,7 @@ export default {
   position: absolute;
   left: 0;
   top: 0;
-  color: #d97706;
+  color: #6b4423;
   font-weight: 700;
   font-size: 14px;
 }

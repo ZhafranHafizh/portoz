@@ -455,7 +455,7 @@ Generated: ${new Date().toLocaleString()}`
 .analytics-header {
   padding: 80px 2rem 60px;
   text-align: center;
-  background: linear-gradient(135deg, #f97316 0%, #d97706 100%);
+  background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
   color: white;
   position: relative;
   overflow: hidden;
@@ -574,7 +574,7 @@ Generated: ${new Date().toLocaleString()}`
 .stat-value {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--primary-color, #f97316);
+  color: var(--primary-color, #8b5a2b);
   margin-bottom: 4px;
 }
 
@@ -636,7 +636,7 @@ Generated: ${new Date().toLocaleString()}`
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  background: var(--primary-color, #f97316);
+  background: var(--primary-color, #8b5a2b);
   color: white;
 }
 
@@ -652,7 +652,7 @@ Generated: ${new Date().toLocaleString()}`
 
 .page-percentage {
   font-weight: 600;
-  color: var(--primary-color, #f97316);
+  color: var(--primary-color, #8b5a2b);
   font-size: 0.9rem;
 }
 
@@ -666,7 +666,7 @@ Generated: ${new Date().toLocaleString()}`
 
 .progress-bar {
   height: 100%;
-  background: var(--primary-color, #f97316);
+  background: var(--primary-color, #8b5a2b);
   border-radius: 3px;
   transition: width 0.3s ease;
 }
@@ -694,7 +694,7 @@ Generated: ${new Date().toLocaleString()}`
 }
 
 .time-btn.active {
-  background: var(--primary-color, #f97316);
+  background: var(--primary-color, #8b5a2b);
   color: white;
 }
 
@@ -729,7 +729,7 @@ Generated: ${new Date().toLocaleString()}`
 
 .bar-fill {
   width: 100%;
-  background: linear-gradient(to top, var(--primary-color, #f97316), rgba(249, 115, 22, 0.6));
+  background: linear-gradient(to top, var(--primary-color, #8b5a2b), rgba(139, 90, 43, 0.6));
   border-radius: 3px 3px 0 0;
   min-height: 4px;
   transition: height 0.3s ease;
@@ -769,7 +769,7 @@ Generated: ${new Date().toLocaleString()}`
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: var(--primary-color, #f97316);
+  background: var(--primary-color, #8b5a2b);
   color: white;
   margin: 0 auto 12px;
   font-size: 1.1rem;
@@ -815,9 +815,9 @@ Generated: ${new Date().toLocaleString()}`
 }
 
 .export-btn:hover {
-  background: var(--primary-color, #f97316);
+  background: var(--primary-color, #8b5a2b);
   color: white;
-  border-color: var(--primary-color, #f97316);
+  border-color: var(--primary-color, #8b5a2b);
 }
 
 .export-info {

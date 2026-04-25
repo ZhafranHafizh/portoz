@@ -120,7 +120,7 @@ body {
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #f97316 #e7e5e4; /* Orange and Light Stone */
+  scrollbar-color: #8b5a2b #e7e5e4; /* Brown and Light Stone */
 }
 
 /* Dark mode scrollbar */
@@ -129,11 +129,11 @@ body.dark-theme ::-webkit-scrollbar-track {
 }
 
 body.dark-theme ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+  background: linear-gradient(135deg, #d4a373 0%, #8b5a2b 100%);
 }
 
 body.dark-theme ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #ea580c 0%, #fb923c 100%);
+  background: linear-gradient(135deg, #8b5a2b 0%, #d4a373 100%);
 }
 
 body.dark-theme ::-webkit-scrollbar-corner {
@@ -141,6 +141,6 @@ body.dark-theme ::-webkit-scrollbar-corner {
 }
 
 body.dark-theme * {
-  scrollbar-color: #fb923c #292524;
+  scrollbar-color: #d4a373 #292524;
 }
 </style>

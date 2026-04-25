@@ -219,7 +219,7 @@ export default {
 .error-code {
   font-size: 6rem;
   font-weight: 900;
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -292,7 +292,7 @@ export default {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
   color: white;
   box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
 }
@@ -304,25 +304,25 @@ export default {
 
 .btn-secondary {
   background: rgba(249, 115, 22, 0.1);
-  color: #f97316;
+  color: #8b5a2b;
   border: 2px solid rgba(249, 115, 22, 0.3);
 }
 
 .btn-secondary:hover {
   background: rgba(249, 115, 22, 0.2);
-  border-color: #f97316;
+  border-color: #8b5a2b;
   transform: translateY(-3px);
 }
 
 .error-page.dark-theme .btn-secondary {
   background: rgba(251, 146, 60, 0.1);
   border-color: rgba(251, 146, 60, 0.3);
-  color: #fb923c;
+  color: #d4a373;
 }
 
 .error-page.dark-theme .btn-secondary:hover {
   background: rgba(251, 146, 60, 0.2);
-  border-color: #fb923c;
+  border-color: #d4a373;
 }
 
 /* Error Details */
@@ -353,7 +353,7 @@ export default {
 
 .detail-text i {
   margin-right: 8px;
-  color: #f97316;
+  color: #8b5a2b;
 }
 
 .detail-text code {
@@ -361,7 +361,7 @@ export default {
   padding: 4px 8px;
   border-radius: 4px;
   font-family: 'Courier New', monospace;
-  color: #f97316;
+  color: #8b5a2b;
   font-size: 0.85rem;
 }
 

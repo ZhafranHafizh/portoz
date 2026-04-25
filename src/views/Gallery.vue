@@ -447,7 +447,7 @@ export default {
   left: -5px;
   right: -5px;
   bottom: -5px;
-  background: linear-gradient(45deg, #f97316, #ea580c, #f97316);
+  background: linear-gradient(45deg, #8b5a2b, #6b4423, #8b5a2b);
   border-radius: var(--radius-md);
   z-index: -1;
   opacity: 0;

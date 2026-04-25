@@ -330,7 +330,7 @@ export default {
 }
 
 .rich-text-editor.is-focused {
-  border-color: #f97316;
+  border-color: #8b5a2b;
   box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
 }
 
@@ -379,8 +379,8 @@ export default {
 
 .editor-toolbar button.is-active {
   background: #ffedd5;
-  border-color: #f97316;
-  color: #ea580c;
+  border-color: #8b5a2b;
+  color: #6b4423;
 }
 
 .editor-toolbar button:active {
@@ -399,12 +399,12 @@ export default {
 }
 
 .toolbar-select:hover {
-  border-color: #f97316;
+  border-color: #8b5a2b;
 }
 
 .toolbar-select:focus {
   outline: none;
-  border-color: #f97316;
+  border-color: #8b5a2b;
   box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
 }
 
@@ -418,12 +418,12 @@ export default {
 }
 
 .color-picker:hover {
-  border-color: #f97316;
+  border-color: #8b5a2b;
 }
 
 .color-picker:focus {
   outline: none;
-  border-color: #f97316;
+  border-color: #8b5a2b;
   box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
 }
 
@@ -470,7 +470,7 @@ export default {
 }
 
 .tiptap-editor-inner a {
-  color: #f97316;
+  color: #8b5a2b;
   text-decoration: underline;
 }
 
@@ -481,7 +481,7 @@ export default {
 }
 
 .tiptap-editor-inner blockquote {
-  border-left: 4px solid #f97316;
+  border-left: 4px solid #8b5a2b;
   padding-left: 1em;
   margin: 0.5em 0;
   color: #6b7280;

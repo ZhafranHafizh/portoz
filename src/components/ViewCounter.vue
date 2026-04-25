@@ -440,7 +440,7 @@ export default {
 
 .counter-badge .count {
   font-weight: 600;
-  color: var(--primary-color, #f97316);
+  color: var(--primary-color, #8b5a2b);
 }
 
 .counter-badge .label {
@@ -509,9 +509,9 @@ export default {
 }
 
 .toggle-btn:hover {
-  background: var(--primary-color, #f97316);
+  background: var(--primary-color, #8b5a2b);
   color: white;
-  border-color: var(--primary-color, #f97316);
+  border-color: var(--primary-color, #8b5a2b);
 }
 
 /* Stats Overview */
@@ -539,9 +539,9 @@ export default {
 }
 
 .stat-item.primary {
-  background: linear-gradient(135deg, var(--primary-color, #f97316) 0%, rgba(249, 115, 22, 0.8) 100%);
+  background: linear-gradient(135deg, var(--primary-color, #8b5a2b) 0%, rgba(139, 90, 43, 0.8) 100%);
   color: white;
-  border-color: var(--primary-color, #f97316);
+  border-color: var(--primary-color, #8b5a2b);
 }
 
 .stat-icon {
@@ -556,7 +556,7 @@ export default {
 }
 
 .stat-item:not(.primary) .stat-icon {
-  background: var(--primary-color, #f97316);
+  background: var(--primary-color, #8b5a2b);
   color: white;
 }
 
@@ -629,7 +629,7 @@ export default {
 
 .page-count {
   font-weight: 600;
-  color: var(--primary-color, #f97316);
+  color: var(--primary-color, #8b5a2b);
 }
 
 .page-bar {
@@ -641,7 +641,7 @@ export default {
 
 .page-bar-fill {
   height: 100%;
-  background: var(--primary-color, #f97316);
+  background: var(--primary-color, #8b5a2b);
   border-radius: 3px;
   transition: width 0.3s ease;
 }
@@ -670,7 +670,7 @@ export default {
   width: 24px;
   height: 24px;
   border-radius: 6px;
-  background: var(--primary-color, #f97316);
+  background: var(--primary-color, #8b5a2b);
   color: white;
   font-size: 0.8rem;
 }
@@ -713,7 +713,7 @@ export default {
 
 .bar-fill {
   width: 100%;
-  background: var(--primary-color, #f97316);
+  background: var(--primary-color, #8b5a2b);
   border-radius: 2px 2px 0 0;
   min-height: 2px;
   transition: height 0.3s ease;
@@ -751,9 +751,9 @@ export default {
 }
 
 .control-btn:hover {
-  background: var(--primary-color, #f97316);
+  background: var(--primary-color, #8b5a2b);
   color: white;
-  border-color: var(--primary-color, #f97316);
+  border-color: var(--primary-color, #8b5a2b);
 }
 
 .control-btn.danger:hover {

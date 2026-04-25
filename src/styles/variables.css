@@ -6,16 +6,16 @@
   --text-secondary: #666666;
   --card-bg: #ffffff;
   --border-color: #e2e8f0;
-  --primary-color: #f97316; /* Orange 500 */
-  --primary-color-dark: #ea580c; /* Orange 600 */
+  --primary-color: #8b5a2b; /* Brown */
+  --primary-color-dark: #6b4423; /* Dark Brown */
   
   /* Gradient variables */
-  --gradient-primary: linear-gradient(135deg, #f97316 0%, #b45309 100%); /* Orange to Amber */
+  --gradient-primary: linear-gradient(135deg, #8b5a2b 0%, #5c3a21 100%); /* Brown to Darker Brown */
   --gradient-dark: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%); /* Stone 900 to 950 */
-  --gradient-overlay: linear-gradient(135deg, rgba(249, 115, 22, 0.9) 0%, rgba(180, 83, 9, 0.9) 100%);
+  --gradient-overlay: linear-gradient(135deg, rgba(139, 90, 43, 0.9) 0%, rgba(92, 58, 33, 0.9) 100%);
   
   /* Shadow variables */
-  --shadow-sm: 0 2px 10px rgba(249, 115, 22, 0.2);
+  --shadow-sm: 0 2px 10px rgba(139, 90, 43, 0.2);
   --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.2);
   --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.3);
   
@@ -45,16 +45,16 @@ body.dark-theme {
   --text-secondary: #a8a29e !important; /* Stone 400 */
   --card-bg: #292524 !important; /* Stone 800 */
   --border-color: #44403c !important; /* Stone 700 */
-  --primary-color: #fb923c !important; /* Orange 400 */
-  --primary-color-dark: #f97316 !important; /* Orange 500 */
+  --primary-color: #d4a373 !important; /* Tan/Light Brown */
+  --primary-color-dark: #8b5a2b !important; /* Brown */
   
   /* Dark theme gradient overrides */
-  --gradient-primary: linear-gradient(135deg, #fb923c 0%, #d97706 100%) !important;
+  --gradient-primary: linear-gradient(135deg, #d4a373 0%, #c48b5d 100%) !important;
   --gradient-dark: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%) !important;
-  --gradient-overlay: linear-gradient(135deg, rgba(251, 146, 60, 0.9) 0%, rgba(217, 119, 6, 0.9) 100%) !important;
+  --gradient-overlay: linear-gradient(135deg, rgba(212, 163, 115, 0.9) 0%, rgba(196, 139, 93, 0.9) 100%) !important;
   
   /* Override shadow variables for dark mode */
-  --shadow-sm: 0 2px 10px rgba(251, 146, 60, 0.2) !important;
+  --shadow-sm: 0 2px 10px rgba(212, 163, 115, 0.2) !important;
   --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
   --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.5) !important;
 }

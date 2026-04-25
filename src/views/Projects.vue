@@ -309,7 +309,7 @@ export default {
 .projects-header {
   padding: 80px 2rem 60px;
   text-align: center;
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
   color: white;
   position: relative;
   overflow: hidden;
@@ -392,14 +392,14 @@ export default {
   align-items: center;
   gap: 12px;
   padding: 16px 32px;
-  background: linear-gradient(135deg, #f97316 0%, #d97706 100%);
+  background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
   color: white;
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
   font-size: 1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
+  box-shadow: 0 8px 25px rgba(139, 90, 43, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -411,14 +411,14 @@ export default {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #d97706 0%, #f97316 100%);
+  background: linear-gradient(135deg, #6b4423 0%, #8b5a2b 100%);
   transition: left 0.3s ease;
   z-index: -1;
 }
 
 .download-cv-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(249, 115, 22, 0.4);
+  box-shadow: 0 12px 35px rgba(139, 90, 43, 0.4);
 }
 
 .download-cv-btn:hover::before {
@@ -470,7 +470,7 @@ export default {
 .filter-pill:hover,
 .filter-pill.active {
   background: white;
-  color: #f97316;
+  color: #8b5a2b;
   border-color: white;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -602,7 +602,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(249, 115, 22, 0.8), rgba(217, 119, 6, 0.8));
+  background: linear-gradient(135deg, rgba(139, 90, 43, 0.8), rgba(107, 68, 35, 0.8));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -659,7 +659,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(249, 115, 22, 0.95), rgba(217, 119, 6, 0.95));
+  background: linear-gradient(135deg, rgba(139, 90, 43, 0.95), rgba(107, 68, 35, 0.95));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -769,7 +769,7 @@ export default {
 .category-badge {
   display: inline-block;
   padding: 6px 12px;
-  background: linear-gradient(135deg, #f97316, #ea580c);
+  background: linear-gradient(135deg, #8b5a2b, #6b4423);
   color: white;
   border-radius: 20px;
   font-size: 0.75rem;
@@ -832,7 +832,7 @@ export default {
 
 .tag-more {
   padding: 6px 12px;
-  background: #ea580c;
+  background: #6b4423;
   color: white;
   border-radius: 12px;
   font-size: 0.75rem;
@@ -866,7 +866,7 @@ export default {
   display: block;
   font-size: 3rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1175,11 +1175,11 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #f97316, #ea580c);
+  background: linear-gradient(135deg, #8b5a2b, #6b4423);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #fb923c, #f97316);
+  background: linear-gradient(135deg, #d4a373, #8b5a2b);
 }
 </style>

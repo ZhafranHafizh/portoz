@@ -561,7 +561,7 @@ export default {
   overflow-x: auto;
   padding: 4px 0;
   scrollbar-width: thin;
-  scrollbar-color: #f97316 #fef3e2;
+  scrollbar-color: #8b5a2b #fef3e2;
 }
 
 .gallery-thumbs::-webkit-scrollbar {
@@ -574,7 +574,7 @@ export default {
 }
 
 .gallery-thumbs::-webkit-scrollbar-thumb {
-  background: #f97316;
+  background: #8b5a2b;
   border-radius: 2px;
 }
 
@@ -603,9 +603,9 @@ export default {
 }
 
 .gallery-thumb.active {
-  border-color: #f97316;
+  border-color: #8b5a2b;
   opacity: 1;
-  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.35);
+  box-shadow: 0 2px 8px rgba(139, 90, 43, 0.35);
 }
 
 .gallery-thumb img {
@@ -737,7 +737,7 @@ export default {
   content: '';
   width: 4px;
   height: 20px;
-  background: linear-gradient(135deg, #f97316, #ea580c);
+  background: linear-gradient(135deg, #8b5a2b, #6b4423);
   border-radius: 2px;
 }
 
@@ -757,7 +757,7 @@ export default {
 
 .tech-tag {
   padding: 8px 16px;
-  background: linear-gradient(135deg, #f97316, #ea580c);
+  background: linear-gradient(135deg, #8b5a2b, #6b4423);
   color: white;
   border-radius: 20px;
   font-size: 0.875rem;
@@ -782,7 +782,7 @@ export default {
 }
 
 .features-list i {
-  color: #f59e0b;
+  color: #8b5a2b;
   margin-top: 2px;
   flex-shrink: 0;
 }
@@ -813,7 +813,7 @@ export default {
 
 .info-item i {
   font-size: 1.25rem;
-  color: #f97316;
+  color: #8b5a2b;
 }
 
 .info-label {
@@ -855,13 +855,13 @@ export default {
 }
 
 .action-btn.primary {
-  background: linear-gradient(135deg, #f97316, #ea580c);
+  background: linear-gradient(135deg, #8b5a2b, #6b4423);
   color: white;
 }
 
 .action-btn.primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4);
+  box-shadow: 0 8px 25px rgba(139, 90, 43, 0.4);
 }
 
 .action-btn.secondary {
@@ -951,7 +951,7 @@ export default {
 .modal-content::-webkit-scrollbar { width: 6px; }
 .modal-content::-webkit-scrollbar-track { background: #fef3e2; }
 .modal-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #f97316, #ea580c);
+  background: linear-gradient(135deg, #8b5a2b, #6b4423);
   border-radius: 3px;
 }
 </style>

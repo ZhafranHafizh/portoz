@@ -257,7 +257,7 @@ onMounted(() => {
 .profile-text h2 {
   font-size: 1.5rem;
   font-weight: 400;
-  color: #f97316; /* Warna aksen */
+  color: #8b5a2b; /* Warna aksen */
   margin: 10px 0;
 }
 
@@ -269,7 +269,7 @@ onMounted(() => {
 }
 
 :global(body.dark-theme) .about-content .profile-text h1 { color: #e4e4e7; }
-:global(body.dark-theme) .about-content .profile-text h2 { color: #fb923c; }
+:global(body.dark-theme) .about-content .profile-text h2 { color: #d4a373; }
 :global(body.dark-theme) .about-content .profile-text .intro { color: #a1a1aa; }
 
 /* Download CV Button */
@@ -282,7 +282,7 @@ onMounted(() => {
   align-items: center;
   gap: 12px;
   padding: 12px 28px;
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
   color: white;
   text-decoration: none;
   border-radius: 50px;
@@ -301,7 +301,7 @@ onMounted(() => {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  background: linear-gradient(135deg, #6b4423 0%, #8b5a2b 100%);
   transition: left 0.3s ease;
   z-index: -1;
 }
@@ -341,7 +341,7 @@ onMounted(() => {
   color: #333;
   margin-top: 40px;
   margin-bottom: 20px;
-  border-bottom: 2px solid #f97316;
+  border-bottom: 2px solid #8b5a2b;
   padding-bottom: 8px;
   display: inline-block;
 }
@@ -351,7 +351,7 @@ onMounted(() => {
   margin-bottom: 20px;
 }
 
-:global(body.dark-theme) .about-content .story-content h3 { color: #e4e4e7; border-bottom-color: #fb923c; }
+:global(body.dark-theme) .about-content .story-content h3 { color: #e4e4e7; border-bottom-color: #d4a373; }
 :global(body.dark-theme) .about-content .story-content p { color: #a1a1aa; }
 
 .skills-list {
@@ -373,7 +373,7 @@ onMounted(() => {
   position: absolute;
   left: 0;
   top: 0;
-  color: #d97706; /* Warna hijau sukses -> Amber/Brown */
+  color: #c48b5d; /* Warna aksen gelap */
   font-weight: 700;
   font-size: 1.2rem;
 }
@@ -385,7 +385,7 @@ onMounted(() => {
 .cta-button {
   display: inline-block;
   padding: 14px 32px;
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
   color: white;
   text-decoration: none;
   border-radius: 50px;

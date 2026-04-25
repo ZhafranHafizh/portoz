@@ -230,7 +230,7 @@ export default {
 }
 
 .nav-item a:hover {
-  background: rgba(249, 115, 22, 0.1);
+  background: rgba(139, 90, 43, 0.1);
 }
 
 .dot {
@@ -247,14 +247,14 @@ export default {
 }
 
 .nav-item a.active .dot {
-  background: #f97316;
+  background: #8b5a2b;
   transform: scale(1.3);
-  box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
+  box-shadow: 0 0 10px rgba(139, 90, 43, 0.5);
 }
 
 :global(body.dark-theme) .nav-item a.active .dot {
-  background: #fb923c;
-  box-shadow: 0 0 10px rgba(251, 146, 60, 0.5);
+  background: #d4a373;
+  box-shadow: 0 0 10px rgba(212, 163, 115, 0.5);
 }
 
 .label {
@@ -279,21 +279,21 @@ export default {
 }
 
 .nav-item a.active .label {
-  color: #f97316;
+  color: #8b5a2b;
 }
 
 :global(body.dark-theme) .nav-item a.active .label {
-  color: #fb923c;
+  color: #d4a373;
 }
 
 .back-to-top {
   margin-top: 12px;
   width: 100%;
   padding: 8px;
-  background: rgba(249, 115, 22, 0.1);
-  border: 1px solid rgba(249, 115, 22, 0.3);
+  background: rgba(139, 90, 43, 0.1);
+  border: 1px solid rgba(139, 90, 43, 0.3);
   border-radius: 20px;
-  color: #f97316;
+  color: #8b5a2b;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
@@ -303,18 +303,18 @@ export default {
 }
 
 :global(body.dark-theme) .back-to-top {
-  background: rgba(251, 146, 60, 0.1);
-  border: 1px solid rgba(251, 146, 60, 0.3);
-  color: #fb923c;
+  background: rgba(212, 163, 115, 0.1);
+  border: 1px solid rgba(212, 163, 115, 0.3);
+  color: #d4a373;
 }
 
 .back-to-top:hover {
-  background: rgba(249, 115, 22, 0.2);
+  background: rgba(139, 90, 43, 0.2);
   transform: translateY(-2px);
 }
 
 :global(body.dark-theme) .back-to-top:hover {
-  background: rgba(251, 146, 60, 0.2);
+  background: rgba(212, 163, 115, 0.2);
 }
 
 /* Back to Tab Mode button */

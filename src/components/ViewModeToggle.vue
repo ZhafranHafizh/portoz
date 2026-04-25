@@ -116,7 +116,7 @@ export default {
 
 .is-one-page .toggle-thumb {
   transform: translateX(20px);
-  background: #f97316;
+  background: #8b5a2b;
 }
 
 .toggle-labels {
