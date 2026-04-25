@@ -13,7 +13,6 @@
     </div>
     
     <div class="nav-actions">
-      <ViewModeToggle />
       <DarkModeToggle />
     </div>
   </nav>
@@ -21,15 +20,13 @@
 
 <script>
 import DarkModeToggle from '@/components/DarkModeToggle.vue'
-import ViewModeToggle from '@/components/ViewModeToggle.vue'
 
 
 
 export default {
   name: 'NavbarOnePage',
   components: {
-    DarkModeToggle,
-    ViewModeToggle
+    DarkModeToggle
   },
   data() {
     return {

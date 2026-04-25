@@ -73,20 +73,24 @@ const router = createRouter({
 
 // View mode router sync
 router.beforeEach((to, from, next) => {
-  const { isOnePage, setMode, MODE_ONE_PAGE, MODE_TAB } = useViewMode()
+  const { setMode, MODE_ONE_PAGE } = useViewMode()
   
-  if (to.path === '/one-page') {
-    if (!isOnePage.value) {
-      setMode(MODE_ONE_PAGE)
-    }
-    next()
-  } else if (!to.path.startsWith('/admin') && isOnePage.value) {
-    if (to.path === '/') {
+  // Force one page mode globally
+  setMode(MODE_ONE_PAGE)
+  
+  // Redirect old tab paths to one-page equivalents
+  if (!to.path.startsWith('/admin') && to.path !== '/one-page') {
+    if (to.path === '/about') {
+      next('/one-page#section-about')
+    } else if (to.path === '/projects') {
+      next('/one-page#section-projects')
+    } else if (to.path === '/gallery') {
+      next('/one-page#section-gallery')
+    } else if (to.path === '/contact') {
+      next('/one-page#section-contact')
+    } else if (to.path === '/') {
       next('/one-page')
     } else {
-      if (to.name && to.name !== 'NotFound') {
-        setMode(MODE_TAB)
-      }
       next()
     }
   } else {
