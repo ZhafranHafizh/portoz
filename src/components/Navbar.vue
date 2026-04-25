@@ -79,13 +79,13 @@ export default {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: #ffffff;
-  border-bottom: 1px solid #e7e5e4;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .dark-theme .navbar {
-  background: #1c1917;
-  border-bottom-color: #44403c;
+  background: var(--surface-elevated);
+  border-bottom-color: var(--border-strong);
 }
 
 .navbar-shell {
@@ -99,18 +99,18 @@ export default {
 }
 
 .brand a {
-  color: #1c1917;
+  color: var(--text-primary);
   text-decoration: none;
   font-size: 1.35rem;
   font-weight: 700;
 }
 
 .dark-theme .brand a {
-  color: #f5f5f4;
+  color: var(--text-primary);
 }
 
 .brand strong {
-  color: #f97316;
+  color: var(--accent);
   font-weight: 500;
 }
 
@@ -125,16 +125,16 @@ export default {
 
 .nav-links a {
   text-decoration: none;
-  color: #57534e;
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
 .dark-theme .nav-links a {
-  color: #d6d3d1;
+  color: var(--text-secondary);
 }
 
 .nav-links a.router-link-exact-active {
-  color: #f97316;
+  color: var(--accent);
 }
 
 .nav-actions {
@@ -148,12 +148,12 @@ export default {
   padding: 0.55rem 0.9rem;
   border-radius: 8px;
   font-weight: 700;
-  color: #ffffff;
-  background: #f97316;
+  color: var(--accent-contrast);
+  background: var(--accent);
 }
 
 .nav-cta:hover {
-  background: #ea580c;
+  background: var(--accent-strong);
 }
 
 .hamburger {
@@ -168,13 +168,13 @@ export default {
   display: block;
   width: 24px;
   height: 2px;
-  background: #44403c;
+  background: var(--text-secondary);
   margin: 5px 0;
   transition: 0.3s ease;
 }
 
 .dark-theme .hamburger span {
-  background: #f5f5f4;
+  background: var(--text-primary);
 }
 
 .hamburger span.open:nth-child(1) {
@@ -208,14 +208,14 @@ export default {
     flex-direction: column;
     gap: 0.75rem;
     padding: 1rem 1.25rem;
-    background: #ffffff;
-    border-bottom: 1px solid #e7e5e4;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border-subtle);
     align-items: flex-start;
   }
 
   .dark-theme .nav-links {
-    background: #1c1917;
-    border-bottom-color: #44403c;
+    background: var(--surface-elevated);
+    border-bottom-color: var(--border-strong);
   }
 
   .nav-links.open {

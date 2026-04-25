@@ -214,6 +214,7 @@ export default {
   font-family: 'Poppins', sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
+  background: linear-gradient(180deg, var(--background) 0%, var(--surface) 100%);
 }
 
 /* Background Elements */
@@ -237,7 +238,7 @@ export default {
 .circle-1 {
   width: 200px;
   height: 200px;
-  background: linear-gradient(45deg, #f97316, #d97706);
+  background: linear-gradient(45deg, var(--accent), var(--accent-strong));
   top: 10%;
   right: 10%;
   animation-delay: 0s;
@@ -246,7 +247,7 @@ export default {
 .circle-2 {
   width: 150px;
   height: 150px;
-  background: linear-gradient(45deg, #d97706, #fbbf24);
+  background: linear-gradient(45deg, var(--accent-strong), var(--accent-hover));
   top: 60%;
   left: 5%;
   animation-delay: 3s;
@@ -255,7 +256,7 @@ export default {
 .circle-3 {
   width: 100px;
   height: 100px;
-  background: linear-gradient(45deg, #fbbf24, #ea580c);
+  background: linear-gradient(45deg, var(--accent-hover), var(--accent));
   top: 30%;
   left: 20%;
   animation-delay: 6s;
@@ -333,7 +334,7 @@ export default {
 .page-title {
   font-size: 3.5rem;
   font-weight: 800;
-  color: #1f2937;
+  color: var(--text-primary);
   margin-bottom: 32px;
   position: relative;
   display: inline-block;
@@ -360,7 +361,7 @@ export default {
   transform: translateX(-50%);
   width: 120px;
   height: 4px;
-  background: linear-gradient(45deg, #f97316, #d97706);
+  background: var(--gradient-primary);
   border-radius: 2px;
   animation: lineExpand 1.2s ease 1s forwards;
   transform-origin: center;
@@ -373,7 +374,7 @@ export default {
 
 .page-subtitle {
   font-size: 1.25rem;
-  color: #374151;
+  color: var(--text-secondary);
   margin-bottom: 48px;
   line-height: 1.7;
   max-width: 680px;
@@ -429,8 +430,8 @@ export default {
 }
 
 .primary-cta {
-  background: linear-gradient(45deg, #f97316, #ea580c);
-  color: white;
+  background: var(--gradient-primary);
+  color: var(--accent-contrast);
 }
 
 .primary-cta:hover {
@@ -439,16 +440,16 @@ export default {
 }
 
 .secondary-cta {
-  background: rgba(255, 255, 255, 0.9);
-  color: #333;
-  border: 2px solid #e0e0e0;
+  background: color-mix(in srgb, var(--surface) 92%, white);
+  color: var(--text-primary);
+  border: 2px solid var(--border-subtle);
 }
 
 .secondary-cta:hover {
-  background: rgba(248, 249, 250, 1);
+  background: var(--surface);
   transform: translateY(-2px);
-  border-color: #f97316;
-  color: #f97316;
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 /* Contact Cards */
@@ -472,13 +473,13 @@ export default {
 .section-header h2 {
   font-size: 2.2rem;
   font-weight: 700;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 10px;
 }
 
 .section-header p {
   font-size: 1.1rem;
-  color: #666;
+  color: var(--text-secondary);
   margin: 0;
 }
 
@@ -502,7 +503,7 @@ export default {
   display: flex;
   flex-direction: column;
   text-align: left;
-  background: rgba(255, 255, 255, 0.9);
+  background: color-mix(in srgb, var(--surface) 90%, white);
   backdrop-filter: blur(10px);
   padding: 35px;
   border-radius: 20px;
@@ -516,7 +517,7 @@ export default {
 }
 
 .contact-item.featured {
-  border: 2px solid #f97316;
+  border: 2px solid var(--accent);
   box-shadow: 0 12px 40px rgba(249, 115, 22, 0.15);
 }
 
@@ -537,8 +538,8 @@ export default {
 }
 
 .featured-badge {
-  background: linear-gradient(45deg, #f97316, #d97706);
-  color: white;
+  background: var(--gradient-primary);
+  color: var(--accent-contrast);
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.75rem;
@@ -591,12 +592,12 @@ export default {
   margin-bottom: 12px;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .info-content p {
   margin-bottom: 20px;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 1rem;
   line-height: 1.6;
 }
@@ -605,7 +606,7 @@ export default {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #f97316;
+  color: var(--accent);
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
@@ -613,14 +614,14 @@ export default {
   position: relative;
   padding: 8px 16px;
   border-radius: 25px;
-  background: rgba(249, 115, 22, 0.1);
-  border: 1px solid rgba(249, 115, 22, 0.2);
+  background: var(--accent-softer);
+  border: 1px solid var(--border-subtle);
 }
 
 .contact-link:hover {
-  background: rgba(249, 115, 22, 0.15);
+  background: var(--accent-soft);
   transform: translateX(5px);
-  border-color: #f97316;
+  border-color: var(--accent);
 }
 
 .contact-stats {
@@ -681,7 +682,7 @@ export default {
 
 /* Social Media Floating */
 .social-floating {
-  background: rgba(255, 255, 255, 0.9);
+  background: color-mix(in srgb, var(--surface) 90%, white);
   backdrop-filter: blur(15px);
   border-radius: 25px;
   padding: 40px;
@@ -704,20 +705,20 @@ export default {
 
 .social-header i {
   font-size: 2rem;
-  color: #f97316;
+  color: var(--accent);
   margin-bottom: 15px;
 }
 
 .social-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
 .social-subtitle {
   font-size: 1rem;
-  color: #666;
+  color: var(--text-secondary);
   margin: 0;
   line-height: 1.5;
 }

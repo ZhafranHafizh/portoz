@@ -111,13 +111,13 @@ export default {
 
 <style scoped>
 .home-view {
-  background: linear-gradient(180deg, #fafaf9 0%, #f5f5f4 100%);
+  background: linear-gradient(180deg, var(--background) 0%, var(--surface) 100%);
   min-height: calc(100vh - 80px);
   padding: 3rem 1.25rem 4rem;
 }
 
 :global(body.dark-theme) .home-view {
-  background: linear-gradient(180deg, #1c1917 0%, #0c0a09 100%);
+  background: linear-gradient(180deg, var(--surface-elevated) 0%, var(--color-bg-950) 100%);
 }
 
 :global(body.dark-theme) .hero {
@@ -149,9 +149,9 @@ export default {
   position: relative;
   padding: clamp(1.5rem, 3vw, 2.25rem);
   border-radius: 18px;
-  border: 1px solid rgba(249, 115, 22, 0.14);
+  border: 1px solid var(--border-subtle);
   background:
-    linear-gradient(135deg, rgba(249, 115, 22, 0.12), rgba(255, 255, 255, 0) 52%),
+    linear-gradient(135deg, var(--accent-softer), rgba(255, 255, 255, 0) 52%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.9));
   overflow: hidden;
 }
@@ -219,25 +219,25 @@ export default {
   font-size: 0.9rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #f97316;
+  color: var(--accent);
 }
 
 .hero-title {
   margin: 0;
   font-size: clamp(2rem, 5vw, 3.2rem);
   line-height: 1.2;
-  color: #1c1917;
+  color: var(--text-primary);
 }
 
 .hero-title :deep(strong) {
-  color: #f97316;
+  color: var(--accent);
 }
 
 .hero-subtitle {
   margin: 1rem auto 1.75rem;
   max-width: 640px;
   font-size: clamp(1rem, 2.2vw, 1.2rem);
-  color: #44403c;
+  color: var(--text-secondary);
 }
 
 .cta-button {
@@ -248,13 +248,13 @@ export default {
   border-radius: 10px;
   text-decoration: none;
   font-weight: 700;
-  color: #ffffff;
-  background: linear-gradient(135deg, #fb923c, #f97316);
+  color: var(--accent-contrast);
+  background: var(--gradient-primary);
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .cta-button:hover {
-  background: #ea580c;
+  background: var(--accent-strong);
   transform: translateY(-1px);
 }
 
@@ -278,8 +278,8 @@ export default {
 
 .info-card {
   grid-column: span 6;
-  background: #ffffff;
-  border: 1px solid #e7e5e4;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 12px;
   padding: 1.25rem;
   position: relative;
@@ -296,18 +296,18 @@ export default {
   width: 1.9rem;
   height: 1.9rem;
   border-radius: 8px;
-  border: 1px solid rgba(249, 115, 22, 0.32);
+  border: 1px solid var(--border-strong);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(249, 115, 22, 0.06);
+  background: var(--accent-softer);
 }
 
 .card-icon svg {
   width: 1rem;
   height: 1rem;
   fill: none;
-  stroke: #ea580c;
+  stroke: var(--accent-strong);
   stroke-width: 1.7;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -316,19 +316,19 @@ export default {
 .info-card h2 {
   margin: 0;
   font-size: 1.1rem;
-  color: #1c1917;
+  color: var(--text-primary);
   text-align: left;
 }
 
 .info-card p {
   margin: 0;
-  color: #57534e;
+  color: var(--text-secondary);
   text-align: left;
 }
 
 .summary-section {
-  background: #ffffff;
-  border: 1px solid #e7e5e4;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 12px;
   padding: 1.5rem;
 }
@@ -336,13 +336,13 @@ export default {
 .summary-section h2 {
   margin: 0 0 0.75rem;
   text-align: left;
-  color: #1c1917;
+  color: var(--text-primary);
 }
 
 .summary-text {
   margin: 0;
   text-align: left;
-  color: #57534e;
+  color: var(--text-secondary);
 }
 
 :global(body.dark-theme) .hero-title,

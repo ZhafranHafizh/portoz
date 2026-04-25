@@ -296,7 +296,7 @@ export default {
 <style scoped>
 .projects-view {
   min-height: 100vh;
-  background: linear-gradient(135deg, #fafaf9 0%, #e7e5e4 100%);
+  background: linear-gradient(135deg, var(--background) 0%, var(--surface) 100%);
   padding: 0;
   font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
 }
@@ -309,8 +309,8 @@ export default {
 .projects-header {
   padding: 80px 2rem 60px;
   text-align: center;
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-  color: white;
+  background: var(--gradient-primary);
+  color: var(--accent-contrast);
   position: relative;
   overflow: hidden;
 }
@@ -392,8 +392,8 @@ export default {
   align-items: center;
   gap: 12px;
   padding: 16px 32px;
-  background: linear-gradient(135deg, #f97316 0%, #d97706 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+  color: var(--accent-contrast);
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
@@ -411,7 +411,7 @@ export default {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #d97706 0%, #f97316 100%);
+  background: linear-gradient(135deg, var(--accent-strong) 0%, var(--accent) 100%);
   transition: left 0.3s ease;
   z-index: -1;
 }
@@ -470,7 +470,7 @@ export default {
 .filter-pill:hover,
 .filter-pill.active {
   background: white;
-  color: #f97316;
+  color: var(--accent);
   border-color: white;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -543,7 +543,7 @@ export default {
 
 /* Bento Card */
 .bento-card {
-  background: white;
+  background: var(--surface);
   border-radius: 24px;
   overflow: hidden;
   height: 100%;
@@ -602,7 +602,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(249, 115, 22, 0.8), rgba(217, 119, 6, 0.8));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 80%, transparent), color-mix(in srgb, var(--accent-strong) 80%, transparent));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -659,7 +659,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(249, 115, 22, 0.95), rgba(217, 119, 6, 0.95));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 95%, transparent), color-mix(in srgb, var(--accent-strong) 95%, transparent));
   display: flex;
   align-items: center;
   justify-content: center;

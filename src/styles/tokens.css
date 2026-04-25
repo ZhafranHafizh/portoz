@@ -39,6 +39,9 @@
   --accent: var(--color-accent-500);
   --accent-hover: var(--color-accent-400);
   --accent-strong: var(--color-accent-600);
+  --accent-soft: color-mix(in srgb, var(--accent) 18%, white);
+  --accent-softer: color-mix(in srgb, var(--accent) 10%, white);
+  --accent-contrast: #fffaf4;
 
   --border-subtle: var(--color-border-700);
   --border-strong: var(--color-border-600);
