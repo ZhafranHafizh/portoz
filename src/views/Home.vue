@@ -1,14 +1,15 @@
 <template>
   <div class="home-view">
     <Particles
+      v-if="showParticles"
       id="tsparticles"
-      :options="particlesOptions"
+      :options="particlesConfig"
       :style="parallaxStyle"
     />
 
     <section class="hero" :style="heroParallaxStyle">
       <div class="profile-image-container" :style="profileParallaxStyle">
-        <img :src="homeContent.hero.profile_image" alt="Profile Photo" class="profile-pic">
+        <img :src="homeContent.hero.profile_image" alt="Profile Photo" class="profile-pic" loading="lazy" decoding="async">
       </div>
       <h1 class="hero-title" v-html="homeContent.hero.title"></h1>
       <h2 class="hero-subtitle" v-html="homeContent.hero.subtitle"></h2>
@@ -28,6 +29,9 @@ export default {
   data() {
     return {
       scrollY: 0,
+      isMobile: false,
+      prefersReducedMotion: false,
+      scrollRafId: null,
       homeContent: {
         hero: {
           profile_image: '../../public/galeri/Profil.png',
@@ -72,13 +76,24 @@ export default {
     };
   },
   mounted() {
+    this.updateViewportFlags();
+    window.addEventListener('resize', this.updateViewportFlags, { passive: true });
     this.fetchHomeContent();
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll, { passive: true });
   },
   beforeUnmount() {
+    if (this.scrollRafId) {
+      cancelAnimationFrame(this.scrollRafId);
+      this.scrollRafId = null;
+    }
+    window.removeEventListener('resize', this.updateViewportFlags);
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    updateViewportFlags() {
+      this.isMobile = window.matchMedia('(max-width: 768px)').matches;
+      this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    },
     async fetchHomeContent() {
       try {
         const { data, error } = await supabase
@@ -107,21 +122,58 @@ export default {
       }
     },
     handleScroll() {
-      this.scrollY = window.scrollY;
+      if (this.disableMotionEffects) return;
+      if (this.scrollRafId) return;
+      this.scrollRafId = requestAnimationFrame(() => {
+        this.scrollY = window.scrollY;
+        this.scrollRafId = null;
+      });
     }
   },
   computed: {
+    disableMotionEffects() {
+      return this.isMobile || this.prefersReducedMotion;
+    },
+    showParticles() {
+      return !this.disableMotionEffects;
+    },
+    particlesConfig() {
+      const particleCount = this.isMobile ? 24 : 80;
+      const linkDistance = this.isMobile ? 100 : 150;
+      const speed = this.isMobile ? 1.2 : 2;
+      return {
+        ...this.particlesOptions,
+        particles: {
+          ...this.particlesOptions.particles,
+          number: {
+            ...this.particlesOptions.particles.number,
+            value: particleCount
+          },
+          links: {
+            ...this.particlesOptions.particles.links,
+            distance: linkDistance
+          },
+          move: {
+            ...this.particlesOptions.particles.move,
+            speed
+          }
+        }
+      };
+    },
     parallaxStyle() {
+      if (this.disableMotionEffects) return {};
       return {
         transform: `translateY(${this.scrollY * 0.5}px)`
       };
     },
     heroParallaxStyle() {
+      if (this.disableMotionEffects) return {};
       return {
         transform: `translateY(${this.scrollY * -0.3}px)`
       };
     },
     profileParallaxStyle() {
+      if (this.disableMotionEffects) return {};
       return {
         transform: `translateY(${this.scrollY * -0.2}px)`
       };
@@ -157,6 +209,7 @@ export default {
   height: 100%;
   z-index: 0; /* Pastikan di paling belakang */
   transition: transform 0.1s ease-out;
+  will-change: transform;
 }
 
 .hero {
@@ -171,6 +224,7 @@ export default {
   transform: translateY(-20px);
   animation: fadeInSlideUp 0.8s ease-out forwards;
   transition: all 0.3s ease;
+  will-change: transform;
 }
 
 :global(body.dark-theme) .hero {
@@ -186,6 +240,7 @@ export default {
 .profile-image-container { 
   margin-bottom: 25px; 
   transition: transform 0.1s ease-out;
+  will-change: transform;
 }
 .profile-pic {
   width: 180px; height: 180px; border-radius: 50%; object-fit: cover;
@@ -268,6 +323,12 @@ export default {
   .cta-button { 
     padding: 12px 25px; 
     font-size: 1rem; 
+  }
+
+  .profile-pic:hover,
+  .cta-button:hover,
+  .cta-button:hover .arrow {
+    transform: none;
   }
 }
 
@@ -352,6 +413,19 @@ export default {
   .cta-button {
     padding: 10px 18px;
     font-size: 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #tsparticles,
+  .hero,
+  .profile-image-container,
+  .profile-pic,
+  .cta-button,
+  .cta-button .arrow {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
   }
 }
 </style>
