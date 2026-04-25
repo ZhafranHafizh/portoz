@@ -299,6 +299,7 @@ export default {
   background: linear-gradient(135deg, var(--background) 0%, var(--surface) 100%);
   padding: 0;
   font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  overflow-x: clip;
 }
 
 :global(body.dark-theme) .projects-view {
@@ -312,7 +313,7 @@ export default {
   background: var(--gradient-primary);
   color: var(--accent-contrast);
   position: relative;
-  overflow: hidden;
+  overflow: clip;
 }
 
 :global(body.dark-theme) .projects-header {
@@ -364,6 +365,11 @@ export default {
   opacity: 0.9;
   font-weight: 400;
   line-height: 1.6;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  text-wrap: balance;
+  word-break: break-word;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
@@ -478,11 +484,11 @@ export default {
 
 /* Bento Grid */
 .bento-grid {
-  padding: 60px 2rem;
+  padding: 60px clamp(1.25rem, 2vw, 2rem);
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
   grid-auto-rows: 400px;
   gap: 24px;
   opacity: 0;
@@ -553,6 +559,7 @@ export default {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   border: 1px solid rgba(255, 255, 255, 0.8);
   position: relative;
+  isolation: isolate;
 }
 
 :global(body.dark-theme) .bento-card {
@@ -589,6 +596,7 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -845,6 +853,8 @@ export default {
   /* background removed to fix dark mode issue */
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 60px;
   opacity: 0;
   transform: translateY(30px);
@@ -952,6 +962,8 @@ export default {
   .page-subtitle {
     font-size: 1.1rem;
     margin-bottom: 30px;
+    max-width: 100%;
+    text-wrap: pretty;
   }
   
   .cv-download-section {
@@ -1057,6 +1069,7 @@ export default {
     font-size: 1rem;
     margin-bottom: 25px;
     line-height: 1.5;
+    max-width: 38ch;
   }
   
   .cv-download-section {
