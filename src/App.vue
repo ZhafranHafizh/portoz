@@ -106,13 +106,13 @@ export default {
 /* Pastikan style #app dan .content Anda mendukung layout */
 body {
   margin: 0;
-  font-family: 'Poppins', 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #333333; /* Neutral dark grey instead of blue-grey */
-  line-height: 1.6;
+  color: var(--text-primary);
+  line-height: var(--line-height-normal);
   transition: background-color 0.3s ease, color 0.3s ease;
-  background-color: #ffffff;
+  background-color: var(--background);
 }
 
 /* ... */
@@ -120,27 +120,27 @@ body {
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #f97316 #e7e5e4; /* Orange and Light Stone */
+  scrollbar-color: var(--accent) var(--surface);
 }
 
 /* Dark mode scrollbar */
 body.dark-theme ::-webkit-scrollbar-track {
-  background: #292524;
+  background: var(--surface);
 }
 
 body.dark-theme ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+  background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-strong) 100%);
 }
 
 body.dark-theme ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #ea580c 0%, #fb923c 100%);
+  background: linear-gradient(135deg, var(--accent-strong) 0%, var(--accent-hover) 100%);
 }
 
 body.dark-theme ::-webkit-scrollbar-corner {
-  background: #292524;
+  background: var(--surface);
 }
 
 body.dark-theme * {
-  scrollbar-color: #fb923c #292524;
+  scrollbar-color: var(--accent) var(--surface);
 }
 </style>
