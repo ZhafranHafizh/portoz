@@ -101,7 +101,8 @@ const initialProjects = [
     "challenges": "Managing the complete design process from concept to development handoff...",
     "duration": "Still in Development",
     "team": "Design & Development Team",
-    "role": "Lead Designer & Design Process Manager"
+    "role": "Lead Designer & Design Process Manager",
+    "is_in_development": true
   }
 ];
 
@@ -124,9 +125,11 @@ async function ensureSchema() {
     duration VARCHAR(100),
     team VARCHAR(100),
     role VARCHAR(100),
+    is_in_development BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )`
+  await sql`ALTER TABLE portfolio_projects ADD COLUMN IF NOT EXISTS is_in_development BOOLEAN DEFAULT FALSE`
 
   // Check if empty, run seed
   const [{ count }] = await sql`SELECT COUNT(*) FROM portfolio_projects`
@@ -135,12 +138,13 @@ async function ensureSchema() {
     for (const proj of initialProjects) {
         await sql`
             INSERT INTO portfolio_projects (
-                title, description, image_url, link, github, figma, tags, category, features, challenges, duration, team, role
+                title, description, image_url, link, github, figma, tags, category, features, challenges, duration, team, role, is_in_development
             ) VALUES (
                 ${proj.title}, ${proj.description || ''}, ${proj.imageUrl || ''}, ${proj.link || ''}, 
                 ${proj.github || ''}, ${proj.figma || ''}, ${JSON.stringify(proj.tags || [])}, 
                 ${JSON.stringify(proj.category || [])}, ${JSON.stringify(proj.features || [])}, 
-                ${proj.challenges || ''}, ${proj.duration || ''}, ${proj.team || ''}, ${proj.role || ''}
+                ${proj.challenges || ''}, ${proj.duration || ''}, ${proj.team || ''}, ${proj.role || ''},
+                ${Boolean(proj.is_in_development)}
             )
         `;
     }
@@ -184,7 +188,8 @@ export async function handler(event) {
           challenges: r.challenges,
           duration: r.duration,
           team: r.team,
-          role: r.role
+          role: r.role,
+          is_in_development: Boolean(r.is_in_development)
       }))
       return { statusCode: 200, headers, body: JSON.stringify(projects) }
     }
@@ -201,12 +206,13 @@ export async function handler(event) {
       const data = JSON.parse(event.body || '{}')
       const rows = await sql`
         INSERT INTO portfolio_projects (
-            title, description, image_url, link, github, figma, tags, category, features, challenges, duration, team, role
+            title, description, image_url, link, github, figma, tags, category, features, challenges, duration, team, role, is_in_development
         ) VALUES (
             ${data.title}, ${data.description || ''}, ${data.imageUrl || ''}, ${data.link || ''}, 
             ${data.github || ''}, ${data.figma || ''}, ${JSON.stringify(data.tags || [])}, 
             ${JSON.stringify(data.category || [])}, ${JSON.stringify(data.features || [])}, 
-            ${data.challenges || ''}, ${data.duration || ''}, ${data.team || ''}, ${data.role || ''}
+            ${data.challenges || ''}, ${data.duration || ''}, ${data.team || ''}, ${data.role || ''},
+            ${Boolean(data.is_in_development)}
         )
         RETURNING *
       `;
@@ -225,6 +231,7 @@ export async function handler(event) {
               tags = ${JSON.stringify(data.tags || [])}, category = ${JSON.stringify(data.category || [])}, 
               features = ${JSON.stringify(data.features || [])}, challenges = ${data.challenges || ''}, 
               duration = ${data.duration || ''}, team = ${data.team || ''}, role = ${data.role || ''},
+              is_in_development = ${Boolean(data.is_in_development)},
               updated_at = CURRENT_TIMESTAMP
           WHERE id = ${data.id}
         `;

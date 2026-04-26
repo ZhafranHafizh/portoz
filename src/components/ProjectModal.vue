@@ -20,6 +20,10 @@
               >
                 {{ category }}
               </span>
+              <span v-if="isProjectInDevelopment(project)" class="modal-development-badge">
+                <i class="fas fa-hammer"></i>
+                Still in development
+              </span>
             </div>
             <h1 class="modal-title">{{ project.title }}</h1>
           </div>
@@ -122,6 +126,11 @@
                 <i class="fas fa-user-tag"></i>
                 <span class="info-label">My Role</span>
                 <span class="info-value">{{ project.role }}</span>
+              </div>
+              <div v-if="isProjectInDevelopment(project)" class="info-item">
+                <i class="fas fa-screwdriver-wrench"></i>
+                <span class="info-label">Status</span>
+                <span class="info-value">Still in development</span>
               </div>
             </div>
           </div>
@@ -266,6 +275,13 @@ export default {
       import('@/services/analytics').then(({ analytics }) => {
         analytics.trackClick(`${type}_${projectTitle.replace(/\s+/g, '-').toLowerCase()}`);
       });
+    },
+    isProjectInDevelopment(project) {
+      return Boolean(
+        project?.isInDevelopment ||
+        project?.is_in_development ||
+        /still in development/i.test(project?.duration || '')
+      );
     },
     closeModal() {
       this.$emit('close');
@@ -425,6 +441,19 @@ export default {
   border-radius: 20px;
   font-size: 0.875rem;
   font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+.modal-development-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 700;
   backdrop-filter: blur(10px);
 }
 

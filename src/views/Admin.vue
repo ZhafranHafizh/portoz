@@ -166,6 +166,7 @@
                 <th>Image</th>
                 <th>Title</th>
                 <th>Category</th>
+                <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -177,13 +178,18 @@
                 </td>
                 <td class="td-title">{{ project.title }}</td>
                 <td>{{ getCategoryString(project.category) }}</td>
+                <td>
+                  <span :class="isProjectInDevelopment(project) ? 'status-development' : 'status-active'">
+                    {{ isProjectInDevelopment(project) ? 'In Development' : 'Published' }}
+                  </span>
+                </td>
                 <td class="action-buttons">
                   <button @click="openEditProjectModal(project)" class="btn btn-sm btn-edit">Edit</button>
                   <button @click="confirmDeleteProject(project.id)" class="btn btn-sm btn-delete">Delete</button>
                 </td>
               </tr>
               <tr v-if="projects.length === 0">
-                <td colspan="5" class="empty-state">No projects found. Try adding one!</td>
+                <td colspan="6" class="empty-state">No projects found. Try adding one!</td>
               </tr>
             </tbody>
           </table>
@@ -718,6 +724,19 @@
                 <label>Your Role</label>
                 <input type="text" v-model="projectForm.role" class="form-input" />
               </div>
+              <div class="form-group full-width">
+                <label>Development Status</label>
+                <div class="toggle-setting inline-toggle-setting">
+                  <div class="toggle-info">
+                    <h4>Still in development</h4>
+                    <p>Aktifkan jika project belum final agar CMS dan halaman portfolio menampilkan penanda khusus.</p>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" v-model="projectForm.is_in_development" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
             </div>
 
             <div class="form-actions">
@@ -1034,7 +1053,8 @@ export default {
         challenges: '',
         duration: '',
         team: '',
-        role: ''
+        role: '',
+        is_in_development: false
       };
     },
     getDefaultGalleryData() {
@@ -1209,7 +1229,8 @@ export default {
         tags: Array.isArray(project.tags) ? project.tags.join(', ') : project.tags || '',
         category: Array.isArray(project.category) ? project.category.join(', ') : project.category || '',
         features: Array.isArray(project.features) ? project.features.join('\n') : project.features || '',
-        images: Array.isArray(project.images) ? [...project.images] : []
+        images: Array.isArray(project.images) ? [...project.images] : [],
+        is_in_development: this.isProjectInDevelopment(project)
       };
       this.showProjectModal = true;
     },
@@ -1225,6 +1246,13 @@ export default {
     },
     getCategoryString(category) {
       return Array.isArray(category) ? category.join(', ') : category;
+    },
+    isProjectInDevelopment(project) {
+      return Boolean(
+        project?.is_in_development ||
+        project?.isInDevelopment ||
+        /still in development/i.test(project?.duration || '')
+      );
     },
     addSkill() {
       const currentSkills = this.skillsList;
@@ -1270,6 +1298,7 @@ export default {
         duration: this.projectForm.duration,
         team: this.projectForm.team,
         role: this.projectForm.role,
+        is_in_development: Boolean(this.projectForm.is_in_development),
         updated_at: new Date().toISOString()
       };
 
@@ -2514,6 +2543,10 @@ export default {
   line-height: 1.5;
 }
 
+.inline-toggle-setting {
+  margin-top: 4px;
+}
+
 /* Toggle Switch */
 .switch {
   position: relative;
@@ -2733,6 +2766,17 @@ input:checked + .slider:before {
   background: rgba(243, 244, 246, 0.85);
   border: var(--admin-border);
   color: var(--admin-muted);
+  border-radius: var(--admin-radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-development {
+  display: inline-block;
+  padding: 5px 12px;
+  background: rgba(254, 243, 199, 0.9);
+  border: 1px solid rgba(245, 158, 11, 0.24);
+  color: #92400e;
   border-radius: var(--admin-radius-sm);
   font-size: 12px;
   font-weight: 600;

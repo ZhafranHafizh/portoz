@@ -75,6 +75,10 @@
           <div class="card-content">
             <div class="project-meta">
               <span class="category-badge">{{ getPrimaryCategory(project) }}</span>
+              <span v-if="project.isInDevelopment" class="development-badge">
+                <i class="fas fa-hammer"></i>
+                In Development
+              </span>
             </div>
             <h3 class="project-title">{{ project.title }}</h3>
             <p class="project-description">{{ getTruncatedDescription(project.description) }}</p>
@@ -206,7 +210,11 @@ export default {
         this.projectsData = data.map(item => ({
           ...item,
           imageUrl: item.image_url, // map image_url to imageUrl
-          images: Array.isArray(item.images) ? item.images : [] // map images array
+          images: Array.isArray(item.images) ? item.images : [], // map images array
+          isInDevelopment: Boolean(
+            item.is_in_development ||
+            /still in development/i.test(item.duration || '')
+          )
         }));
 
         this.initAnimations();
@@ -771,6 +779,10 @@ export default {
 }
 
 .project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
   margin-bottom: 12px;
 }
 
@@ -784,6 +796,30 @@ export default {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.development-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(245, 158, 11, 0.14);
+  color: #9a3412;
+  border: 1px solid rgba(245, 158, 11, 0.24);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.development-badge i {
+  font-size: 0.75rem;
+}
+
+:global(body.dark-theme) .development-badge {
+  background: rgba(245, 158, 11, 0.18) !important;
+  color: #fdba74 !important;
+  border-color: rgba(251, 191, 36, 0.24) !important;
 }
 
 .project-title {
