@@ -101,6 +101,9 @@
               </div>
             </div>
 
+            <!-- Visitor Heatmap -->
+            <VisitorHeatmap :events="analyticsEvents" />
+
             <div class="analytics-grid">
               <div class="analytics-box">
                 <h3>Top Visited Pages</h3>
@@ -842,11 +845,13 @@
 <script>
 import { supabase } from '@/config/supabaseClient';
 import RichTextEditor from '@/components/RichTextEditor.vue';
+import VisitorHeatmap from '@/components/VisitorHeatmap.vue';
 
 export default {
   name: 'AdminView',
   components: {
-    RichTextEditor
+    RichTextEditor,
+    VisitorHeatmap
   },
   data() {
     return {

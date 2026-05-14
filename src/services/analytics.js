@@ -37,7 +37,9 @@ class AnalyticsService {
           city: data.city,
           region: data.region,
           country: data.country,
-          ip_address: data.ip
+          ip_address: data.ip,
+          latitude: data.latitude ? parseFloat(data.latitude) : null,
+          longitude: data.longitude ? parseFloat(data.longitude) : null
         };
         sessionStorage.setItem('portoz_location_data', JSON.stringify(this.locationData));
       }
@@ -62,6 +64,8 @@ class AnalyticsService {
         region: location?.region || null,
         country: location?.country || null,
         ip_address: location?.ip_address || null,
+        latitude: location?.latitude || null,
+        longitude: location?.longitude || null,
         user_agent: navigator.userAgent
       };
 
