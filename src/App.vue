@@ -81,9 +81,7 @@ export default {
 </script>
 
 <style>
-/* ... Style global Anda yang sudah ada ... */
 
-/* !!! TAMBAHKAN CSS UNTUK TRANSISI DI SINI !!! */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease; /* Durasi dan tipe transisi */

@@ -45,13 +45,39 @@ export default defineComponent({
     ContactView
   },
   setup() {
-    // Handle smooth scroll for anchor links
+    // Map route paths to section IDs
+    const routeToSectionMap = {
+      '/about': 'section-about',
+      '/projects': 'section-projects',
+      '/gallery': 'section-gallery',
+      '/contact': 'section-contact',
+      '/': 'section-home'
+    }
+
+    // Handle smooth scroll for anchor links AND router-link clicks
     const handleAnchorClick = (event) => {
-      const anchor = event.target.closest('a[href^="#"]')
-      if (anchor) {
+      const anchor = event.target.closest('a')
+      if (!anchor) return
+
+      const href = anchor.getAttribute('href')
+      if (!href) return
+
+      // Handle hash-based anchors (e.g., #section-about)
+      if (href.startsWith('#')) {
         event.preventDefault()
-        const targetId = anchor.getAttribute('href').substring(1)
+        const targetId = href.substring(1)
         const targetElement = document.getElementById(targetId)
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' })
+        }
+        return
+      }
+
+      // Handle route-based links (e.g., /about, /contact)
+      const sectionId = routeToSectionMap[href]
+      if (sectionId) {
+        event.preventDefault()
+        const targetElement = document.getElementById(sectionId)
         if (targetElement) {
           targetElement.scrollIntoView({ behavior: 'smooth' })
         }
@@ -59,11 +85,11 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      document.addEventListener('click', handleAnchorClick)
+      document.addEventListener('click', handleAnchorClick, true)
     })
 
     onBeforeUnmount(() => {
-      document.removeEventListener('click', handleAnchorClick)
+      document.removeEventListener('click', handleAnchorClick, true)
     })
   }
 })

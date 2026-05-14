@@ -65,9 +65,15 @@ const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
-    } else {
-      return { top: 0, behavior: 'smooth' }
     }
+    // Handle hash-based scrolling for one-page sections
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth'
+      }
+    }
+    return { top: 0, behavior: 'smooth' }
   }
 })
 
